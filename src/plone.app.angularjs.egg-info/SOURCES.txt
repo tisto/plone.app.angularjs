@@ -1,0 +1,16 @@
+README.txt
+setup.py
+src/plone/__init__.py
+src/plone.app.angularjs.egg-info/PKG-INFO
+src/plone.app.angularjs.egg-info/SOURCES.txt
+src/plone.app.angularjs.egg-info/dependency_links.txt
+src/plone.app.angularjs.egg-info/entry_points.txt
+src/plone.app.angularjs.egg-info/namespace_packages.txt
+src/plone.app.angularjs.egg-info/not-zip-safe
+src/plone.app.angularjs.egg-info/requires.txt
+src/plone.app.angularjs.egg-info/top_level.txt
+src/plone/app/__init__.py
+src/plone/app/angularjs/__init__.py
+src/plone/app/angularjs/testing.py
+src/plone/app/angularjs/tests/__init__.py
+src/plone/app/angularjs/tests/test_setup.py
