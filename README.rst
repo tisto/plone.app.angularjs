@@ -1,2 +1,4 @@
+.. contents::
+
 plone.app.angularjs
 ===================
