@@ -5,15 +5,12 @@
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     i18n_domain="plone.app.angularjs">
 
-  <five:registerPackage package="." initialize=".initialize" />
-
   <genericsetup:registerProfile
-      name="default"
-      title="plone.app.angularjs"
-      directory="profiles/default"
-      description="Installs the plone.app.angularjs package"
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      />
-  <!-- -*- extra stuff goes here -*- -->
-  
+    name="default"
+    title="plone.app.angularjs"
+    directory="profiles/default"
+    description="Installs the plone.app.angularjs package"
+    provides="Products.GenericSetup.interfaces.EXTENSION"
+    />
+
 </configure>
