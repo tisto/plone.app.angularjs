@@ -15,11 +15,7 @@
 /.Python
 /include
 /lib
-/.project
-/.pydevproject
 /.mr.developer.cfg
-/src/plone*
-/src/collective*
 *.mo
 docs/Makefile
 docs/make.bat

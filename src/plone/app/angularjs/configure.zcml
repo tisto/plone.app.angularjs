@@ -13,4 +13,6 @@
     provides="Products.GenericSetup.interfaces.EXTENSION"
     />
 
+  <include package=".app" />
+
 </configure>
