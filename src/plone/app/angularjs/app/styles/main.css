@@ -13,6 +13,10 @@ body {
     float: left;
 }
 
+.container .jumbotron {
+    margin-top: 100px;
+}
+
 .fade {
     position: absolute;
     top: 0;
