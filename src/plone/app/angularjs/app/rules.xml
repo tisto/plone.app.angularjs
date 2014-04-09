@@ -18,11 +18,4 @@
     </xsl:element>
   </replace>
 
-  <!-- ANGULAR APP JAVASCRIPT -->
-  <replace content="/html/body/script[starts-with(@src, 'scripts/')]">
-    <xsl:element name="script">
-      <xsl:attribute name="src">++theme++plone.app.angularjs/<xsl:value-of select="@src" /></xsl:attribute>
-    </xsl:element>
-  </replace>
-
 </rules>
