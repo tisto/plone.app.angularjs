@@ -18,4 +18,11 @@
     permission="zope2.View"
     />
 
+  <browser:page
+    name="angularjs-object-traversal"
+    for="Products.CMFCore.interfaces.ISiteRoot"
+    class=".objecttraversal.AngularJsObjectTraversal"
+    permission="zope2.View"
+    />
+
 </configure>

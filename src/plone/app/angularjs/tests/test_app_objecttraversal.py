@@ -1,0 +1,92 @@
+import unittest2 as unittest
+
+from plone.app.testing import setRoles
+from plone.app.testing import TEST_USER_ID
+from zope.component.interfaces import ComponentLookupError
+from zope.component import getMultiAdapter
+
+
+from plone.app.angularjs.testing import\
+    PLONE_APP_ANGULARJS_INTEGRATION
+
+import json
+
+
+class TestObjectTraversal(unittest.TestCase):
+
+    layer = PLONE_APP_ANGULARJS_INTEGRATION
+
+    def setUp(self):
+        self.app = self.layer['app']
+        self.portal = self.layer['portal']
+        self.request = self.layer['request']
+        setRoles(self.portal, TEST_USER_ID, ['Manager'])
+
+    def test_view_is_registered(self):
+        try:
+            getMultiAdapter(
+                (self.portal, self.request),
+                name="angularjs-object-traversal"
+            )
+        except ComponentLookupError, error:
+            self.fail(
+                "The view seems not to be registered properly. %s" % error)
+
+    def test_object_traversal_without_param(self):
+        view = getMultiAdapter(
+            (self.portal, self.request),
+            name="angularjs-object-traversal"
+        )
+        view = view.__of__(self.portal)
+        self.assertFalse(view())
+
+    def test_object_traversal_empty_param(self):
+        self.request.set('object-traversal-path', '')
+        view = getMultiAdapter(
+            (self.portal, self.request),
+            name="angularjs-object-traversal"
+        )
+        view = view.__of__(self.portal)
+        self.assertFalse(view())
+
+    def test_object_traversal_document(self):
+        self.portal.invokeFactory('Document', 'doc1')
+        self.request.set('object-traversal-path', 'doc1')
+        view = getMultiAdapter(
+            (self.portal, self.request),
+            name="angularjs-object-traversal"
+        )
+        view = view.__of__(self.portal)
+
+        self.assertTrue(view())
+        self.assertEqual(
+            json.loads(view()),
+            {
+                u'route': u'/plone/doc1',
+                u'title': u'',
+                u'description': u'',
+                u'text': u'',
+                u'id': u'doc1'
+            }
+        )
+
+    def test_object_traversal_document_sets_title(self):
+        self.portal.invokeFactory('Document', 'doc1', title=u'Document 1')
+        self.request.set('object-traversal-path', 'doc1')
+        view = getMultiAdapter(
+            (self.portal, self.request),
+            name="angularjs-object-traversal"
+        )
+        view = view.__of__(self.portal)
+
+        self.assertTrue(view())
+        self.assertEqual(
+            json.loads(view()),
+            {
+                u'route': u'/plone/doc1',
+                u'title': u'Document 1',
+                u'description': u'',
+                u'text': u'',
+                u'id': u'doc1'
+            }
+        )

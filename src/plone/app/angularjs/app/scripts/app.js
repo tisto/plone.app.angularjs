@@ -1,4 +1,4 @@
-var ploneModule = angular.module('ploneApp', ['ngRoute']);
+var ploneModule = angular.module('ploneApp', ['ngRoute', 'ngSanitize']);
 
 ploneModule.config(['$routeProvider',
   function($routeProvider) {
@@ -14,14 +14,20 @@ ploneModule.config(['$routeProvider',
   }
 ]);
 
-ploneModule.controller('ObjectPathController', ['$scope', '$routeParams',
-  function($scope, $routeParams) {
-    'use strict';
-    $scope.page = {
-      'route': $routeParams.objecttraversal,
-      'id': 'doc1',
-      'title': 'My first document',
-      'text': 'This is my first document'
-    };
-  }
-]);
+ploneModule.controller('ObjectPathController',
+  ['$scope', '$routeParams', '$http', '$sce',
+    function($scope, $routeParams, $http, $sce) {
+      'use strict';
+      $http({
+        url: '@@angularjs-object-traversal',
+        method: 'GET',
+        params: {'object-traversal-path': $routeParams.objecttraversal},
+      }).success(function(data, status, headers, config) {
+        $scope.page = data;
+        $scope.deliberatelyTrustDangerousSnippet = function() {
+          return $sce.trustAsHtml($scope.snippet);
+        };
+      });
+    }
+  ]
+);
