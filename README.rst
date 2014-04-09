@@ -1,7 +1,12 @@
-.. contents::
-
 plone.app.angularjs
 ===================
+
+Experimental AngularJS-based front end for the Plone CMS.
+
+Contents
+--------
+
+.. contents::
 
 Create a simple AngularJS App within Plone
 ------------------------------------------
