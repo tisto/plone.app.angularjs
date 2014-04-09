@@ -42,7 +42,10 @@ setup(
         'setuptools',
         'plone.app.theming',
     ],
-    extras_require={'test': ['plone.app.testing']},
+    extras_require={'test': [
+        'plone.app.testing>=4.2.4',
+        'plone.app.robotframework',
+    ]},
     entry_points="""
     # -*- Entry points: -*-
       [z3c.autoinclude.plugin]

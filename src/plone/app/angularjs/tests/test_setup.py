@@ -3,12 +3,12 @@ import unittest2 as unittest
 from Products.CMFCore.utils import getToolByName
 
 from plone.app.angularjs.testing import\
-    PLONE_APP_ANGULARJS_INTEGRATION
+    PLONE_APP_ANGULARJS_INTEGRATION_TESTING
 
 
 class TestExample(unittest.TestCase):
 
-    layer = PLONE_APP_ANGULARJS_INTEGRATION
+    layer = PLONE_APP_ANGULARJS_INTEGRATION_TESTING
 
     def setUp(self):
         self.app = self.layer['app']

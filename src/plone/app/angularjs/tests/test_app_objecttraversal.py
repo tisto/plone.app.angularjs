@@ -7,14 +7,14 @@ from zope.component import getMultiAdapter
 
 
 from plone.app.angularjs.testing import\
-    PLONE_APP_ANGULARJS_INTEGRATION
+    PLONE_APP_ANGULARJS_INTEGRATION_TESTING
 
 import json
 
 
 class TestObjectTraversal(unittest.TestCase):
 
-    layer = PLONE_APP_ANGULARJS_INTEGRATION
+    layer = PLONE_APP_ANGULARJS_INTEGRATION_TESTING
 
     def setUp(self):
         self.app = self.layer['app']
