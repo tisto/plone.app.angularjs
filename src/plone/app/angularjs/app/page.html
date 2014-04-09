@@ -1,7 +1,9 @@
-<div>
-  <h1>{{page.title}}</h1>
-  <p>Path: {{page.route}}</p>
-  <p>ID: {{page.id}}</p>
-  <p>Description: {{page.description}}</p>
-  <div ng-bind-html="page.text"></div>
+<div class="jumbotron">
+  <div class="container">
+    <h1>{{page.title}}</h1>
+    <p>{{page.description}}</p>
+    <p>Path: {{page.route}}</p>
+    <p>ID: {{page.id}}</p>
+  </div>
 </div>
+<div ng-bind-html="page.text"></div>

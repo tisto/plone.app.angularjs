@@ -1,7 +1,12 @@
 <!doctype html>
 <html ng-app="ploneApp">
 <head>
+  <title>Plone + AngularJS</title>
   <meta charset="utf-8" />
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.5/angular.min.js"></script>
   <script src="http://code.angularjs.org/1.2.14/angular-route.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.5/angular-sanitize.js"></script>
@@ -10,6 +15,9 @@
 </head>
 <body>
   <div navigation-directive></div>
-  <div ng-view></div>
+  <div class="container">
+    <div ng-view></div>
+  </div>
+
 </body>
 </html>

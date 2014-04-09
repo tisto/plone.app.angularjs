@@ -2,7 +2,12 @@
 var ploneModule;
 
 ploneModule.controller('NavigationController',
-  function($scope) {
+  function($scope, $http) {
+    var url = '@@angularjs-top-navigation';
+    $http.get(url).success(function(data, status, headers, config) {
+      $scope.items = data;
+    });
+    /*
     $scope.items = [
       {
         id: 'front-page',
@@ -24,7 +29,7 @@ ploneModule.controller('NavigationController',
         title: 'Document 1',
         url: '#/folder1/doc1'
       }
-    ]
+    ]*/
   }
 );
 

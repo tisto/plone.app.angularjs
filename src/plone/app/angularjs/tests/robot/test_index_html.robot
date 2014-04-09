@@ -3,6 +3,7 @@
 *** Settings ***
 
 Resource  plone/app/robotframework/selenium.robot
+Resource  plone/app/robotframework/keywords.robot
 
 Library  Remote  ${PLONE_URL}/RobotRemote
 
@@ -15,10 +16,11 @@ ${ADMIN_ROLE}  Site Administrator
 
 *** Test Cases ***
 
-Site Administrator can access control panel
+Site Navigation
     Given I'm logged in as a '${ADMIN_ROLE}'
-     When I open the personal menu
-     Then I see the Site Setup -link
+      and a document  My Document
+     When I open the Plone AngularJS App
+     Then the navigation contains  My Document
 
 *** Keywords ***
 
@@ -26,8 +28,13 @@ I'm logged in as a '${ROLE}'
     Enable autologin as  ${ROLE}
     Go to  ${PLONE_URL}
 
-I open the personal menu
-    Click link  css=#user-name
+a document
+    [Arguments]  ${title}
+    Create content  type=Document  id=document1  title=${title}
 
-I see the Site Setup -link
-    Element should be visible  css=#personaltools-plone_setup
+I open the Plone AngularJS App
+    Go To  ${PLONE_URL}/index.html
+
+the navigation contains
+    [Arguments]  ${title}
+    Page should contain  ${title}
