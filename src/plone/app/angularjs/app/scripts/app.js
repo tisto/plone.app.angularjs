@@ -1,4 +1,4 @@
-var ploneModule = angular.module('ploneApp', ['ngRoute', 'ngSanitize']);
+var ploneModule = angular.module('ploneApp', ['ngRoute', 'ngSanitize', 'ngAnimate']);
 
 ploneModule.config(['$routeProvider',
   function($routeProvider) {
