@@ -19,6 +19,13 @@
     />
 
   <browser:page
+    name="navigation.tpl.html"
+    for="Products.CMFCore.interfaces.ISiteRoot"
+    template="navigation.tpl.html"
+    permission="zope2.View"
+    />
+
+  <browser:page
     name="angularjs-object-traversal"
     for="Products.CMFCore.interfaces.ISiteRoot"
     class=".objecttraversal.AngularJsObjectTraversal"
