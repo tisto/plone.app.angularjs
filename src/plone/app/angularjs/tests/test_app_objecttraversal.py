@@ -90,3 +90,46 @@ class TestObjectTraversal(unittest.TestCase):
                 u'id': u'doc1'
             }
         )
+
+    def test_object_traversal_folder(self):
+        self.portal.invokeFactory('Folder', 'folder1')
+        self.request.set('object-traversal-path', 'folder1')
+        view = getMultiAdapter(
+            (self.portal, self.request),
+            name="angularjs-object-traversal"
+        )
+        view = view.__of__(self.portal)
+
+        self.assertTrue(view())
+        self.assertEqual(
+            json.loads(view()),
+            {
+                u'route': u'/plone/folder1',
+                u'title': u'',
+                u'description': u'',
+                u'text': u'',
+                u'id': u'folder1'
+            }
+        )
+
+    def test_object_traversal_nested_document(self):
+        self.portal.invokeFactory('Folder', 'folder1')
+        self.portal.folder1.invokeFactory('Document', 'doc1')
+        self.request.set('object-traversal-path', 'folder1/doc1')
+        view = getMultiAdapter(
+            (self.portal, self.request),
+            name="angularjs-object-traversal"
+        )
+        view = view.__of__(self.portal)
+
+        self.assertTrue(view())
+        self.assertEqual(
+            json.loads(view()),
+            {
+                u'route': u'/plone/folder1/doc1',
+                u'title': u'',
+                u'description': u'',
+                u'text': u'',
+                u'id': u'doc1'
+            }
+        )
