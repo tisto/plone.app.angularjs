@@ -1,8 +1,8 @@
-'use strict';
 var ploneModule;
 
 ploneModule.controller('NavigationController',
   function($scope, $http) {
+    'use strict';
     var url = '@@angularjs-top-navigation';
     $http.get(url).success(function(data, status, headers, config) {
       $scope.items = data;
@@ -35,6 +35,7 @@ ploneModule.controller('NavigationController',
 
 ploneModule.directive('navigationDirective',
   function() {
+    'use strict';
     return {
       templateUrl: 'navigation.tpl.html',
       controller: 'NavigationController'
