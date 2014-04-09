@@ -1,5 +1,4 @@
 from setuptools import setup, find_packages
-import os
 
 version = '1.0'
 
@@ -46,7 +45,7 @@ setup(
     extras_require={'test': ['plone.app.testing']},
     entry_points="""
     # -*- Entry points: -*-
-	  [z3c.autoinclude.plugin]
-	  target = plone
+      [z3c.autoinclude.plugin]
+      target = plone
     """,
 )

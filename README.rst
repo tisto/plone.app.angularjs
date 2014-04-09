@@ -49,3 +49,6 @@ app/index.html::
     </div>
   </body>
   </html>
+
+=> Go to app/index.html (without starting Zope)
+=> Go to localhost:8080/Plone/index.html (after starting Zope)
