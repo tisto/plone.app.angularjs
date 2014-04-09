@@ -11,4 +11,11 @@
     permission="zope2.View"
     />
 
+  <browser:page
+    name="page.html"
+    for="Products.CMFCore.interfaces.ISiteRoot"
+    template="page.html"
+    permission="zope2.View"
+    />
+
 </configure>
