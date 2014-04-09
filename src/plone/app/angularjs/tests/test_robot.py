@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from plone.testing import layered
-from plone.app.angularjs.testing import (
+from plone.app.angularjs.testing import \
     PLONE_APP_ANGULARJS_ROBOT_TESTING
-)
+
 from plone.app.testing import ROBOT_TEST_LEVEL
 
 import os

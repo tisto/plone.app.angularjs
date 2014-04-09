@@ -7,29 +7,6 @@ ploneModule.controller('NavigationController',
     $http.get(url).success(function(data, status, headers, config) {
       $scope.items = data;
     });
-    /*
-    $scope.items = [
-      {
-        id: 'front-page',
-        title: 'Front page',
-        url: '#/front-page'
-      },
-      {
-        id: 'news',
-        title: 'News',
-        url: '#/news'
-      },
-      {
-        id: 'events',
-        title: 'Events',
-        url: '#/events'
-      },
-      {
-        id: 'doc1',
-        title: 'Document 1',
-        url: '#/folder1/doc1'
-      }
-    ]*/
   }
 );
 
@@ -43,3 +20,22 @@ ploneModule.directive('navigationDirective',
   }
 );
 
+ploneModule.controller('NavigationPortletController',
+  function($scope, $http) {
+    'use strict';
+    var url = '@@angularjs-portlet-navigation';
+    $http.get(url).success(function(data, status, headers, config) {
+      $scope.items = data;
+    });
+  }
+);
+
+ploneModule.directive('navigationPortletDirective',
+  function() {
+    'use strict';
+    return {
+      templateUrl: 'navigation-portlet.tpl.html',
+      controller: 'NavigationPortletController'
+    };
+  }
+);

@@ -24,6 +24,6 @@ class AngularJsObjectTraversal(BrowserView):
             'route': path,
             'id': obj.id,
             'title': obj.title,
-            'description': obj.description,
+            'description': obj.Description(),
             'text': text
         })

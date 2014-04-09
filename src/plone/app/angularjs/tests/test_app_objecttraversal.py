@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 import unittest2 as unittest
 
 from plone.app.testing import setRoles
@@ -86,6 +87,28 @@ class TestObjectTraversal(unittest.TestCase):
                 u'route': u'/plone/doc1',
                 u'title': u'Document 1',
                 u'description': u'',
+                u'text': u'',
+                u'id': u'doc1'
+            }
+        )
+
+    def test_object_traversal_document_sets_description(self):
+        self.portal.invokeFactory('Document', 'doc1', title=u'Document 1')
+        self.portal.doc1.setDescription(u'I am the first document!')
+        self.request.set('object-traversal-path', 'doc1')
+        view = getMultiAdapter(
+            (self.portal, self.request),
+            name="angularjs-object-traversal"
+        )
+        view = view.__of__(self.portal)
+
+        self.assertTrue(view())
+        self.assertEqual(
+            json.loads(view()),
+            {
+                u'route': u'/plone/doc1',
+                u'title': u'Document 1',
+                u'description': u'I am the first document!',
                 u'text': u'',
                 u'id': u'doc1'
             }

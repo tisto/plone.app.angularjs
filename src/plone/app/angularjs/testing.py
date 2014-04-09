@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 from plone.app.robotframework.testing import AUTOLOGIN_LIBRARY_FIXTURE
 from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import applyProfile
