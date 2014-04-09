@@ -18,7 +18,13 @@ class AngularJsTopNavigation(BrowserView):
                     'description': brain.description,
                     'url': '#' + brain.getPath().replace(portal_path, '')
                 }
-                for brain in catalog(path='/')
+                for brain in catalog({
+                    'path': {
+                        'query': '/'.join(self.context.getPhysicalPath()),
+                        'depth': 1
+                    },
+                    'sort_on': 'getObjPositionInParent'
+                })
             ]
         )
 
