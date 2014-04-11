@@ -47,6 +47,18 @@ class TestObjectTraversal(unittest.TestCase):
         view = view.__of__(self.portal)
         self.assertFalse(view())
 
+    def test_object_traversal_not_found(self):
+        self.request.set('object-traversal-path', 'nonexistingdoc')
+        view = getMultiAdapter(
+            (self.portal, self.request),
+            name="angularjs-object-traversal"
+        )
+        view = view.__of__(self.portal)
+        self.assertEqual(
+            json.loads(view()),
+            {'title': 'Object not found.'}
+        )
+
     def test_object_traversal_document(self):
         self.portal.invokeFactory('Document', 'doc1')
         self.request.set('object-traversal-path', 'doc1')
