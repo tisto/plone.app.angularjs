@@ -16,9 +16,7 @@ before_script:
 script:
   - bin/test
   - bin/code-analysis
-#after_success:
-# - bin/createcoverage run bin/test
-# - pip install -q coveralls
-# - coveralls
+after_success:
+ - bin/test-coverage
 after_failure:
   - bin/jshint --version
