@@ -3,12 +3,10 @@ var ploneModule = angular.module('ploneApp', ['ngRoute', 'ngSanitize', 'ngAnimat
 ploneModule.config(['$routeProvider',
   function($routeProvider) {
     'use strict';
-    $routeProvider
-    .when('/:objecttraversal*', {
-        controller: 'ObjectPathController',
-        templateUrl: 'page.html'
-      }
-    ).otherwise({
+    $routeProvider.when('/:objecttraversal*', {
+      controller: 'ObjectPathController',
+      templateUrl: 'page.html'
+    }).otherwise({
       redirectTo: '/'
     });
   }
@@ -22,7 +20,7 @@ ploneModule.controller('ObjectPathController',
         url: '@@angularjs-object-traversal',
         method: 'GET',
         params: {'object-traversal-path': $routeParams.objecttraversal},
-      }).success(function(data, status, headers, config) {
+      }).success(function(data) {
         $scope.page = data;
         $scope.deliberatelyTrustDangerousSnippet = function() {
           return $sce.trustAsHtml($scope.snippet);
