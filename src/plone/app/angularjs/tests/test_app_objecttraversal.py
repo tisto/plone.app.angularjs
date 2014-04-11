@@ -3,7 +3,6 @@ import unittest2 as unittest
 
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
-from zope.component.interfaces import ComponentLookupError
 from zope.component import getMultiAdapter
 
 
@@ -24,14 +23,12 @@ class TestObjectTraversal(unittest.TestCase):
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
 
     def test_view_is_registered(self):
-        try:
+        self.assertTrue(
             getMultiAdapter(
                 (self.portal, self.request),
                 name="angularjs-object-traversal"
             )
-        except ComponentLookupError, error:
-            self.fail(
-                "The view seems not to be registered properly. %s" % error)
+        )
 
     def test_object_traversal_without_param(self):
         view = getMultiAdapter(
