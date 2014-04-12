@@ -85,7 +85,7 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
         self.assertEqual(json.loads(view()), [])
 
     def test_document_in_navigation(self):
-        self.portal.invokeFactory('Document', 'doc1', title='Document 1')
+        self.portal.invokeFactory('Folder', 'folder1', title='Folder 1')
         view = getMultiAdapter(
             (self.portal, self.request),
             name="angularjs-portlet-navigation"
@@ -96,9 +96,31 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
         self.assertEqual(
             json.loads(view()),
             [{
-                u'id': u'doc1',
-                u'title': u'Document 1',
+                u'id': u'folder1',
+                u'title': u'Folder 1',
                 u'description': u'',
-                u'url': '#/doc1',
+                u'url': '#/folder1',
+                u'children': []
             }]
+        )
+
+    def test_nested_document_in_navigation(self):
+        self.portal.invokeFactory('Folder', 'folder1', title='Folder 1')
+        self.portal.folder1.invokeFactory(
+            'Document', 'doc1', title='Document 1'
+        )
+        view = getMultiAdapter(
+            (self.portal, self.request),
+            name="angularjs-portlet-navigation"
+        )
+        view = view.__of__(self.portal)
+
+        self.assertTrue(view())
+        self.assertEqual(
+            json.loads(view())[0]['id'],
+            'folder1'
+        )
+        self.assertEqual(
+            json.loads(view())[0]['children'][0]['id'],
+            'doc1'
         )

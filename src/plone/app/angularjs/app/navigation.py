@@ -34,14 +34,33 @@ class AngularJsPortletNavigation(BrowserView):
     def __call__(self):
         catalog = getToolByName(self.context, 'portal_catalog')
         portal_path = '/'.join(self.context.getPhysicalPath())
+
+        def _get_children(context):
+            return [
+                {
+                    'id': brain.id,
+                    'title': brain.Title,
+                    'description': brain.description,
+                    'url': '#' + brain.getPath().replace(portal_path, ''),
+                    'children': []
+                } for brain in catalog(
+                    {'path': {'query': context.getPath(), 'depth': 1}}
+                )
+            ]
         return json.dumps(
             [
                 {
                     'id': brain.id,
                     'title': brain.Title,
                     'description': brain.description,
-                    'url': '#' + brain.getPath().replace(portal_path, '')
+                    'url': '#' + brain.getPath().replace(portal_path, ''),
+                    'children': _get_children(brain)
                 }
-                for brain in catalog(path='/')
+                for brain in catalog(
+                    {
+                        'path': {'query': portal_path, 'depth': 1},
+                        'portal_type': 'Folder'
+                    }
+                )
             ]
         )

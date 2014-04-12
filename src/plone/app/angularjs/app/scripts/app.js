@@ -7,7 +7,7 @@ ploneModule.config(['$routeProvider',
       controller: 'ObjectPathController',
       templateUrl: 'page.html'
     }).otherwise({
-      redirectTo: '/'
+      redirectTo: '/front-page'
     });
   }
 ]);
