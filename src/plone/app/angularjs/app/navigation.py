@@ -24,7 +24,7 @@ class AngularJsTopNavigation(BrowserView):
                         'depth': 1
                     },
                     'sort_on': 'getObjPositionInParent'
-                })
+                }) if brain.exclude_from_nav is not True
             ]
         )
 
