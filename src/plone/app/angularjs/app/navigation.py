@@ -43,9 +43,11 @@ class AngularJsPortletNavigation(BrowserView):
                     'description': brain.description,
                     'url': '#' + brain.getPath().replace(portal_path, ''),
                     'children': []
-                } for brain in catalog(
-                    {'path': {'query': context.getPath(), 'depth': 1}}
-                )
+                } for brain in catalog({
+                    'path': {'query': context.getPath(), 'depth': 1},
+                    'sort_on': 'getObjPositionInParent',
+                    }
+                ) if brain.exclude_from_nav is not True
             ]
         return json.dumps(
             [
@@ -59,8 +61,9 @@ class AngularJsPortletNavigation(BrowserView):
                 for brain in catalog(
                     {
                         'path': {'query': portal_path, 'depth': 1},
-                        'portal_type': 'Folder'
+                        'portal_type': 'Folder',
+                        'sort_on': 'getObjPositionInParent',
                     }
-                )
+                ) if brain.exclude_from_nav is not True
             ]
         )

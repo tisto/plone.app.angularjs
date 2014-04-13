@@ -124,3 +124,16 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
             json.loads(view())[0]['children'][0]['id'],
             'doc1'
         )
+
+    def test_do_not_show_excluded_from_nav_documents(self):
+        self.portal.invokeFactory('Folder', 'folder1', title='Folder 1')
+        self.portal.folder1.exclude_from_nav = True
+        self.portal.folder1.reindexObject(idxs=['exclude_from_nav'])
+        view = getMultiAdapter(
+            (self.portal, self.request),
+            name="angularjs-portlet-navigation"
+        )
+        view = view.__of__(self.portal)
+
+        self.assertTrue(view())
+        self.assertEqual(len(json.loads(view())), 0)
