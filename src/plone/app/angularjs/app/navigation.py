@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
+from Products.CMFCore.interfaces import IFolderish
 from Products.CMFCore.utils import getToolByName
+
 from Products.Five.browser import BrowserView
 
 import json
@@ -23,6 +25,8 @@ class AngularJsTopNavigation(BrowserView):
                         'query': '/'.join(self.context.getPhysicalPath()),
                         'depth': 1
                     },
+                    'portal_type': 'Folder',
+                    #'object_provides': 'Products.CMFCore.interfaces.IFolderish',
                     'sort_on': 'getObjPositionInParent'
                 }) if brain.exclude_from_nav is not True
             ]

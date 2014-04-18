@@ -38,8 +38,9 @@ class TestAngularJsTopNavigation(unittest.TestCase):
         view = view.__of__(self.portal)
         self.assertEqual(json.loads(view()), [])
 
-    def test_document_in_navigation(self):
-        self.portal.invokeFactory('Document', 'doc1', title='Document 1')
+    def test_folder_in_navigation(self):
+        self.portal.invokeFactory('Folder', 'folder1', title='Folder 1')
+        self.portal.folder1.reindexObject()
         view = getMultiAdapter(
             (self.portal, self.request),
             name="angularjs-top-navigation"
@@ -50,11 +51,25 @@ class TestAngularJsTopNavigation(unittest.TestCase):
         self.assertEqual(
             json.loads(view()),
             [{
-                u'id': u'doc1',
-                u'title': u'Document 1',
+                u'id': u'folder1',
+                u'title': u'Folder 1',
                 u'description': u'',
-                u'url': '#/doc1',
+                u'url': '#/folder1',
             }]
+        )
+
+    def test_document_not_in_navigation(self):
+        self.portal.invokeFactory('Document', 'doc1', title='Document 1')
+        view = getMultiAdapter(
+            (self.portal, self.request),
+            name="angularjs-top-navigation"
+        )
+        view = view.__of__(self.portal)
+
+        self.assertTrue(view())
+        self.assertEqual(
+            json.loads(view()),
+            []
         )
 
     def test_do_not_show_excluded_from_nav_documents(self):
