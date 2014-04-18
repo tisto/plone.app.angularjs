@@ -1,12 +1,18 @@
 var ploneModule;
 
 ploneModule.controller('NavigationController',
-  function($scope, $http) {
+  function($scope, $http, $location) {
     'use strict';
+    $scope.location = $location;
     var url = '@@angularjs-top-navigation';
     $http.get(url).success(function(data) {
       $scope.items = data;
     });
+
+    $scope.$watch('location.path()', setActiveNavigationItem);
+    function setActiveNavigationItem() {
+      $scope.activeSection = $location.path().slice(1).split('/')[0];
+    }
   }
 );
 
