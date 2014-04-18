@@ -5,7 +5,7 @@
   </div>
   <ol class="breadcrumb">
     <li><a href="#front-page">Home</a></li>
-    <li class="active">{{page.route}}</li>
+    <li ng-repeat="breadcrumb in path" class="active">{{breadcrumb}}</li>
   </ol>
   <div id="navigation-portlet-directive" navigation-portlet-directive></div>
   <div id="content" ng-bind-html="page.text"></div>

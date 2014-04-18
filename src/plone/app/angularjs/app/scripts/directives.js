@@ -13,6 +13,7 @@ ploneModule.controller('NavigationController',
     function setActiveNavigationItem() {
       $scope.activeSection = $location.path().slice(1).split('/')[0];
       $scope.activeItem = $location.path();
+      $scope.path = $location.path().slice(1).split('/');
     }
   }
 );
