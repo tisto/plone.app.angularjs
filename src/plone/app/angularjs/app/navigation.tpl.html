@@ -1,5 +1,5 @@
 <div role="navigation" class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
+  <div class="container-fluid">
     <div class="navbar-header">
       <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
         <span class="sr-only">Toggle navigation</span>
@@ -12,7 +12,26 @@
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li ng-repeat="item in items" ng-class="{active: activeSection == item.id}">
-          <a ng-href="{{item.url}}">{{item.title}}</a></li>
+          <a ng-href="{{item.url}}">{{item.title}}</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li ng-controller="ModalDemoCtrl">
+          <a ng-click="open()">Edit</a>
+        </li>
+        <li><a ng-href="#{{activeItem}}">Login</a></li>
+        <!--
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+          </ul>
+        </li>
+        -->
       </ul>
     </div>
   </div>

@@ -1,4 +1,6 @@
-var ploneModule = angular.module('ploneApp', ['ngRoute', 'ngSanitize', 'ngAnimate']);
+var ploneModule = angular.module(
+  'ploneApp', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ui.bootstrap']
+);
 
 ploneModule.config(['$routeProvider',
   function($routeProvider) {
@@ -16,6 +18,9 @@ ploneModule.controller('ObjectPathController',
   ['$scope', '$routeParams', '$http', '$sce',
     function($scope, $routeParams, $http, $sce) {
       'use strict';
+      if ($routeParams.objecttraversal.match('/edit$')) {
+        alert("edit");
+      }
       $http({
         url: '@@angularjs-object-traversal',
         method: 'GET',

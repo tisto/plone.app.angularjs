@@ -19,6 +19,13 @@
     />
 
   <browser:page
+    name="edit.html"
+    for="Products.CMFCore.interfaces.ISiteRoot"
+    template="edit.html"
+    permission="zope2.View"
+    />
+
+  <browser:page
     name="angularjs-top-navigation"
     for="Products.CMFCore.interfaces.ISiteRoot"
     class=".navigation.AngularJsTopNavigation"
