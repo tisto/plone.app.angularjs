@@ -18,9 +18,8 @@ ploneModule.controller('ObjectPathController',
   ['$scope', '$routeParams', '$http', '$sce',
     function($scope, $routeParams, $http, $sce) {
       'use strict';
-      if ($routeParams.objecttraversal.match('/edit$')) {
-        alert("edit");
-      }
+      //if ($routeParams.objecttraversal.match('/edit$')) {
+      //}
       $http({
         url: '@@angularjs-object-traversal',
         method: 'GET',
