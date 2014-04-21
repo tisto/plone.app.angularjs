@@ -3,5 +3,6 @@
   <version>0001</version>
   <dependencies>
     <dependency>profile-plone.app.theming:default</dependency>
+    <dependency>profile-plone.app.contenttypes:plone-content</dependency>
   </dependencies>
 </metadata>
