@@ -8,6 +8,18 @@ Contents
 
 .. contents::
 
+Prerequisits
+------------
+
+Install Bower::
+
+  sudo npm install -g bower
+
+Install Bower Dependencies::
+
+  bower init
+
+
 Create a simple AngularJS App within Plone
 ------------------------------------------
 
