@@ -8,7 +8,9 @@ from zope.publisher.interfaces.http import IHTTPRequest
 from ZPublisher.BaseRequest import DefaultPublishTraverse
 from Products.Five.browser import BrowserView
 from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
-# XXX: GAH
+# XXX: This interface is needed else we end up
+# on the traverser of plone.app.imaging
+# used for archetypes that implements .../image_<size_name>
 from plone.app.imaging.interfaces import IBaseObject
 
 
@@ -31,6 +33,9 @@ class APIInnerTraverser(DefaultPublishTraverse):
     """
 
     def publishTraverse(self, request, name):
+        # TODO: WebDav here usually mangles a bit some variables in request
+        # (like traversed stuff, etc) so the fake PUT or DELETE at the end
+        # is removed
         if name in ('PUT', 'DELETE'):
             return FakeView(self.context, request)
         return super(APIInnerTraverser, self).publishTraverse(request, name)
