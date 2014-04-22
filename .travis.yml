@@ -2,6 +2,7 @@ language: python
 python: "2.7"
 before_install:
   - pip install http://effbot.org/downloads/Imaging-1.1.7.tar.gz
+  - npm install -g jshint
   - npm install -g bower
 install:
   - mkdir -p buildout-cache/eggs
