@@ -18,9 +18,9 @@ ${ADMIN_ROLE}  Site Administrator
 
 Site Navigation
   Given I'm logged in as a '${ADMIN_ROLE}'
-    and a document  My Document
+    and a folder  My Folder
    When I open the Plone AngularJS App
-   Then the navigation contains  My Document
+   Then the navigation contains  My Folder
 
 Portal Navigation
   Given I'm logged in as a '${ADMIN_ROLE}'
@@ -37,6 +37,10 @@ I'm logged in as a '${ROLE}'
 a document
   [Arguments]  ${title}
   Create content  type=Document  id=document1  title=${title}
+
+a folder
+  [Arguments]  ${title}
+  Create content  type=Folder  id=folder1  title=${title}
 
 a document within a folder
   [Arguments]  ${title}

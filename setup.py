@@ -41,7 +41,6 @@ setup(
     install_requires=[
         'setuptools',
         'plone.app.theming',
-        'plone.app.contenttypes',
     ],
     extras_require={'test': [
         'plone.app.testing>=4.2.4',

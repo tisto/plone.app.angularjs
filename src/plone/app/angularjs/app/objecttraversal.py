@@ -16,7 +16,7 @@ class AngularJsObjectTraversal(BrowserView):
         except KeyError:
             return json.dumps({'title': 'Object not found.'})
         try:
-            text = obj.text.output
+            text = obj.getText()
         except AttributeError:
             text = ''
         self.request.response.setHeader("Content-Type", "application/json")
