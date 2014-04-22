@@ -22,4 +22,6 @@
     directory="app"
     />
 
+  <include package=".api" />
+
 </configure>
