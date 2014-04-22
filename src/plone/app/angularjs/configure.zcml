@@ -6,6 +6,8 @@
     xmlns:plone="http://namespaces.plone.org/plone"
     i18n_domain="plone.app.angularjs">
 
+  <includeDependencies package="." />
+
   <genericsetup:registerProfile
     name="default"
     title="plone.app.angularjs"
