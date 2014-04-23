@@ -1,9 +1,71 @@
+==============================================================================
 Create a simple AngularJS App within Plone
-------------------------------------------
+==============================================================================
+
+Buildout
+--------
+
+Bootstrap::
+
+  mkdir my-first-angular-app
+  cd my-first-angular-app
+  wget http://downloads.buildout.org/2/bootstrap.py
+
+buildout.cfg::
+
+  [buildout]
+  extends = http://dist.plone.org/release/4.3-latest/versions.cfg
+  find-links =
+      http://dist.plone.org/release/4.3-latest/
+      http://dist.plone.org/thirdparty/
+
+  parts =
+      instance
+      templer
+
+  [instance]
+  recipe = plone.recipe.zope2instance
+  user = admin:admin
+  http-address = 8080
+  eggs =
+      Plone
+
+  [templer]
+  recipe = zc.recipe.egg
+  eggs =
+      PasteScript
+      templer.core
+      templer.buildout
+      templer.plone
+      templer.dexterity
+
+Run buildout::
+
+  python bootstrap.py
+  bin/buildout
+
+Create package::
+
+  bin/templer plone_basic my.angularapp
+  => Register Profile (Should this package register a GS Profile) [False]: True
+  mkdir src
+  mv my.angularapp src/
+
+Include newly created package into the buildout.cfg::
+
+  [buildout]
+  develop = src/my.angularapp
+
+  [instance]
+  eggs = my.angularapp
+
+Re-run buildout::
+
+  bin/buildout
 
 Create app dir::
 
-  cd src/plone/app/angularjs
+  cd src/my.angularapp/src/my/angularapp
   mkdir app
   touch app/__init__.py
 
@@ -24,7 +86,7 @@ app/configure.zcml::
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:zcml="http://namespaces.zope.org/zcml"
-    i18n_domain="plone.app.angularjs">
+    i18n_domain="my.angularapp">
 
     <browser:page
       name="index.html"
