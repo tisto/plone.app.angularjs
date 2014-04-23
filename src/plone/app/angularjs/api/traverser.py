@@ -22,7 +22,7 @@ class IAPIRequest(Interface):
 class FakeView(BrowserView):
 
     def __call__(self):
-        self.request.response.setStatus(413)
+        self.request.response.setStatus(418)
         self.request.response.setHeader('Content-Type', 'application/json')
         return json.dumps("I'm a teapot")
 
