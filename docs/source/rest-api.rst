@@ -111,7 +111,9 @@ Basic content operations
 
 The basic content operations are the CRUD ones (create, retrieve, update, delete).
 
-To create a document in the portal root, we will do a ``POST`` request (see http://restcookbook.com/HTTP%20Methods/put-vs-post/)::
+.. note:: In this section the list of fields is purely an example, this should be expanded more to include correct names and all the properties
+
+To create a document in the portal root, we will do a ``POST`` request (`as recommended by this cookbook <http://restcookbook.com/HTTP%20Methods/put-vs-post/>`_)::
 
   POST /plone/++api++1/json HTTP/1.1
   Host: http://nohost
@@ -266,6 +268,11 @@ This approach has a few downsides, namely:
 
 #. We still return some potentially useless data
 #. The pagination and listing is not configurable (number of elements per batch, sorting), and might result in many calls to retrieve all the content.
+
+Alternative implementation
+==========================
+
+An alternative implementation might work similarly, but the ``GET`` would like the ``@@contents`` view only, which in turn would have configurable batching. This might break the `HATEOAS`_ principle a bit but offers pragmatica advantages.
 
 Searching
 *********
