@@ -51,7 +51,6 @@ class APITraverser(object):
         self.context = context
         self.request = request
 
-    def traverse(self, name, postpath): # pylint: disable=unused-argument
+    def traverse(self, name, postpath):  # pylint: disable=unused-argument
         alsoProvides(self.request, IAPIRequest)
         return self.context
-
