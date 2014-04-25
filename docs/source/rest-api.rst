@@ -9,12 +9,12 @@ Prefix, versioning and dialect
 
 This API uses a prefix to disambiguate calls to the API from the normal requests. While this is not mandatory for REST APIs, we are forced to do that for a number of reasons:
 
-  #. It is necessary to differentiate the request as an API one (think of a dynamic layer)
-  #. It is necessary to properly support ``PUT`` and ``DELETE`` without falling into the WebDAV codepath.
+#. It is necessary to differentiate the request as an API one (think of a dynamic layer)
+#. It is necessary to properly support ``PUT`` and ``DELETE`` without falling into the WebDAV codepath.
 
 The prefix also contains information about the version and the dialect of the API: the version is a progressive number (like a package version number, but not tigthly related to it), while the dialect is the format into which the data is passed to the API and returned.
 
-..note:: Currently the API supports only plain JSON, but we plan to support `JSON-LD`_ in the future.
+.. note:: Currently the API supports only plain JSON, but we plan to support `JSON-LD`_ in the future.
 
 The prefix has the following schema::
 
@@ -28,7 +28,7 @@ For example::
 Security
 ========
 
-TODO: check for how oAuth 2 does stuff
+.. todo:: check for how oAuth 2 does stuff
 
 
 Error handling
@@ -89,18 +89,20 @@ If the request has a content type of ``message/coffeepot``, we will return::
 Other errors
 ------------
 
+.. todo: expand
+
 The following code mapping will be used:
 
-401 :
+``401``
     Missing authentication header/token
 
-403 :
+``403``
     Authorization level not enough, only for authenticated clients, else ``404``
 
-405 :
+``405``
     For resources that do not support the HTTP verb (say, a search using ``PUT``)
 
-423 :
+``423``
     For ``PUT`` and ``PATCH`` requests on a locked resource
 
 
@@ -156,7 +158,7 @@ To update it we will do::
   }
 
 Notice how we updated all the fields of the content.
-This is because, as per http://restcookbook.com/HTTP%20Methods/patch/, ``PUT`` should provide **all the data**.
+This is because, as per `REST cookbook recommendations <http://restcookbook.com/HTTP%20Methods/patch/>`_, ``PUT`` should provide **all the data**.
 
 If we want to do a partial update, e.g. update just the body text, we can use ``PATCH``::
 
@@ -199,10 +201,10 @@ To keep in line with the `HATEOAS`_ principle, a ``GET`` on the folder should re
 However, this poses an important performance issue.
 Imagine you have a folder with 10k contents, it will be very inconvenient to return links to all the 10k contents in the response, because:
 
- #. It will have unmitigable performance issues (even supposing that retrieving the list and rendering the JSON takes zero time, we still need to deliver a huge content)
- #. It might not be relevant: we might not be interested in the listing and we will be having a performance issue to return what useless information (atleast for that call)
+#. It will have unmitigable performance issues (even supposing that retrieving the list and rendering the JSON takes zero time, we still need to deliver a huge content)
+#. It might not be relevant: we might not be interested in the listing and we will be having a performance issue to return what useless information (atleast for that call)
 
-The REST cookbook suggests to use pagination (http://restcookbook.com/Resources/pagination/), as it is done on UIs.
+`The REST cookbook suggests to use pagination <http://restcookbook.com/Resources/pagination/>`_, as it is done on UIs.
 
 Therefore, if we get the folder at ``/plone/my-folder``::
 
@@ -257,30 +259,30 @@ If we traverse to the next page we will then get::
 
 A few important things to note:
 
-  #. The first page has no previous link, and the last will have no next
-  #. Accessing ``http://nohost/++api++1/json/my-folder/@@contents`` will redirect to the first page
+#. The first page has no previous link, and the last will have no next
+#. Accessing ``http://nohost/++api++1/json/my-folder/@@contents`` will redirect to the first page
 
 This approach has a few downsides, namely:
 
-  #. We still return some potentially useless data
-  #. The pagination and listing is not configurable (number of elements per batch, sorting), and might result in many calls to retrieve all the content.
+#. We still return some potentially useless data
+#. The pagination and listing is not configurable (number of elements per batch, sorting), and might result in many calls to retrieve all the content.
 
 Searching
 *********
 
-.. note:: The author is not quite satisfied with this section. Like, not at all.
+.. todo:: The author is not quite satisfied with this section. Like, not at all.
 
 Searching should support the following features:
 
-  #. Keyword search
-  #. Full text search
-  #. Range searches
-  #. Sorting
+#. Keyword search
+#. Full text search
+#. Range searches
+#. Sorting
 
 It should also:
 
-  #. Be available via ``GET`` to support easy caching (http://stackoverflow.com/questions/5020704/how-to-design-restful-search-filtering)
-  #. Have a batching mechanism
+#. Be available via ``GET`` to support easy caching (`as recommended on stackoverflow <http://stackoverflow.com/questions/5020704/how-to-design-restful-search-filtering>`_)
+#. Have a batching mechanism
 
 These requirements restrict us to using either *fake resources* (i.e. ``/search/Title=foo/SearchableText=bar``) or plain old querystrings.
 
@@ -315,25 +317,25 @@ Search is contextual, which means that while ``/plone/++api++1/json/@@search`` s
 Metadata
 ********
 
-TODO
+.. todo:: Implement
 
 
 Workflow
 ********
 
-TODO
+.. todo:: Implement
 
 
 Permissions
 ***********
 
-TODO
+.. todo:: Implement
 
 
 Object introspection
 *************
 
-TODO
+.. todo:: Implement
 
 
 Global objects
@@ -342,30 +344,28 @@ Global objects
 Membership
 ==========
 
-TODO
+.. todo:: Implement
 
 
 Groups
 ======
 
-TODO
+.. todo:: Implement
 
 
 Roles
 =====
 
-TODO
+.. todo:: Implement
 
 
 Self introspection
 ==================
 
-TODO
+.. todo:: Implement
 
 
 
 
-
-
-_`HATEOAS`: http://restcookbook.com/Basics/hateoas/
-_`JSON-LD`: http://www.w3.org/TR/json-ld/
+.. _`HATEOAS`: http://restcookbook.com/Basics/hateoas/
+.. _`JSON-LD`: http://www.w3.org/TR/json-ld/
