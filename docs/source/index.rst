@@ -12,7 +12,7 @@ Contents:
    :maxdepth: 2
 
    getting-started.rst
-
+   rest-api.rst
 
 Indices and tables
 ==================
