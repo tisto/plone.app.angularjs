@@ -14,7 +14,7 @@ This API uses a prefix to disambiguate calls to the API from the normal requests
 
 The prefix also contains information about the version and the dialect of the API: the version is a progressive number (like a package version number, but not tigthly related to it), while the dialect is the format into which the data is passed to the API and returned.
 
-..note:: Currently the API supports ony plain JSON, but we plan to support `JSON-LD`_ in the future
+..note:: Currently the API supports only plain JSON, but we plan to support `JSON-LD`_ in the future.
 
 The prefix has the following schema::
 
