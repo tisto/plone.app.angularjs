@@ -1,5 +1,12 @@
 var ploneModule = angular.module(
-  'ploneApp', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ui.bootstrap']
+  'ploneApp',
+  [
+    'chieffancypants.loadingBar',
+    'ngAnimate',
+    'ngRoute',
+    'ngSanitize',
+    'ui.bootstrap',
+  ]
 );
 
 ploneModule.config(['$routeProvider',
