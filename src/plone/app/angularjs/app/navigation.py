@@ -17,7 +17,9 @@ class AngularJsTopNavigation(BrowserView):
                     'id': brain.id,
                     'title': brain.Title,
                     'description': brain.description,
-                    'url': 'index.html' + brain.getPath().replace(portal_path, '')
+                    'url': 'index.html' + brain.getPath().replace(
+                        portal_path, ''
+                    )
                 }
                 for brain in catalog({
                     'path': {
@@ -43,7 +45,9 @@ class AngularJsPortletNavigation(BrowserView):
                     'id': brain.id,
                     'title': brain.Title,
                     'description': brain.description,
-                    'url': 'index.html' + brain.getPath().replace(portal_path, ''),
+                    'url': 'index.html' + brain.getPath().replace(
+                        portal_path, ''
+                    ),
                     'children': []
                 } for brain in catalog({
                     'path': {'query': context.getPath(), 'depth': 1},
@@ -57,7 +61,9 @@ class AngularJsPortletNavigation(BrowserView):
                     'id': brain.id,
                     'title': brain.Title,
                     'description': brain.description,
-                    'url': 'index.html' + brain.getPath().replace(portal_path, ''),
+                    'url': 'index.html' + brain.getPath().replace(
+                        portal_path, ''
+                    ),
                     'children': _get_children(brain)
                 }
                 for brain in catalog(
