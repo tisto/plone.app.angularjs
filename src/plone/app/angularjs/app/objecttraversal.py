@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from Products.Five.browser import BrowserView
+from Products.CMFCore.interfaces import IFolderish
 from zope.site.hooks import getSite
+
 import json
 
 
@@ -23,7 +25,9 @@ class AngularJsObjectTraversal(BrowserView):
         # XXX: Just debugging
         if not getattr(obj, 'id', False):
             obj = getSite()
-        print "Return %s" % obj.id
+            print "Not found '%s'" % path
+        if IFolderish.providedBy(obj):
+            text = 'Folder View'
         return json.dumps({
             'route': path,
             'id': obj.id,
