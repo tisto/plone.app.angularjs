@@ -54,7 +54,7 @@ class TestAngularJsTopNavigation(unittest.TestCase):
                 u'id': u'folder1',
                 u'title': u'Folder 1',
                 u'description': u'',
-                u'url': '#/folder1',
+                u'url': 'index.html/folder1',
             }]
         )
 
@@ -127,7 +127,7 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
                 u'id': u'folder1',
                 u'title': u'Folder 1',
                 u'description': u'',
-                u'url': '#/folder1',
+                u'url': 'index.html/folder1',
                 u'children': []
             }]
         )
