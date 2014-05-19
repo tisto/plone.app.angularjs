@@ -11,6 +11,9 @@ class AngularAppRootView(BrowserView):
     def __call__(self):
         return self.template()
 
+    def base(self):
+        return self.request.base + '/Plone/index.html'
+
     def publishTraverse(self, request, name):
         """Always return the Angular app when traversing to
         Plone/index.html/<path>.
