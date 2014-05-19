@@ -1,7 +1,10 @@
 from zope.interface import implements
 from zope.publisher.interfaces import IPublishTraverse
+from zope.site.hooks import getSite
 from Products.Five.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+
+ANGULAR_BASE_VIEW = 'index.html'
 
 
 class AngularAppRootView(BrowserView):
@@ -12,7 +15,12 @@ class AngularAppRootView(BrowserView):
         return self.template()
 
     def base(self):
-        return self.request.base + '/Plone/index.html'
+        portal = getSite()
+        return '%s/%s/%s' % (
+            self.request.base,
+            portal.id,
+            ANGULAR_BASE_VIEW,
+        )
 
     def publishTraverse(self, request, name):
         """Always return the Angular app when traversing to

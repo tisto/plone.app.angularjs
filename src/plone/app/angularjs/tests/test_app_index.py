@@ -30,4 +30,4 @@ class TestAppIndex(unittest.TestCase):
             name="index.html"
         )
         view = view.__of__(self.portal)
-        self.assertEqual(view.base(), 'http://nohost/Plone/index.html')
+        self.assertEqual(view.base(), 'http://nohost/plone/index.html')
