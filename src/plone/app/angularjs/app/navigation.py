@@ -17,7 +17,7 @@ class AngularJsTopNavigation(BrowserView):
                     'id': brain.id,
                     'title': brain.Title,
                     'description': brain.description,
-                    'url': 'index.html' + brain.getPath().replace(
+                    'url': 'Plone' + brain.getPath().replace(
                         portal_path, ''
                     )
                 }
@@ -45,7 +45,7 @@ class AngularJsPortletNavigation(BrowserView):
                     'id': brain.id,
                     'title': brain.Title,
                     'description': brain.description,
-                    'url': 'index.html' + brain.getPath().replace(
+                    'url': 'Plone' + brain.getPath().replace(
                         portal_path, ''
                     ),
                     'children': []
@@ -61,7 +61,7 @@ class AngularJsPortletNavigation(BrowserView):
                     'id': brain.id,
                     'title': brain.Title,
                     'description': brain.description,
-                    'url': 'index.html' + brain.getPath().replace(
+                    'url': 'Plone' + brain.getPath().replace(
                         portal_path, ''
                     ),
                     'children': _get_children(brain)

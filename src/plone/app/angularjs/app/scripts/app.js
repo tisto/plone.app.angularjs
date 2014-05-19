@@ -16,9 +16,9 @@ ploneModule.config(['$routeProvider', '$locationProvider',
     $locationProvider.hashPrefix('!');
     $routeProvider.when('/:objecttraversal*', {
       controller: 'ObjectPathController',
-      templateUrl: 'page.html'
+      templateUrl: 'Plone/page.html'
     }).otherwise({
-      redirectTo: '/front-page'
+      redirectTo: 'Plone/front-page'
     });
   }
 ]);
@@ -30,7 +30,7 @@ ploneModule.controller('ObjectPathController',
       //if ($routeParams.objecttraversal.match('/edit$')) {
       //}
       $http({
-        url: '@@angularjs-object-traversal',
+        url: 'Plone/@@angularjs-object-traversal',
         method: 'GET',
         params: {'object-traversal-path': $routeParams.objecttraversal.replace('index.html/', '')},
       }).success(function(data) {
