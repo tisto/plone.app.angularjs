@@ -9,9 +9,11 @@ var ploneModule = angular.module(
   ]
 );
 
-ploneModule.config(['$routeProvider',
-  function($routeProvider) {
+ploneModule.config(['$routeProvider', '$locationProvider',
+  function($routeProvider, $locationProvider) {
     'use strict';
+    $locationProvider.html5Mode(true);
+    $locationProvider.hashPrefix('!');
     $routeProvider.when('/:objecttraversal*', {
       controller: 'ObjectPathController',
       templateUrl: 'page.html'
@@ -30,7 +32,7 @@ ploneModule.controller('ObjectPathController',
       $http({
         url: '@@angularjs-object-traversal',
         method: 'GET',
-        params: {'object-traversal-path': $routeParams.objecttraversal},
+        params: {'object-traversal-path': $routeParams.objecttraversal.replace('index.html/', '')},
       }).success(function(data) {
         $scope.page = data;
         $scope.deliberatelyTrustDangerousSnippet = function() {
