@@ -8,7 +8,7 @@ from ZPublisher.BaseRequest import DefaultPublishTraverse
 from zope.component import adapts
 from zope.publisher.interfaces import IRequest
 from Products.CMFCore.interfaces._content import IContentish
-
+from zope.publisher.interfaces.browser import IBrowserRequest
 
 class AngularAppRootView(BrowserView):
     implements(IPublishTraverse)
@@ -28,7 +28,7 @@ class AngularAppRootView(BrowserView):
 # https://github.com/collective/collective.routes/blob/master/collective/routes/traverser.py
 # http://g0dil.de/wiki/PloneStuff
 class AngularAppPortalRootTraverser(DefaultPublishTraverse):
-    adapts(IPloneSiteRoot, IRequest)
+    adapts(IPloneSiteRoot, IBrowserRequest)
 
     def publishTraverse(self, request, name):
         is_front_page = request.URL.endswith('front-page')
@@ -39,10 +39,14 @@ class AngularAppPortalRootTraverser(DefaultPublishTraverse):
             # return angular app view
             return AngularAppRootView(self.context, self.request)()
         return DefaultPublishTraverse.publishTraverse(self, request, name)
+        return super(AngularAppPortalRootTraverser, self).publishTraverse(
+            request,
+            name
+        )
 
 
 class AngularAppRedirectorTraverser(DefaultPublishTraverse):
-    adapts(IContentish, IRequest)
+    adapts(IContentish, IBrowserRequest)
 
     def publishTraverse(self, request, name):
         if not IPloneSiteRoot.providedBy(self.context):
@@ -51,4 +55,7 @@ class AngularAppRedirectorTraverser(DefaultPublishTraverse):
             request['TraversalRequestNameStack'] = []
             # return angular app view
             return AngularAppRootView(self.context, self.request)()
-        return DefaultPublishTraverse.publishTraverse(self, request, name)
+        return super(AngularAppRedirectorTraverser, self).publishTraverse(
+            request,
+            name
+        )
