@@ -31,7 +31,9 @@ class AngularAppPortalRootTraverser(DefaultPublishTraverse):
     adapts(IPloneSiteRoot, IRequest)
 
     def publishTraverse(self, request, name):
-        if request.URL == 'http://localhost:8080/Plone/folder_listing':
+        is_front_page = request.URL.endswith('front-page')
+        no_front_page = request.URL.endswith('folder_listing')
+        if is_front_page or no_front_page:
             # stop traversing
             request['TraversalRequestNameStack'] = []
             # return angular app view

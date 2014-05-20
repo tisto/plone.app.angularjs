@@ -32,7 +32,7 @@ Portal Navigation
 
 I'm logged in as a '${ROLE}'
   Enable autologin as  ${ROLE}
-  Go to  ${PLONE_URL}/index.html
+  Go to  ${PLONE_URL}
 
 a document
   [Arguments]  ${title}
@@ -48,7 +48,7 @@ a document within a folder
   Create content  type=Document  id=doc1  title=${title}  container=${folder_uid}
 
 I open the Plone AngularJS App
-  Go To  ${PLONE_URL}/index.html
+  Go To  ${PLONE_URL}
 
 the navigation contains
   [Arguments]  ${title}
