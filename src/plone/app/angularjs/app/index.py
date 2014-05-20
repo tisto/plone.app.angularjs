@@ -44,7 +44,7 @@ class AngularAppRedirectorTraverser(DefaultPublishTraverse):
 
     def publishTraverse(self, request, name):
         if not IPloneSiteRoot.providedBy(self.context):
-            print "Return Angular App"
+            print "Return Angular App for %s" % self.request.URL
             # stop traversing
             request['TraversalRequestNameStack'] = []
             # return angular app view

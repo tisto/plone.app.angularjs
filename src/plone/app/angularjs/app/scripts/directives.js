@@ -4,7 +4,7 @@ ploneModule.controller('NavigationController',
   function($scope, $http, $location) {
     'use strict';
     $scope.location = $location;
-    var url = 'Plone/@@angularjs-top-navigation';
+    var url = '@@angularjs-top-navigation';
     $http.get(url).success(function(data) {
       $scope.items = data;
     });
@@ -23,7 +23,7 @@ ploneModule.directive('navigationDirective',
   function() {
     'use strict';
     return {
-      templateUrl: 'Plone/navigation.tpl.html',
+      templateUrl: 'navigation.tpl.html',
       controller: 'NavigationController'
     };
   }
@@ -32,7 +32,7 @@ ploneModule.directive('navigationDirective',
 ploneModule.controller('NavigationPortletController',
   function($scope, $http) {
     'use strict';
-    var url = 'Plone/@@angularjs-portlet-navigation';
+    var url = '@@angularjs-portlet-navigation';
     $http.get(url).success(function(data) {
       $scope.items = data;
     });
@@ -43,7 +43,7 @@ ploneModule.directive('navigationPortletDirective',
   function() {
     'use strict';
     return {
-      templateUrl: 'Plone/navigation-portlet.tpl.html',
+      templateUrl: 'navigation-portlet.tpl.html',
       controller: 'NavigationPortletController'
     };
   }
