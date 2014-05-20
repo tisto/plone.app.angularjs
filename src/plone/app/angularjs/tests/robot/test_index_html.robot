@@ -57,4 +57,4 @@ the navigation contains
 the portal navigation contains
   [Arguments]  ${title}
   Wait until page contains element  css=#navigation-portlet-directive ul li
-  Element should contain  css=#navigation-portlet-directive  ${title}
+  Element should contain  css=#navigation-portlet-directive ul li ul li a  ${title}
