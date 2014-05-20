@@ -19,7 +19,7 @@ class AngularAppRootView(BrowserView):
 
     def base(self):
         portal = getSite()
-        return '%s/%s' % (
+        return '%s/%s/' % (
             self.request.base,
             portal.id
         )
