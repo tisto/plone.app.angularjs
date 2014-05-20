@@ -24,4 +24,8 @@
 
   <include package=".api" />
 
+  <adapter factory=".traversal.AngularAppPortalRootTraverser" />
+
+  <adapter factory=".traversal.AngularAppRedirectorTraverser" />
+
 </configure>

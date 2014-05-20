@@ -4,10 +4,6 @@
     xmlns:zcml="http://namespaces.zope.org/zcml"
     i18n_domain="plone.app.angularjs">
 
-  <adapter factory=".index.AngularAppPortalRootTraverser" />
-
-  <adapter factory=".index.AngularAppRedirectorTraverser" />
-
   <browser:page
     name="index.html"
     for="Products.CMFCore.interfaces.ISiteRoot"
