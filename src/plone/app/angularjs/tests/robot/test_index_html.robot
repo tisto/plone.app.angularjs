@@ -16,13 +16,13 @@ ${ADMIN_ROLE}  Site Administrator
 
 *** Test Cases ***
 
-Site Navigation
+Top Navigation
   Given I'm logged in as a '${ADMIN_ROLE}'
     and a folder  My Folder
    When I open the Plone AngularJS App
    Then the navigation contains  My Folder
 
-Portal Navigation
+Portlet Navigation
   Given I'm logged in as a '${ADMIN_ROLE}'
     and a document within a folder  My Document
    When I open the Plone AngularJS App
