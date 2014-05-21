@@ -53,10 +53,12 @@ I open the Plone AngularJS App
 
 the top navigation contains
   [Arguments]  ${title}
+  Wait until page contains element  css=#top-navigation-directive ul li a
   Wait until element is visible  css=#top-navigation-directive ul li a
   Element should contain  css=#top-navigation-directive  ${title}
 
 the portlet navigation contains
   [Arguments]  ${title}
   Wait until page contains element  css=#navigation-portlet-directive ul li
+  Wait until element is visible  css=#navigation-portlet-directive ul li
   Element should contain  css=#navigation-portlet-directive ul li ul li a  ${title}
