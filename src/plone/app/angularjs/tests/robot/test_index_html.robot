@@ -28,6 +28,12 @@ Portlet Navigation
    When I open the Plone AngularJS App
    Then the portlet navigation contains  My Document
 
+Portal Root with Front Page
+  Given I'm logged in as a '${ADMIN_ROLE}'
+    and a document  Front Page  id=front-page
+   When I open the Plone AngularJS App
+   Then the page title is  Front Page
+    and the page URL is  front-page
 
 *** Keywords ***
 
@@ -36,8 +42,8 @@ I'm logged in as a '${ROLE}'
   Go to  ${PLONE_URL}
 
 a document
-  [Arguments]  ${title}
-  Create content  type=Document  id=document1  title=${title}
+  [Arguments]  ${title}  ${id}=document1
+  Create content  type=Document  id=${id}  title=${title}
 
 a folder
   [Arguments]  ${title}
@@ -50,6 +56,7 @@ a document within a folder
 
 I open the Plone AngularJS App
   Go To  ${PLONE_URL}
+  Wait until page contains element  xpath=/html[@ng-app='ploneApp']
 
 the top navigation contains
   [Arguments]  ${title}
@@ -62,3 +69,13 @@ the portlet navigation contains
   Wait until page contains element  css=#navigation-portlet-directive ul li
   Wait until element is visible  css=#navigation-portlet-directive ul li
   Element should contain  css=#navigation-portlet-directive ul li ul li a  ${title}
+
+the page title is
+  [Arguments]  ${title}
+  Wait until page contains element  css=.jumbotron h1
+  Wait until element is visible  css=.jumbotron h1
+  Element should contain  css=.jumbotron h1  ${title}
+
+the page URL is
+  [Arguments]  ${id}
+  Location Should Be  ${PLONE_URL}/${id}
