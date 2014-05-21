@@ -1,4 +1,4 @@
-<ul class="nav nav-pills nav-stacked">
+<ul id="portlet-navigation-directive" class="nav nav-pills nav-stacked">
   <li ng-repeat="item in items"
       ng-class="{active: activeItem == item.url.slice(1)}">
     <a ng-href="{{item.url}}">{{item.title}}</a>

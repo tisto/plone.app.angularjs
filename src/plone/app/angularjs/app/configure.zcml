@@ -7,7 +7,7 @@
   <browser:page
     name="index.html"
     for="Products.CMFCore.interfaces.ISiteRoot"
-    template="index.html"
+    class=".index.AngularAppRootView"
     permission="zope2.View"
     />
 
