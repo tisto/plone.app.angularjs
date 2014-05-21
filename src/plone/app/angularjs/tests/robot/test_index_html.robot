@@ -16,17 +16,18 @@ ${ADMIN_ROLE}  Site Administrator
 
 *** Test Cases ***
 
-Site Navigation
+Top Navigation
   Given I'm logged in as a '${ADMIN_ROLE}'
     and a folder  My Folder
    When I open the Plone AngularJS App
-   Then the navigation contains  My Folder
+   Then the top navigation contains  My Folder
 
-Portal Navigation
+Portlet Navigation
   Given I'm logged in as a '${ADMIN_ROLE}'
     and a document within a folder  My Document
    When I open the Plone AngularJS App
-   Then the portal navigation contains  My Document
+   Then the portlet navigation contains  My Document
+
 
 *** Keywords ***
 
@@ -50,11 +51,12 @@ a document within a folder
 I open the Plone AngularJS App
   Go To  ${PLONE_URL}
 
-the navigation contains
+the top navigation contains
   [Arguments]  ${title}
-  Page should contain  ${title}
+  Wait until element is visible  css=#top-navigation-directive ul li a
+  Element should contain  css=#top-navigation-directive  ${title}
 
-the portal navigation contains
+the portlet navigation contains
   [Arguments]  ${title}
   Wait until page contains element  css=#navigation-portlet-directive ul li
   Element should contain  css=#navigation-portlet-directive ul li ul li a  ${title}
