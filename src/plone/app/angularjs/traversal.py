@@ -8,6 +8,8 @@ from zope.publisher.interfaces.browser import IBrowserRequest
 from plone.app.angularjs.app.index import AngularAppRootView
 from plone.app.angularjs.api.traverser import IAPIRequest
 
+import json
+
 
 class AngularAppPortalRootTraverser(DefaultPublishTraverse):
     adapts(IPloneSiteRoot, IBrowserRequest)
@@ -18,7 +20,11 @@ class AngularAppPortalRootTraverser(DefaultPublishTraverse):
             if getattr(api, name, None):
                 return getattr(api, name)()
             else:
-                return "API method '%s' not found." % name
+                return json.dumps({
+                    'code': '404',
+                    'message': "API method '%s' not found." % name,
+                    'data': ''
+                })
         is_front_page = request.URL.endswith('front-page')
         no_front_page = request.URL.endswith('folder_listing')
         if is_front_page or no_front_page:

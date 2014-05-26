@@ -8,6 +8,10 @@ from plone.app.angularjs.testing import\
     PLONE_APP_ANGULARJS_INTEGRATION_TESTING
 from plone.app.angularjs.traversal import AngularAppPortalRootTraverser
 from plone.app.angularjs.traversal import AngularAppRedirectorTraverser
+from plone.app.angularjs.api.traverser import IAPIRequest
+from zope.interface import directlyProvides
+
+import json
 
 
 class TestAngularAppPortalRootTraverser(unittest.TestCase):
@@ -31,6 +35,26 @@ class TestAngularAppPortalRootTraverser(unittest.TestCase):
         traversal = AngularAppPortalRootTraverser(self.portal, self.request)
         view = traversal.publishTraverse(self.request, "front-page")
         self.assertTrue('ng-app' in view)
+
+    def test_api_top_navigation(self):
+        self.request.URL = 'http://nohost/plone/++api++v1/'
+        directlyProvides(self.request, IAPIRequest)
+        traversal = AngularAppPortalRootTraverser(self.portal, self.request)
+        view = traversal.publishTraverse(self.request, "top_navigation")
+        self.assertEqual(json.loads(view), [])
+
+    def test_api_non_existing_method(self):
+        self.request.URL = 'http://nohost/plone/++api++v1/'
+        directlyProvides(self.request, IAPIRequest)
+        traversal = AngularAppPortalRootTraverser(self.portal, self.request)
+        view = traversal.publishTraverse(
+            self.request,
+            "non_existing_api_method"
+        )
+        self.assertEqual(
+            json.loads(view)['message'],
+            "API method 'non_existing_api_method' not found."
+        )
 
 
 class TestAngularAppRedirectorTraverser(unittest.TestCase):
