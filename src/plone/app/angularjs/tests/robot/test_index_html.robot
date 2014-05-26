@@ -11,33 +11,28 @@ Test Setup  Open test browser
 Test Teardown  Close all browsers
 
 
-*** Variables ***
-
-${ADMIN_ROLE}  Site Administrator
-
-
 *** Test Cases ***
 
 Top Navigation
-  Given I'm logged in as a '${ADMIN_ROLE}'
+  Given a logged in admin
     and a folder  My Folder
    When I open the Plone AngularJS App
    Then the top navigation contains  My Folder
 
 Portlet Navigation
-  Given I'm logged in as a '${ADMIN_ROLE}'
+  Given a logged in admin
     and a document  My Document
    When I open the Plone AngularJS App
    Then the portlet navigation contains  My Document
 
 Portlet Navigation with nested Object
-  Given I'm logged in as a '${ADMIN_ROLE}'
+  Given a logged in admin
     and a document within a folder  My Document
    When I open the Plone AngularJS App
    Then the portlet navigation contains  My Document
 
 Portal Root with Front Page
-  Given I'm logged in as a '${ADMIN_ROLE}'
+  Given a logged in admin
    When I open the Plone AngularJS App
    Then the page title is  Front Page
     and the page URL is  front-page
@@ -45,8 +40,8 @@ Portal Root with Front Page
 
 *** Keywords ***
 
-I'm logged in as a '${ROLE}'
-  Enable autologin as  ${ROLE}
+a logged in admin
+  Enable autologin as  Site Administrator
   Go to  ${PLONE_URL}
 
 a document
