@@ -56,6 +56,18 @@ class TestAngularAppPortalRootTraverser(unittest.TestCase):
             "API method 'non_existing_api_method' not found."
         )
 
+    def test_api_overview(self):
+        self.request.URL = 'http://nohost/plone/++api++v1/'
+        directlyProvides(self.request, IAPIRequest)
+        traversal = AngularAppPortalRootTraverser(self.portal, self.request)
+        view = traversal.publishTraverse(
+            self.request,
+            ""
+        )
+        self.assertTrue(
+            "<h1>REST API</h1>" in view()
+        )
+
 
 class TestAngularAppRedirectorTraverser(unittest.TestCase):
 

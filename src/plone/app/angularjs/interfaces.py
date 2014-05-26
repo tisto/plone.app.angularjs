@@ -5,7 +5,7 @@ class IRestApi(Interface):
     """
     """
 
-    def portlet_navigation_tree():
+    def navigation_tree():
         """Returns the full portlet navigation tree.
         """
 

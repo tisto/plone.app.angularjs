@@ -1,0 +1,14 @@
+<div>
+  <h1>REST API</h1>
+  <h2>Root Methods</h2>
+  <ul tal:repeat="method view/api_methods">
+    <li>
+      <a href="" tal:attributes="href method/url">
+        <span tal:content="method/id" />
+      </a>:
+      <span tal:content="method/description" />
+    </li>
+  </ul>
+  <h2>RESTish Methods</h2>
+  soon...
+</div>

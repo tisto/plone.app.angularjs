@@ -1,10 +1,30 @@
 # -*- coding: utf-8 -*-
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from Products.Five.browser import BrowserView
 from zope.component.hooks import getSite
 from Products.CMFCore.utils import getToolByName
 from zope.interface import implements
 from plone.app.angularjs.interfaces import IRestApi
 
 import json
+
+
+class ApiOverview(BrowserView):
+
+    template = ViewPageTemplateFile('api.pt')
+
+    def __call__(self):
+        return self.template()
+
+    def api_methods(self):
+        portal_url = getSite().absolute_url()
+        return [
+            {
+                'id': x,
+                'description': IRestApi.get(x).getDoc(),
+                'url': '%s/++api++v1/%s' % (portal_url, x),
+            } for x in IRestApi.names()
+        ]
 
 
 class RestApi(object):
