@@ -4,7 +4,7 @@ ploneModule.controller('NavigationController',
   function($scope, $http, $location) {
     'use strict';
     $scope.location = $location;
-    var url = '@@angularjs-top-navigation';
+    var url = '++api++v1/top_navigation';
     $http.get(url).success(function(data) {
       $scope.items = data;
     });
@@ -32,7 +32,7 @@ ploneModule.directive('navigationDirective',
 ploneModule.controller('NavigationPortletController',
   function($scope, $http) {
     'use strict';
-    var url = '@@angularjs-portlet-navigation';
+    var url = '++api++v1/navigation_tree';
     $http.get(url).success(function(data) {
       $scope.items = data;
     });

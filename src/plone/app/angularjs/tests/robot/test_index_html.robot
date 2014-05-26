@@ -24,16 +24,22 @@ Top Navigation
 
 Portlet Navigation
   Given I'm logged in as a '${ADMIN_ROLE}'
+    and a document  My Document
+   When I open the Plone AngularJS App
+   Then the portlet navigation contains  My Document
+
+Portlet Navigation with nested Object
+  Given I'm logged in as a '${ADMIN_ROLE}'
     and a document within a folder  My Document
    When I open the Plone AngularJS App
    Then the portlet navigation contains  My Document
 
 Portal Root with Front Page
   Given I'm logged in as a '${ADMIN_ROLE}'
-    and a document  Front Page  id=front-page
    When I open the Plone AngularJS App
    Then the page title is  Front Page
     and the page URL is  front-page
+
 
 *** Keywords ***
 
@@ -55,6 +61,7 @@ a document within a folder
   Create content  type=Document  id=doc1  title=${title}  container=${folder_uid}
 
 I open the Plone AngularJS App
+  Create content  type=Document  id=front-page  title=Front Page
   Go To  ${PLONE_URL}
   Wait until page contains element  xpath=/html[@ng-app='ploneApp']
 
@@ -68,7 +75,7 @@ the portlet navigation contains
   [Arguments]  ${title}
   Wait until page contains element  css=#navigation-portlet-directive ul li
   Wait until element is visible  css=#navigation-portlet-directive ul li
-  Element should contain  css=#navigation-portlet-directive ul li ul li a  ${title}
+  Page should contain element  xpath=//div[@id='navigation-portlet-directive']//a[contains(text(), '${title}')]
 
 the page title is
   [Arguments]  ${title}

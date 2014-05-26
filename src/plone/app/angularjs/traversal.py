@@ -1,15 +1,24 @@
+from zope.component import getUtility
+from plone.app.angularjs.interfaces import IRestApi
 from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
 from ZPublisher.BaseRequest import DefaultPublishTraverse
 from zope.component import adapts
 from Products.CMFCore.interfaces._content import IContentish
 from zope.publisher.interfaces.browser import IBrowserRequest
 from plone.app.angularjs.app.index import AngularAppRootView
+from plone.app.angularjs.api.traverser import IAPIRequest
 
 
 class AngularAppPortalRootTraverser(DefaultPublishTraverse):
     adapts(IPloneSiteRoot, IBrowserRequest)
 
     def publishTraverse(self, request, name):
+        if IAPIRequest.providedBy(request):
+            api = getUtility(IRestApi)
+            if getattr(api, name, None):
+                return getattr(api, name)()
+            else:
+                return "API method '%s' not found." % name
         is_front_page = request.URL.endswith('front-page')
         no_front_page = request.URL.endswith('folder_listing')
         if is_front_page or no_front_page:
