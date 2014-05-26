@@ -75,8 +75,7 @@ the top navigation contains
 
 the portlet navigation contains
   [Arguments]  ${title}
-  Wait until page contains element  css=#navigation-portlet-directive ul li
-  Wait until element is visible  css=#navigation-portlet-directive ul li
+  Wait until element is visible  xpath=//div[@id='navigation-portlet-directive']//a[contains(text(), '${title}')]
   Page should contain element  xpath=//div[@id='navigation-portlet-directive']//a[contains(text(), '${title}')]
 
 the page title is
