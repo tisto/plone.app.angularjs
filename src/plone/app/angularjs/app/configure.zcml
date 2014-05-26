@@ -26,13 +26,6 @@
     />
 
   <browser:page
-    name="angularjs-top-navigation"
-    for="Products.CMFCore.interfaces.ISiteRoot"
-    class=".navigation.AngularJsTopNavigation"
-    permission="zope2.View"
-    />
-
-  <browser:page
     name="navigation.tpl.html"
     for="Products.CMFCore.interfaces.ISiteRoot"
     template="navigation.tpl.html"
@@ -40,23 +33,9 @@
     />
 
   <browser:page
-    name="angularjs-portlet-navigation"
-    for="Products.CMFCore.interfaces.ISiteRoot"
-    class=".navigation.AngularJsPortletNavigation"
-    permission="zope2.View"
-    />
-
-  <browser:page
     name="navigation-portlet.tpl.html"
     for="Products.CMFCore.interfaces.ISiteRoot"
     template="navigation-portlet.tpl.html"
-    permission="zope2.View"
-    />
-
-  <browser:page
-    name="angularjs-object-traversal"
-    for="Products.CMFCore.interfaces.ISiteRoot"
-    class=".objecttraversal.AngularJsObjectTraversal"
     permission="zope2.View"
     />
 

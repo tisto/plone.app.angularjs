@@ -20,7 +20,7 @@ class AngularAppPortalRootTraverser(DefaultPublishTraverse):
                 return ApiOverview(self.context, self.request)
             api = getUtility(IRestApi)
             if getattr(api, name, None):
-                return getattr(api, name)()
+                return getattr(api, name)(request)
             else:
                 return json.dumps({
                     'code': '404',

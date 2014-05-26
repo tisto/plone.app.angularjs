@@ -30,7 +30,30 @@ class ApiOverview(BrowserView):
 class RestApi(object):
     implements(IRestApi)
 
-    def top_navigation(self):
+    def traversal(self, request):
+        portal = getSite()
+        path = request.get('path')
+        if not path:
+            return
+        path = '/'.join(portal.getPhysicalPath()) + '/' + path
+        try:
+            obj = portal.restrictedTraverse(path)
+        except KeyError:
+            return json.dumps({'title': 'Object not found.'})
+        try:
+            text = obj.getText()
+        except AttributeError:
+            text = ''
+        request.response.setHeader("Content-Type", "application/json")
+        return json.dumps({
+            'route': path,
+            'id': obj.id,
+            'title': obj.title,
+            'description': obj.Description(),
+            'text': text
+        })
+
+    def top_navigation(self, request):
         portal = getSite()
         catalog = getToolByName(portal, 'portal_catalog')
         portal_path = '/'.join(portal.getPhysicalPath())
@@ -55,7 +78,7 @@ class RestApi(object):
             ]
         )
 
-    def navigation_tree(self):
+    def navigation_tree(self, request):
         portal = getSite()
         catalog = getToolByName(portal, 'portal_catalog')
         portal_path = '/'.join(portal.getPhysicalPath())

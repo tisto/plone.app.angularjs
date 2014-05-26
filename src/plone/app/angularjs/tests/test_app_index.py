@@ -23,11 +23,3 @@ class TestAppIndex(unittest.TestCase):
                 name="index.html"
             )
         )
-
-    def test_object_traversal_without_param(self):
-        view = getMultiAdapter(
-            (self.portal, self.request),
-            name="angularjs-top-navigation"
-        )
-        view = view.__of__(self.portal)
-        self.assertTrue(view())

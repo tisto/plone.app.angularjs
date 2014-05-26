@@ -30,9 +30,9 @@ ploneModule.controller('ObjectPathController',
       //if ($routeParams.objecttraversal.match('/edit$')) {
       //}
       $http({
-        url: '@@angularjs-object-traversal',
+        url: '++api++v1/traversal',
         method: 'GET',
-        params: {'object-traversal-path': $routeParams.objecttraversal.replace('index.html/', '')},
+        params: {'path': $routeParams.objecttraversal.replace('index.html/', '')},
       }).success(function(data) {
         $scope.page = data;
         $scope.deliberatelyTrustDangerousSnippet = function() {

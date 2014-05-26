@@ -30,18 +30,18 @@ class TestApi(unittest.TestCase):
 
     def test_portlet_navigation_tree_method(self):
         api = getUtility(IRestApi)
-        self.assertTrue(api.navigation_tree())
+        self.assertTrue(api.navigation_tree(self.request))
         self.portal.invokeFactory('Folder', id='folder1', title='Folder 1')
         self.assertEqual(
-            json.loads(api.navigation_tree())[0]['url'],
+            json.loads(api.navigation_tree(self.request))[0]['url'],
             'folder1'
         )
         self.assertEqual(
-            json.loads(api.navigation_tree())[0]['id'],
+            json.loads(api.navigation_tree(self.request))[0]['id'],
             'folder1'
         )
         self.assertEqual(
-            json.loads(api.navigation_tree())[0]['url'],
+            json.loads(api.navigation_tree(self.request))[0]['url'],
             'folder1'
         )
 

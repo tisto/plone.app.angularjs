@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
-import unittest2 as unittest
-
+from plone.app.angularjs.interfaces import IRestApi
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
-from zope.component import getMultiAdapter
-
-
 from plone.app.angularjs.testing import\
     PLONE_APP_ANGULARJS_INTEGRATION_TESTING
+from zope.component import getUtility
 
 import json
+import unittest2 as unittest
 
 
 class TestAngularJsTopNavigation(unittest.TestCase):
@@ -21,35 +19,18 @@ class TestAngularJsTopNavigation(unittest.TestCase):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
-
-    def test_view_is_registered(self):
-        self.assertTrue(
-            getMultiAdapter(
-                (self.portal, self.request),
-                name="angularjs-top-navigation"
-            )
-        )
+        self.api = getUtility(IRestApi)
 
     def test_empty_navigation(self):
-        view = getMultiAdapter(
-            (self.portal, self.request),
-            name="angularjs-top-navigation"
-        )
-        view = view.__of__(self.portal)
-        self.assertEqual(json.loads(view()), [])
+        self.assertEqual(json.loads(self.api.top_navigation(self.request)), [])
 
     def test_folder_in_navigation(self):
         self.portal.invokeFactory('Folder', 'folder1', title='Folder 1')
         self.portal.folder1.reindexObject()
-        view = getMultiAdapter(
-            (self.portal, self.request),
-            name="angularjs-top-navigation"
-        )
-        view = view.__of__(self.portal)
 
-        self.assertTrue(view())
+        self.assertTrue(self.api.top_navigation(self.request))
         self.assertEqual(
-            json.loads(view()),
+            json.loads(self.api.top_navigation(self.request)),
             [{
                 u'id': u'folder1',
                 u'title': u'Folder 1',
@@ -60,15 +41,10 @@ class TestAngularJsTopNavigation(unittest.TestCase):
 
     def test_document_not_in_navigation(self):
         self.portal.invokeFactory('Document', 'doc1', title='Document 1')
-        view = getMultiAdapter(
-            (self.portal, self.request),
-            name="angularjs-top-navigation"
-        )
-        view = view.__of__(self.portal)
 
-        self.assertTrue(view())
+        self.assertTrue(self.api.top_navigation(self.request))
         self.assertEqual(
-            json.loads(view()),
+            json.loads(self.api.top_navigation(self.request)),
             []
         )
 
@@ -76,14 +52,12 @@ class TestAngularJsTopNavigation(unittest.TestCase):
         self.portal.invokeFactory('Folder', 'folder1', title='Folder 1')
         self.portal.folder1.exclude_from_nav = True
         self.portal.folder1.reindexObject(idxs=['exclude_from_nav'])
-        view = getMultiAdapter(
-            (self.portal, self.request),
-            name="angularjs-top-navigation"
-        )
-        view = view.__of__(self.portal)
 
-        self.assertTrue(view())
-        self.assertEqual(len(json.loads(view())), 0)
+        self.assertTrue(self.api.top_navigation(self.request))
+        self.assertEqual(
+            len(json.loads(self.api.top_navigation(self.request))),
+            0
+        )
 
 
 class TestAngularJsPortletNavigation(unittest.TestCase):
@@ -95,34 +69,20 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
-
-    def test_view_is_registered(self):
-        self.assertTrue(
-            getMultiAdapter(
-                (self.portal, self.request),
-                name="angularjs-portlet-navigation"
-            )
-        )
+        self.api = getUtility(IRestApi)
 
     def test_empty_navigation(self):
-        view = getMultiAdapter(
-            (self.portal, self.request),
-            name="angularjs-portlet-navigation"
+        self.assertEqual(
+            json.loads(self.api.navigation_tree(self.request)),
+            []
         )
-        view = view.__of__(self.portal)
-        self.assertEqual(json.loads(view()), [])
 
     def test_document_in_navigation(self):
         self.portal.invokeFactory('Folder', 'folder1', title='Folder 1')
-        view = getMultiAdapter(
-            (self.portal, self.request),
-            name="angularjs-portlet-navigation"
-        )
-        view = view.__of__(self.portal)
 
-        self.assertTrue(view())
+        self.assertTrue(self.api.navigation_tree(self.request))
         self.assertEqual(
-            json.loads(view()),
+            json.loads(self.api.navigation_tree(self.request)),
             [{
                 u'id': u'folder1',
                 u'title': u'Folder 1',
@@ -137,19 +97,17 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
         self.portal.folder1.invokeFactory(
             'Document', 'doc1', title='Document 1'
         )
-        view = getMultiAdapter(
-            (self.portal, self.request),
-            name="angularjs-portlet-navigation"
-        )
-        view = view.__of__(self.portal)
 
-        self.assertTrue(view())
         self.assertEqual(
-            json.loads(view())[0]['id'],
+            json.loads(self.api.navigation_tree(self.request))[0]['id'],
             'folder1'
         )
         self.assertEqual(
-            json.loads(view())[0]['children'][0]['id'],
+            json.loads(
+                self.api.navigation_tree(
+                    self.request
+                )
+            )[0]['children'][0]['id'],
             'doc1'
         )
 
@@ -157,11 +115,8 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
         self.portal.invokeFactory('Folder', 'folder1', title='Folder 1')
         self.portal.folder1.exclude_from_nav = True
         self.portal.folder1.reindexObject(idxs=['exclude_from_nav'])
-        view = getMultiAdapter(
-            (self.portal, self.request),
-            name="angularjs-portlet-navigation"
-        )
-        view = view.__of__(self.portal)
 
-        self.assertTrue(view())
-        self.assertEqual(len(json.loads(view())), 0)
+        self.assertEqual(
+            len(json.loads(self.api.navigation_tree(self.request))),
+            0
+        )
