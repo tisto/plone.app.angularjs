@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from plone.app.robotframework.testing import REMOTE_LIBRARY_ROBOT_TESTING
+from plone.app.robotframework.testing import REMOTE_LIBRARY_BUNDLE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import applyProfile
 from plone.app.testing import PLONE_FIXTURE
@@ -42,7 +42,7 @@ PLONE_APP_ANGULARJS_FUNCTIONAL_TESTING = FunctionalTesting(
 PLONE_APP_ANGULARJS_ROBOT_TESTING = FunctionalTesting(
     bases=(
         PLONE_APP_ANGULARJS_FIXTURE,
-        REMOTE_LIBRARY_ROBOT_TESTING,
+        REMOTE_LIBRARY_BUNDLE_FIXTURE,
         z2.ZSERVER_FIXTURE
     ),
     name="PloneAppAngularJs:Robot"
