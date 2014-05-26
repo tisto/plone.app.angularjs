@@ -21,6 +21,7 @@ after_success:
 after_script:
 - travis-artifacts upload --path parts/test
 - travis-artifacts upload --target-path latest --path parts/test
+- echo "ROBOT RESULTS: http://plone-app-angularjs.s3-website-us-east-1.amazonaws.com/artifacts/$TRAVIS_JOB_ID/$TRAVIS_JOB_ID.1/robot_log.html"
 env:
   global:
   - ARTIFACTS_S3_BUCKET=plone-app-angularjs
