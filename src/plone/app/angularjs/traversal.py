@@ -3,7 +3,7 @@ from plone.app.angularjs.interfaces import IRestApi
 from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
 from ZPublisher.BaseRequest import DefaultPublishTraverse
 from zope.component import adapts
-from Products.CMFCore.interfaces._content import IContentish
+from plone.dexterity.interfaces import IDexterityItem
 from zope.publisher.interfaces.browser import IBrowserRequest
 from plone.app.angularjs.app.index import AngularAppRootView
 from plone.app.angularjs.api.traverser import IAPIRequest
@@ -34,7 +34,6 @@ class AngularAppPortalRootTraverser(DefaultPublishTraverse):
             request['TraversalRequestNameStack'] = []
             # return angular app view
             return AngularAppRootView(self.context, self.request)()
-        return DefaultPublishTraverse.publishTraverse(self, request, name)
         return super(AngularAppPortalRootTraverser, self).publishTraverse(
             request,
             name
@@ -42,9 +41,16 @@ class AngularAppPortalRootTraverser(DefaultPublishTraverse):
 
 
 class AngularAppRedirectorTraverser(DefaultPublishTraverse):
-    adapts(IContentish, IBrowserRequest)
+    adapts(IDexterityItem, IBrowserRequest)
+    # XXX: Adapting IContentish works only for Archetypes content objects:
+    # from Products.CMFCore.interfaces import IContentish
+    # adapts(IContentish, IBrowserRequest)
+    #
+    # XXX: Adapting to IDexterityContent collides with the traversal in
+    # plone.dexterity/plone/dexterity/browser/traversal.py
 
     def publishTraverse(self, request, name):
+        print("PortalRootTraverser: %s" % self.request.URL)
         if not IPloneSiteRoot.providedBy(self.context):
             print "Return Angular App for %s" % self.request.URL
             # stop traversing
