@@ -29,9 +29,9 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     keywords='',
-    author='',
-    author_email='',
-    url='http://svn.plone.org/svn/collective/',
+    author='Timo Stollenwerk',
+    author_email='tisto@plone.org',
+    url='http://github.com/tisto/plone.app.angularjs/',
     license='gpl',
     packages=find_packages('src'),
     package_dir={'': 'src'},
@@ -43,8 +43,9 @@ setup(
         'plone.app.theming',
     ],
     extras_require={'test': [
+        'plone.app.contenttypes[test]',
         'plone.app.testing>=4.2.4',
-        'plone.app.robotframework[ride,reload,debug]',
+        'plone.app.robotframework[reload,debug]',
     ]},
     entry_points="""
     # -*- Entry points: -*-
