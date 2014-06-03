@@ -28,7 +28,9 @@ class AngularAppPortalRootTraverser(DefaultPublishTraverse):
                     'data': ''
                 })
         is_front_page = request.URL.endswith('front-page')
-        no_front_page = request.URL.endswith('folder_listing')
+        no_front_page = \
+            request.URL.endswith('folder_listing') or \
+            request.URL.endswith('folder_contents')
         if is_front_page or no_front_page:
             # stop traversing
             request['TraversalRequestNameStack'] = []
