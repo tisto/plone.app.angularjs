@@ -52,9 +52,7 @@ class AngularAppRedirectorTraverser(DefaultPublishTraverse):
     # plone.dexterity/plone/dexterity/browser/traversal.py
 
     def publishTraverse(self, request, name):
-        print("PortalRootTraverser: %s" % self.request.URL)
         if not IPloneSiteRoot.providedBy(self.context):
-            print "Return Angular App for %s" % self.request.URL
             # stop traversing
             request['TraversalRequestNameStack'] = []
             # return angular app view
