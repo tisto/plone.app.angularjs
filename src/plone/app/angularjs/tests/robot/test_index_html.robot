@@ -64,12 +64,14 @@ I open the Plone AngularJS App
 
 the top navigation contains
   [Arguments]  ${title}
+  Capture Page Screenshot
   Wait until page contains element  css=#top-navigation-directive ul li a
   Wait until element is visible  css=#top-navigation-directive ul li a
   Element should contain  css=#top-navigation-directive  ${title}
 
 the portlet navigation contains
   [Arguments]  ${title}
+  Capture Page Screenshot
   Wait until element is visible  xpath=//div[@id='navigation-portlet-directive']//a[contains(text(), '${title}')]
   Page should contain element  xpath=//div[@id='navigation-portlet-directive']//a[contains(text(), '${title}')]
 
