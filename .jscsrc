@@ -1,0 +1,3 @@
+{
+    "excludeFiles": ["src/plone/app/angularjs/app/bower_components/**"]
+}
