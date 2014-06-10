@@ -1,7 +1,6 @@
 var ploneModule = angular.module(
   'ploneApp',
   [
-    'chieffancypants.loadingBar',
     'ngAnimate',
     'ngRoute',
     'ngSanitize',
