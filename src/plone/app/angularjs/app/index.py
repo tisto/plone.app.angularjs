@@ -11,8 +11,8 @@ class AngularAppRootView(BrowserView):
         return self.template()
 
     def base(self):
+        """Return the portal url with a trailing '/'. Without this the Angular
+           app won't work properly.
+        """
         portal = getSite()
-        return '%s/%s/' % (
-            self.request.base,
-            portal.id
-        )
+        return portal.absolute_url() + '/'
