@@ -2,9 +2,16 @@ var ploneModule;
 
 ploneModule.factory('reportTreeService', function($q, $http) {
 
-  var getTreeData = function() {
+  var getTreeData = function(path) {
+    console.log('getTreeData(' + path + ')');
     var deferred = $q.defer();
-    $http.get("++api++v1/navigation_tree").then(function (response) {
+    $http({
+      method: 'GET',
+      url: '++api++v1/folder_children',
+      params: {
+        path: path
+      }
+    }).then(function (response) {
       deferred.resolve(response.data);
     });
     return deferred.promise;
@@ -18,42 +25,27 @@ ploneModule.factory('reportTreeService', function($q, $http) {
 
 
 ploneModule.controller('NavigationPortletController',
-  function($scope, reportTreeService) {
+  function($scope, $location, reportTreeService) {
     'use strict';
+    $scope.location = $location;
     $scope.folders = [];
-
-    reportTreeService.getTreeData().then(function(data) {
+    var path = $scope.location.path();
+    console.log("PATH: " + path);
+    reportTreeService.getTreeData(path).then(function(data) {
       $scope.folders = data;
 
       $scope.my_tree_handler = function(branch) {
+        console.log('my_tree_handler(' + branch + ')');
         $scope.output = "You selected: " + branch.label;
         if (branch.label == 'Nachrichten') {
-          branch.children = [
-            {
-              label: 'Canada',
-              children: ['Toronto', 'Vancouver']
-            }, {
-              label: 'USA',
-              children: ['New York', 'Los Angeles']
-            }, {
-              label: 'Mexico',
-              children: ['Mexico City', 'Guadalajara']
-            }
-          ];
+          reportTreeService.getTreeData('/news').then(function(data) {
+            branch.children = data;
+          });
         }
-        if (branch.label == 'South America') {
-          branch.children = [
-            {
-              label: 'Venezuela',
-              children: ['Caracas', 'Maracaibo']
-            }, {
-              label: 'Brazil',
-              children: ['Sao Paulo', 'Rio de Janeiro']
-            }, {
-              label: 'Argentina',
-              children: ['Buenos Aires', 'Cordoba']
-            }
-          ];
+        if (branch.label == 'Termine') {
+          reportTreeService.getTreeData('/events').then(function(data) {
+            branch.children = data;
+          });
         }
       };
     });

@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+from Acquisition import aq_chain
+from Products.CMFCore.interfaces import IContentish
+from Products.CMFCore.interfaces import IFolderish
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.Five.browser import BrowserView
 from zope.component.hooks import getSite
@@ -83,27 +86,32 @@ class RestApi(object):
         catalog = getToolByName(portal, 'portal_catalog')
         portal_path = '/'.join(portal.getPhysicalPath())
 
-#        return json.dumps([
-#            {
-#                'label': 'North America',
-#                'children': []
-#            }, {
-#                'label': 'South America',
-#                'children': []
-#            }
-#        ])
-
-        return json.dumps(
-            [
+        def _get_children(context):
+            return [
                 {
                     'id': brain.id,
                     'title': brain.Title,
-                    'label': brain.Title,
                     'description': brain.description,
                     'url': brain.getPath().replace(
                         portal_path, ''
                     ).lstrip('/'),
                     'children': []
+                } for brain in catalog({
+                    'path': {'query': context.getPath(), 'depth': 1},
+                    'sort_on': 'getObjPositionInParent',
+                    }
+                ) if brain.exclude_from_nav is not True
+            ]
+        return json.dumps(
+            [
+                {
+                    'id': brain.id,
+                    'title': brain.Title,
+                    'description': brain.description,
+                    'url': brain.getPath().replace(
+                        portal_path, ''
+                    ).lstrip('/'),
+                    'children': _get_children(brain)
                 }
                 for brain in catalog(
                     {
@@ -111,5 +119,38 @@ class RestApi(object):
                         'sort_on': 'getObjPositionInParent',
                     }
                 ) if brain.exclude_from_nav is not True
+            ]
+        )
+
+    def folder_children(self, request):
+        portal = getSite()
+        portal_path = '/'.join(portal.getPhysicalPath())
+        path = request.get('path')
+        if not path:
+            path = portal_path
+        else:
+            path = portal_path + path
+        try:
+            folder = portal.restrictedTraverse(path)
+        except KeyError:
+            return json.dumps([])
+        if not IFolderish.providedBy(folder):
+            for item in aq_chain(folder):
+                if IFolderish.providedBy(item):
+                    folder = item
+                    break
+        return json.dumps(
+            [
+                {
+                    'id': obj[1].id,
+                    'title': obj[1].title,
+                    'label': obj[1].title,
+                    'description': obj[1].description,
+                    'url': '/'.join(obj[1].getPhysicalPath()),
+                    'children': []
+                }
+                for obj in folder.objectItems()
+                if IContentish.providedBy(obj[1])
+                and obj[1].exclude_from_nav is not True
             ]
         )
