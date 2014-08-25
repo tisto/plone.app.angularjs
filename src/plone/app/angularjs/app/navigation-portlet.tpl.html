@@ -11,8 +11,6 @@
   </li>
 </ul>-->
 <div id="portlet-navigation-directive" class="nav nav-pills nav-stacked">
-  <div ng-controller="NavigationPortletController">
-    <abn-tree tree-data="my_data" tree-control="my_tree" on-select="my_tree_handler(branch)" expand-level="0"></abn-tree>
-    <div style="width: 100%" class="alert alert-warning">{{ output }}</div>
-  </div>
+  <abn-tree tree-data="folders" tree-control="my_tree" on-select="my_tree_handler(branch)" expand-level="0"></abn-tree>
+  <div style="width: 100%" class="alert alert-warning">{{ output }}</div>
 </div>

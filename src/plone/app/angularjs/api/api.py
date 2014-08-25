@@ -83,32 +83,27 @@ class RestApi(object):
         catalog = getToolByName(portal, 'portal_catalog')
         portal_path = '/'.join(portal.getPhysicalPath())
 
-        def _get_children(context):
-            return [
-                {
-                    'id': brain.id,
-                    'title': brain.Title,
-                    'description': brain.description,
-                    'url': brain.getPath().replace(
-                        portal_path, ''
-                    ).lstrip('/'),
-                    'children': []
-                } for brain in catalog({
-                    'path': {'query': context.getPath(), 'depth': 1},
-                    'sort_on': 'getObjPositionInParent',
-                    }
-                ) if brain.exclude_from_nav is not True
-            ]
+#        return json.dumps([
+#            {
+#                'label': 'North America',
+#                'children': []
+#            }, {
+#                'label': 'South America',
+#                'children': []
+#            }
+#        ])
+
         return json.dumps(
             [
                 {
                     'id': brain.id,
                     'title': brain.Title,
+                    'label': brain.Title,
                     'description': brain.description,
                     'url': brain.getPath().replace(
                         portal_path, ''
                     ).lstrip('/'),
-                    'children': _get_children(brain)
+                    'children': []
                 }
                 for brain in catalog(
                     {
