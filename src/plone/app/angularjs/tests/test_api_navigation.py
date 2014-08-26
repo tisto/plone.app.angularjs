@@ -77,7 +77,7 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
             []
         )
 
-    def test_document_in_navigation(self):
+    def test_folder_in_navigation(self):
         self.portal.invokeFactory('Folder', 'folder1', title='Folder 1')
 
         self.assertTrue(self.api.navigation_tree(self.request))
@@ -92,7 +92,7 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
             }]
         )
 
-    def test_nested_document_in_navigation(self):
+    def test_nested_folder_in_navigation(self):
         self.portal.invokeFactory('Folder', 'folder1', title='Folder 1')
         self.portal.folder1.invokeFactory(
             'Document', 'doc1', title='Document 1'
@@ -111,7 +111,7 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
             'doc1'
         )
 
-    def test_do_not_show_excluded_from_nav_documents(self):
+    def test_do_not_show_excluded_from_nav_folder(self):
         self.portal.invokeFactory('Folder', 'folder1', title='Folder 1')
         self.portal.folder1.exclude_from_nav = True
         self.portal.folder1.reindexObject(idxs=['exclude_from_nav'])
