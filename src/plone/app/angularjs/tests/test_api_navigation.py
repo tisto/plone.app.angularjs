@@ -92,6 +92,32 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
             }]
         )
 
+    def test_multiple_folders_in_navigation(self):
+        self.portal.invokeFactory('Folder', 'folder1', title='Folder 1')
+        self.portal.invokeFactory('Folder', 'folder2', title='Folder 2')
+
+        self.assertTrue(self.api.navigation_tree(self.request))
+        self.assertEqual(
+            len(json.loads(self.api.navigation_tree(self.request))), 2
+        )
+        self.assertEqual(
+            [
+                x['id'] for x
+                in json.loads(self.api.navigation_tree(self.request))
+            ],
+            ['folder1', 'folder2']
+        )
+
+    def test_do_not_show_excluded_from_nav_folder(self):
+        self.portal.invokeFactory('Folder', 'folder1', title='Folder 1')
+        self.portal.folder1.exclude_from_nav = True
+        self.portal.folder1.reindexObject(idxs=['exclude_from_nav'])
+
+        self.assertEqual(
+            len(json.loads(self.api.navigation_tree(self.request))),
+            0
+        )
+
     def test_nested_folder_in_navigation(self):
         self.portal.invokeFactory('Folder', 'folder1', title='Folder 1')
         self.portal.folder1.invokeFactory(
@@ -109,14 +135,4 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
                 )
             )[0]['children'][0]['id'],
             'doc1'
-        )
-
-    def test_do_not_show_excluded_from_nav_folder(self):
-        self.portal.invokeFactory('Folder', 'folder1', title='Folder 1')
-        self.portal.folder1.exclude_from_nav = True
-        self.portal.folder1.reindexObject(idxs=['exclude_from_nav'])
-
-        self.assertEqual(
-            len(json.loads(self.api.navigation_tree(self.request))),
-            0
         )
