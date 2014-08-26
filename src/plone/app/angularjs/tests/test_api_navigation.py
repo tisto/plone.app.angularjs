@@ -118,10 +118,11 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
             0
         )
 
-    def test_nested_folder_in_navigation(self):
+    def test_show_nested_folder_in_navigation(self):
+        self.request.set('path', '/folder1')
         self.portal.invokeFactory('Folder', 'folder1', title='Folder 1')
         self.portal.folder1.invokeFactory(
-            'Document', 'doc1', title='Document 1'
+            'Folder', 'folder2', title='Folder 2'
         )
 
         self.assertEqual(
@@ -134,5 +135,5 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
                     self.request
                 )
             )[0]['children'][0]['id'],
-            'doc1'
+            'folder2'
         )
