@@ -1,4 +1,4 @@
-<ul id="portlet-navigation-directive" class="nav nav-pills nav-stacked">
+<!--<ul id="portlet-navigation-directive" class="nav nav-pills nav-stacked">
   <li ng-repeat="item in items"
       ng-class="{active: activeItem == item.url.slice(1)}">
     <a ng-href="{{item.url}}">{{item.title}}</a>
@@ -9,4 +9,8 @@
       </li>
     </ul>
   </li>
-</ul>
+</ul>-->
+<div id="portlet-navigation-directive" class="nav nav-pills nav-stacked">
+  <abn-tree tree-data="folders" tree-control="my_tree" on-select="my_tree_handler(branch)" expand-level="4"></abn-tree>
+  <div style="width: 100%" class="alert alert-warning">{{ output }}</div>
+</div>

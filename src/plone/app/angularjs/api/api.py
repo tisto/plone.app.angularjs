@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from Acquisition import aq_chain
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.Five.browser import BrowserView
 from zope.component.hooks import getSite
@@ -83,38 +84,59 @@ class RestApi(object):
         catalog = getToolByName(portal, 'portal_catalog')
         portal_path = '/'.join(portal.getPhysicalPath())
 
-        def _get_children(context):
-            return [
+        top_level_children = [
+            {
+                'id': brain.id,
+                'title': brain.Title,
+                'label': brain.Title,
+                'description': brain.description,
+                'url': brain.getPath().replace(
+                    portal_path, ''
+                ).lstrip('/'),
+                'children': []
+            }
+            for brain in catalog(
                 {
-                    'id': brain.id,
-                    'title': brain.Title,
-                    'description': brain.description,
-                    'url': brain.getPath().replace(
-                        portal_path, ''
-                    ).lstrip('/'),
-                    'children': []
-                } for brain in catalog({
-                    'path': {'query': context.getPath(), 'depth': 1},
+                    'path': {'query': portal_path, 'depth': 1},
                     'sort_on': 'getObjPositionInParent',
-                    }
-                ) if brain.exclude_from_nav is not True
-            ]
-        return json.dumps(
-            [
-                {
-                    'id': brain.id,
-                    'title': brain.Title,
-                    'description': brain.description,
-                    'url': brain.getPath().replace(
-                        portal_path, ''
-                    ).lstrip('/'),
-                    'children': _get_children(brain)
                 }
-                for brain in catalog(
-                    {
-                        'path': {'query': portal_path, 'depth': 1},
-                        'sort_on': 'getObjPositionInParent',
-                    }
-                ) if brain.exclude_from_nav is not True
-            ]
-        )
+            ) if brain.exclude_from_nav is not True
+        ]
+
+        path = request.get('path')
+        if path:
+            try:
+                obj = portal.restrictedTraverse(portal_path + path)
+            except KeyError:
+                pass
+            if obj:
+                chain = aq_chain(obj)[:-3]
+                output = []
+                # begin with the children of the object that has been selected
+                for child in chain[0].objectItems():
+                    output.append({
+                        'id': child[1].id,
+                        'title': child[1].title,
+                        'label': child[1].title,
+                        'description': child[1].description,
+                        'url': '/'.join(child[1].getPhysicalPath()[2:]),
+                        'children': []
+                    })
+                # traverse the acquisition chain
+                for item in chain:
+                    output = [{
+                        'id': item.id,
+                        'title': item.title,
+                        'label': item.title,
+                        'description': item.description,
+                        'url': '/'.join(item.getPhysicalPath()[2:]),
+                        'children': output
+                    }]
+                # replace top level children with the one from aq_chain
+                i = 0
+                for child in top_level_children:
+                    if child['id'] == item.id:
+                        top_level_children[i] = output[0]
+                    i = i + 1
+
+        return json.dumps(top_level_children)

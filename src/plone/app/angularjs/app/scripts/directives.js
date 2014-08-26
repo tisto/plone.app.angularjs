@@ -28,23 +28,3 @@ ploneModule.directive('navigationDirective',
     };
   }
 );
-
-ploneModule.controller('NavigationPortletController',
-  function($scope, $http) {
-    'use strict';
-    var url = '++api++v1/navigation_tree';
-    $http.get(url).success(function(data) {
-      $scope.items = data;
-    });
-  }
-);
-
-ploneModule.directive('navigationPortletDirective',
-  function() {
-    'use strict';
-    return {
-      templateUrl: 'navigation-portlet.tpl.html',
-      controller: 'NavigationPortletController'
-    };
-  }
-);
