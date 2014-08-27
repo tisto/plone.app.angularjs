@@ -1,29 +1,20 @@
-<!-- LEVEL 1 -->
-<ul id="portlet-navigation-directive" class="nav nav-pills nav-stacked">
-  <li ng-repeat="item in folders"
-      ng-class="{active: activeItem == item.url.slice(1)}">
-    <a ng-href="{{item.url}}">{{item.title}}</a>
-    <!-- LEVEL 2 -->
-    <ul class="nav nav-pills nav-stacked">
-      <li ng-repeat="child2 in item.children"
-          ng-class="{active: activeItem == child2.url.slice(1)}">
-        <a ng-href="{{child2.url}}">{{child2.title}}</a>
-        <!-- LEVEL 3 -->
-        <ul class="nav nav-pills nav-stacked">
-          <li ng-repeat="child3 in child2.children"
-              ng-class="{active: activeItem == child3.url.slice(1)}">
-            <a ng-href="{{child3.url}}">{{child3.title}}</a>
-            <!-- LEVEL 4 -->
-            <ul class="nav nav-pills nav-stacked">
-              <li ng-repeat="child4 in child3.children"
-                  ng-class="{active: activeItem == child4.url.slice(1)}">
-                <a ng-href="{{child4.url}}">{{child4.title}}</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
+<div>
+
+  <!-- TEMPLATE -->
+  <script type="text/ng-template" id="navigationTree">
+    <a ng-href="{{ node.url }}">{{ node.title }}</a>
+    <ul ng-if="node.children" class="nav nav-pills nav-stacked">
+      <li ng-repeat="node in node.children" ng-include="'navigationTree'">
       </li>
     </ul>
-  </li>
-</ul>
-<pre>{{output}}</pre>
+  </script>
+
+  <!-- START RECURSION -->
+  <ul id="portlet-navigation-directive" class="nav nav-pills nav-stacked">
+    <li ng-repeat="node in folders" ng-include="'navigationTree'"></li>
+  </ul>
+
+  <!-- DEBUG -->
+  <pre>{{output}}</pre>
+
+</div>
