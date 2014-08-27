@@ -18,6 +18,9 @@ script:
 - bin/code-analysis
 after_success:
 - bin/test-coverage
+- bin/createcoverage run bin/test
+- pip install -q coveralls
+- coveralls
 after_script:
 - travis-artifacts upload --path parts/test
 - travis-artifacts upload --target-path latest --path parts/test
