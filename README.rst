@@ -11,18 +11,18 @@ Contents
 Prerequisits
 ------------
 
-Install Bower:
+Install Bower::
 
   $ sudo npm install -g bower
 
-Install Grunt:
+Install Grunt::
 
   $ sudo npm install -g grunt-cli
 
 Buildout
 --------
 
-Run buildout:
+Run buildout::
 
   $ python bootstrap.py
   $ bin/buildout
