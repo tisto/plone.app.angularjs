@@ -29,8 +29,10 @@ ploneModule.factory('reportTreeService', function($q, $http) {
 ploneModule.controller('NavigationPortletController',
   function($scope, $location, reportTreeService) {
     'use strict';
+    var tree;
     //$scope.location = $location;
     $scope.folders = [];
+    $scope.my_tree = tree = {};
     var path = $scope.location.path();
     reportTreeService.getTreeData(path).then(function(data) {
       $scope.folders = data;
@@ -38,6 +40,7 @@ ploneModule.controller('NavigationPortletController',
         //console.log(branch.expanded);
         branch.expanded = true;
         $location.path(branch.url);
+        tree.expand_all();
       };
     });
   }
