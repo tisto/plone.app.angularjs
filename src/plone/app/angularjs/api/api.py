@@ -138,5 +138,19 @@ class RestApi(object):
                     if child['id'] == item.id:
                         top_level_children[i] = output[0]
                     i = i + 1
+        if True:
+            print('')
+            print('---------------')
+            print('Navigation Tree')
+            print('---------------')
+            print(path)
+            print('---------------')
+            for item in top_level_children:
+                print('+- ' + item['id'])
+                for item in item['children']:
+                    print('   +- ' + item['id'])
+                    for item in item['children']:
+                        print('      +- ' + item['id'])
+            print('---------------')
 
         return json.dumps(top_level_children)

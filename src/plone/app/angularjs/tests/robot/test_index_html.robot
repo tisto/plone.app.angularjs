@@ -29,6 +29,7 @@ Portlet Navigation with nested Object
   Given a logged in admin
     and a document within a folder  My Document
    When I open the Plone AngularJS App
+    and I click on the folder in the navigation
    Then the portlet navigation contains  My Document
 
 Portal Root with Front Page
@@ -61,6 +62,10 @@ I open the Plone AngularJS App
   Create content  type=Document  id=front-page  title=Front Page
   Go To  ${PLONE_URL}
   Wait until page contains element  xpath=/html[@ng-app='ploneApp']
+
+I click on the folder in the navigation
+  Wait until element is visible  xpath=//div[@id='navigation-portlet-directive']//*[contains(text(), 'Folder 1')]
+  Click Link  xpath=//div[@id='navigation-portlet-directive']//*[contains(text(), 'Folder 1')]
 
 the top navigation contains
   [Arguments]  ${title}

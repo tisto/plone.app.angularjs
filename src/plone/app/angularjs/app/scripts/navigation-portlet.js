@@ -3,6 +3,7 @@ var ploneModule;
 ploneModule.factory('reportTreeService', function($q, $http) {
 
   var getTreeData = function(path) {
+    console.log('getTreeData(' + path + ')');
     if (path == '/front-page') {
       path = null;
     }
@@ -11,7 +12,7 @@ ploneModule.factory('reportTreeService', function($q, $http) {
       method: 'GET',
       url: '++api++v1/navigation_tree',
       params: {
-        path: path
+        'path': path
       }
     }).then(function (response) {
       deferred.resolve(response.data);
@@ -29,19 +30,15 @@ ploneModule.factory('reportTreeService', function($q, $http) {
 ploneModule.controller('NavigationPortletController',
   function($scope, $location, reportTreeService) {
     'use strict';
-    var tree;
-    //$scope.location = $location;
+    $scope.location = $location;
     $scope.folders = [];
-    $scope.my_tree = tree = {};
     var path = $scope.location.path();
     reportTreeService.getTreeData(path).then(function(data) {
       $scope.folders = data;
-      $scope.my_tree_handler = function(branch) {
-        //console.log(branch.expanded);
-        branch.expanded = true;
-        $location.path(branch.url);
-        tree.expand_all();
-      };
+      $scope.output = JSON.stringify(data, null, "  ");
+      $scope.$watch('location', function(newValue, oldValue) {
+        $scope.folders = data;
+      });
     });
   }
 );
