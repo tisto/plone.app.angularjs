@@ -37,7 +37,7 @@ class TestAngularJsTopNavigation(unittest.TestCase):
                 u'id': u'folder1',
                 u'title': u'Folder 1',
                 u'description': u'',
-                u'url': 'folder1',
+                u'path': 'folder1',
             }]
         )
 
@@ -89,7 +89,7 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
                 u'id': u'folder1',
                 u'title': u'Folder 1',
                 u'description': u'',
-                u'url': u'folder1',
+                u'path': u'folder1',
                 u'children': []
             }]
         )
@@ -172,7 +172,7 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
                 self.api.navigation_tree(
                     self.request
                 )
-            )[0]['children'][0]['url'],
+            )[0]['children'][0]['path'],
             'folder1/folder2'
         )
 

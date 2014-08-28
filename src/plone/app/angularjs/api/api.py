@@ -67,7 +67,7 @@ class RestApi(object):
                     'id': brain.id,
                     'title': brain.Title,
                     'description': brain.description,
-                    'url': brain.getPath().replace(
+                    'path': brain.getPath().replace(
                         portal_path, ''
                     ).lstrip('/')
                 }
@@ -92,7 +92,7 @@ class RestApi(object):
                 'id': brain.id,
                 'title': brain.Title,
                 'description': brain.description,
-                'url': brain.getPath().replace(
+                'path': brain.getPath().replace(
                     portal_path, ''
                 ).lstrip('/'),
                 'children': []
@@ -120,7 +120,7 @@ class RestApi(object):
                         'id': child[1].id,
                         'title': child[1].title,
                         'description': child[1].description,
-                        'url': '/'.join(child[1].getPhysicalPath()[2:]),
+                        'path': '/'.join(child[1].getPhysicalPath()[2:]),
                         'children': []
                     })
                 # traverse the acquisition chain
@@ -129,7 +129,7 @@ class RestApi(object):
                         'id': item.id,
                         'title': item.title,
                         'description': item.description,
-                        'url': '/'.join(item.getPhysicalPath()[2:]),
+                        'path': '/'.join(item.getPhysicalPath()[2:]),
                         'children': output
                     }]
                 # replace top level children with the one from aq_chain

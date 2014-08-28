@@ -2,7 +2,7 @@
 
   <!-- TEMPLATE -->
   <script type="text/ng-template" id="navigationTree">
-    <a ng-href="{{ node.url }}">{{ node.title }}</a>
+    <a ng-href="{{ node.path }}">{{ node.title }}</a>
     <ul ng-if="node.children" class="nav nav-pills nav-stacked">
       <li ng-repeat="node in node.children" ng-include="'navigationTree'">
       </li>

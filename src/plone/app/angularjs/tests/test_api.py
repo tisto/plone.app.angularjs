@@ -33,7 +33,7 @@ class TestApi(unittest.TestCase):
         self.assertTrue(api.navigation_tree(self.request))
         self.portal.invokeFactory('Folder', id='folder1', title='Folder 1')
         self.assertEqual(
-            json.loads(api.navigation_tree(self.request))[0]['url'],
+            json.loads(api.navigation_tree(self.request))[0]['path'],
             'folder1'
         )
         self.assertEqual(
@@ -41,7 +41,7 @@ class TestApi(unittest.TestCase):
             'folder1'
         )
         self.assertEqual(
-            json.loads(api.navigation_tree(self.request))[0]['url'],
+            json.loads(api.navigation_tree(self.request))[0]['path'],
             'folder1'
         )
 
