@@ -88,7 +88,6 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
             [{
                 u'id': u'folder1',
                 u'title': u'Folder 1',
-                u'label': u'Folder 1',
                 u'description': u'',
                 u'url': u'folder1',
                 u'children': []

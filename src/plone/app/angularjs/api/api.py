@@ -91,7 +91,6 @@ class RestApi(object):
             {
                 'id': brain.id,
                 'title': brain.Title,
-                'label': brain.Title,
                 'description': brain.description,
                 'url': brain.getPath().replace(
                     portal_path, ''
@@ -120,7 +119,6 @@ class RestApi(object):
                     output.append({
                         'id': child[1].id,
                         'title': child[1].title,
-                        'label': child[1].title,
                         'description': child[1].description,
                         'url': '/'.join(child[1].getPhysicalPath()[2:]),
                         'children': []
@@ -130,7 +128,6 @@ class RestApi(object):
                     output = [{
                         'id': item.id,
                         'title': item.title,
-                        'label': item.title,
                         'description': item.description,
                         'url': '/'.join(item.getPhysicalPath()[2:]),
                         'children': output
