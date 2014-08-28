@@ -10,7 +10,7 @@ ploneModule.factory('reportTreeService', function($q, $http) {
     var deferred = $q.defer();
     $http({
       method: 'GET',
-      url: '++api++v1/navigation_tree',
+      url: '++api++v1/portlet_navigation',
       params: {
         'path': path
       }

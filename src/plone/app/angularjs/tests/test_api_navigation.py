@@ -75,16 +75,16 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
 
     def test_empty_navigation(self):
         self.assertEqual(
-            json.loads(self.api.navigation_tree(self.request)),
+            json.loads(self.api.portlet_navigation(self.request)),
             []
         )
 
     def test_folder_in_navigation(self):
         self.portal.invokeFactory('Folder', 'folder1', title='Folder 1')
 
-        self.assertTrue(self.api.navigation_tree(self.request))
+        self.assertTrue(self.api.portlet_navigation(self.request))
         self.assertEqual(
-            json.loads(self.api.navigation_tree(self.request)),
+            json.loads(self.api.portlet_navigation(self.request)),
             [{
                 u'id': u'folder1',
                 u'title': u'Folder 1',
@@ -98,14 +98,14 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
         self.portal.invokeFactory('Folder', 'folder1', title='Folder 1')
         self.portal.invokeFactory('Folder', 'folder2', title='Folder 2')
 
-        self.assertTrue(self.api.navigation_tree(self.request))
+        self.assertTrue(self.api.portlet_navigation(self.request))
         self.assertEqual(
-            len(json.loads(self.api.navigation_tree(self.request))), 2
+            len(json.loads(self.api.portlet_navigation(self.request))), 2
         )
         self.assertEqual(
             [
                 x['id'] for x
-                in json.loads(self.api.navigation_tree(self.request))
+                in json.loads(self.api.portlet_navigation(self.request))
             ],
             ['folder1', 'folder2']
         )
@@ -116,7 +116,7 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
         self.portal.folder1.reindexObject(idxs=['exclude_from_nav'])
 
         self.assertEqual(
-            len(json.loads(self.api.navigation_tree(self.request))),
+            len(json.loads(self.api.portlet_navigation(self.request))),
             0
         )
 
@@ -126,13 +126,13 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
         self.portal.invokeFactory('Folder', 'folder3', title='Folder 3')
 
         self.assertEqual(
-            len(json.loads(self.api.navigation_tree(self.request))),
+            len(json.loads(self.api.portlet_navigation(self.request))),
             3
         )
         self.assertEqual(
             [
                 x['id'] for x
-                in json.loads(self.api.navigation_tree(self.request))
+                in json.loads(self.api.portlet_navigation(self.request))
             ],
             ['folder1', 'folder2', 'folder3']
         )
@@ -144,7 +144,7 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
         self.portal.invokeFactory('Folder', 'folder3', title='Folder 3')
 
         self.assertEqual(
-            len(json.loads(self.api.navigation_tree(self.request))),
+            len(json.loads(self.api.portlet_navigation(self.request))),
             3
         )
 
@@ -156,12 +156,12 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
         )
 
         self.assertEqual(
-            json.loads(self.api.navigation_tree(self.request))[0]['id'],
+            json.loads(self.api.portlet_navigation(self.request))[0]['id'],
             'folder1'
         )
         self.assertEqual(
             json.loads(
-                self.api.navigation_tree(
+                self.api.portlet_navigation(
                     self.request
                 )
             )[0]['children'][0]['id'],
@@ -169,7 +169,7 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
         )
         self.assertEqual(
             json.loads(
-                self.api.navigation_tree(
+                self.api.portlet_navigation(
                     self.request
                 )
             )[0]['children'][0]['path'],
@@ -187,13 +187,13 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
         )
 
         self.assertEqual(
-            json.loads(self.api.navigation_tree(self.request))[0]['id'],
+            json.loads(self.api.portlet_navigation(self.request))[0]['id'],
             'folder1'
         )
 
         self.assertEqual(
             json.loads(
-                self.api.navigation_tree(
+                self.api.portlet_navigation(
                     self.request
                 )
             )[0]['children'][0]['id'],
@@ -201,7 +201,7 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
         )
         self.assertEqual(
             json.loads(
-                self.api.navigation_tree(
+                self.api.portlet_navigation(
                     self.request
                 )
             )[0]['children'][0]['children'][0]['id'],
@@ -223,23 +223,23 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
         )
 
         self.assertEqual(
-            json.loads(self.api.navigation_tree(self.request))[0]['id'],
+            json.loads(self.api.portlet_navigation(self.request))[0]['id'],
             'folder1'
         )
         self.assertEqual(
-            json.loads(self.api.navigation_tree(self.request))[1]['id'],
+            json.loads(self.api.portlet_navigation(self.request))[1]['id'],
             'folder2'
         )
         self.assertEqual(
             json.loads(
-                self.api.navigation_tree(
+                self.api.portlet_navigation(
                     self.request
                 )
             )[1]['children'][0]['id'],
             'folder2-1'
         )
         self.assertEqual(
-            json.loads(self.api.navigation_tree(self.request))[2]['id'],
+            json.loads(self.api.portlet_navigation(self.request))[2]['id'],
             'folder3'
         )
 
@@ -257,7 +257,7 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
             'Folder', 'folder111', title='Folder 111')
 
         first_child_id = json.loads(
-            self.api.navigation_tree(self.request)
+            self.api.portlet_navigation(self.request)
         )[0]['id']
         self.assertEqual(
             first_child_id,
@@ -266,7 +266,7 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
         )
 
         second_child_id = json.loads(
-            self.api.navigation_tree(self.request)
+            self.api.portlet_navigation(self.request)
         )[0]['children'][0]['id']
         self.assertEqual(
             second_child_id,
@@ -275,7 +275,7 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
         )
 
         third_child_id = json.loads(
-            self.api.navigation_tree(self.request)
+            self.api.portlet_navigation(self.request)
         )[0]['children'][0]['children'][0]['id']
         self.assertEqual(
             third_child_id,
@@ -298,23 +298,23 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
         )
 
         self.assertEqual(
-            json.loads(self.api.navigation_tree(self.request))[0]['id'],
+            json.loads(self.api.portlet_navigation(self.request))[0]['id'],
             'front-page'
         )
         self.assertEqual(
-            json.loads(self.api.navigation_tree(self.request))[1]['id'],
+            json.loads(self.api.portlet_navigation(self.request))[1]['id'],
             'news'
         )
         self.assertEqual(
             json.loads(
-                self.api.navigation_tree(
+                self.api.portlet_navigation(
                     self.request
                 )
             )[1]['children'][0]['id'],
             'news1'
         )
         self.assertEqual(
-            json.loads(self.api.navigation_tree(self.request))[2]['id'],
+            json.loads(self.api.portlet_navigation(self.request))[2]['id'],
             'events'
         )
 
@@ -345,7 +345,7 @@ class TestAngularJsPortletNavigationFunctional(unittest.TestCase):
         import transaction
         transaction.commit()
         self.browser.open(
-            self.portal_url + '/++api++v1/navigation_tree?path=/news/news1')
+            self.portal_url + '/++api++v1/portlet_navigation?path=/news/news1')
         output = json.loads(self.browser.contents)
         self.assertEqual(output[0]['id'], u'news')
         self.assertEqual(output[0]['children'][0]['id'], u'news1')

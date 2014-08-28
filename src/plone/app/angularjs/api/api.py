@@ -82,7 +82,7 @@ class RestApi(object):
             ]
         )
 
-    def navigation_tree(self, request):
+    def portlet_navigation(self, request):
         portal = getSite()
         catalog = getToolByName(portal, 'portal_catalog')
         portal_path = '/'.join(portal.getPhysicalPath())
