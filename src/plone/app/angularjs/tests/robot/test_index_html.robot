@@ -1,6 +1,18 @@
-# bin/robot-server plone.app.angularjs.testing.PLONE_APP_ANGULARJS_ROBOT_TESTING
-# bin/robot src/plone/app/angularjs/tests/robot/test_index_html.robot
-*** Settings ***
+# ============================================================================
+# ROBOT TESTS FOR BASIC ANGULAR JS PAGE RENDERING
+# ============================================================================
+#
+# Start robot server:
+#
+#   $ bin/robot-server plone.app.angularjs.testing.PLONE_APP_ANGULARJS_ROBOT_TESTING
+#
+# Run robot tests:
+#
+#   $ bin/robot src/plone/app/angularjs/tests/robot/test_index_html.robot
+#
+# ============================================================================
+
+*** Settings *****************************************************************
 
 Resource  plone/app/robotframework/selenium.robot
 Resource  plone/app/robotframework/keywords.robot
@@ -11,7 +23,7 @@ Test Setup  Open test browser
 Test Teardown  Close all browsers
 
 
-*** Test Cases ***
+*** Test Cases ***************************************************************
 
 Top Navigation
   Given a logged in admin
@@ -39,7 +51,7 @@ Portal Root with Front Page
     and the page URL is  front-page
 
 
-*** Keywords ***
+*** Keywords *****************************************************************
 
 a logged in admin
   Enable autologin as  Site Administrator
