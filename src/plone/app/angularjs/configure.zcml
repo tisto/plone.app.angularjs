@@ -1,5 +1,6 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:five="http://namespaces.zope.org/five"
     xmlns:i18n="http://namespaces.zope.org/i18n"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
@@ -17,8 +18,9 @@
     />
 
   <include package=".app" />
-  <plone:static
-    type="theme"
+
+  <browser:resourceDirectory
+    name="plone.app.angularjs"
     directory="app"
     />
 
