@@ -31,6 +31,13 @@ Top Navigation
    When I open the Plone AngularJS App
    Then the top navigation contains  My Folder
 
+Top Navigation Links
+  Given a logged in admin
+    and a folder  My Folder
+    and the Plone AngularJS App
+   When I click 'My Folder' in the top navigation
+   Then the page title is  My Folder
+
 Portlet Navigation
   Given a logged in admin
     and a document  My Document
@@ -53,6 +60,8 @@ Portal Root with Front Page
 
 *** Keywords *****************************************************************
 
+# --- Given ------------------------------------------------------------------
+
 a logged in admin
   Enable autologin as  Site Administrator
   Go to  ${PLONE_URL}
@@ -70,6 +79,14 @@ a document within a folder
   ${folder_uid}  Create content  type=Folder  id=folder1  title=Folder 1
   Create content  type=Document  id=doc1  title=${title}  container=${folder_uid}
 
+the Plone AngularJS App
+  Create content  type=Document  id=front-page  title=Front Page
+  Go To  ${PLONE_URL}
+  Wait until page contains element  xpath=/html[@ng-app='ploneApp']
+
+
+# --- WHEN -------------------------------------------------------------------
+
 I open the Plone AngularJS App
   Create content  type=Document  id=front-page  title=Front Page
   Go To  ${PLONE_URL}
@@ -78,6 +95,13 @@ I open the Plone AngularJS App
 I click on the folder in the navigation
   Wait until element is visible  xpath=//div[@id='navigation-portlet-directive']//*[contains(text(), 'Folder 1')]
   Click Link  xpath=//div[@id='navigation-portlet-directive']//*[contains(text(), 'Folder 1')]
+
+I click '${link_title}' in the top navigation
+  Wait until element is visible  xpath=//div[@id='top-navigation-directive']//a[contains(., '${link_title}')]
+  Click Link  xpath=//div[@id='top-navigation-directive']//a[contains(., '${link_title}')]
+
+
+# --- THEN -------------------------------------------------------------------
 
 the top navigation contains
   [Arguments]  ${title}
@@ -96,7 +120,7 @@ the page title is
   [Arguments]  ${title}
   Wait until page contains element  css=.jumbotron h1
   Wait until element is visible  css=.jumbotron h1
-  Element should contain  css=.jumbotron h1  ${title}
+  Wait Until Keyword Succeeds  10s  1s  Element should contain  css=.jumbotron h1  ${title}
 
 the page URL is
   [Arguments]  ${id}
