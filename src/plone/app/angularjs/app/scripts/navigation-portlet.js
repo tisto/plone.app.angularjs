@@ -3,7 +3,7 @@ var ploneModule;
 ploneModule.factory('reportTreeService', function($q, $http) {
 
   var getTreeData = function(path) {
-    console.log('getTreeData(' + path + ')');
+    //console.log('getTreeData(' + path + ')');
     if (path == '/front-page') {
       path = null;
     }

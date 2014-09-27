@@ -12,16 +12,16 @@
     />
 
   <browser:page
-    name="page.html"
+    name="page.tpl.html"
     for="Products.CMFCore.interfaces.ISiteRoot"
-    template="page.html"
+    template="page.tpl.html"
     permission="zope2.View"
     />
 
   <browser:page
-    name="edit.html"
+    name="edit.tpl.html"
     for="Products.CMFCore.interfaces.ISiteRoot"
-    template="edit.html"
+    template="edit.tpl.html"
     permission="zope2.View"
     />
 

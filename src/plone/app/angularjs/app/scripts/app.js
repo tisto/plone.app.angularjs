@@ -6,9 +6,11 @@ var ploneModule = angular.module(
     'ngSanitize',
     'ui.bootstrap',
     'angularBootstrapNavTree',
+    //'ngMockE2E'
   ]
 );
 
+// Route Configuration
 ploneModule.config(['$routeProvider', '$locationProvider',
   function($routeProvider, $locationProvider) {
     'use strict';
@@ -16,7 +18,7 @@ ploneModule.config(['$routeProvider', '$locationProvider',
     $locationProvider.hashPrefix('!');
     $routeProvider.when('/:objecttraversal*', {
       controller: 'ObjectPathController',
-      templateUrl: 'page.html'
+      templateUrl: 'page.tpl.html'
     }).otherwise({
       redirectTo: 'front-page'
     });

@@ -24,6 +24,7 @@
     "angular-loading-bar": "0.4.2",
     "angular-sanitize": "1.2.14",
     "angular-bootstrap": "0.10.0",
-    "angular-bootstrap-nav-tree": "*"
+    "angular-bootstrap-nav-tree": "*",
+    "angular-mocks": "~1.2.25"
   }
 }
