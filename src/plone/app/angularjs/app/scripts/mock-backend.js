@@ -50,7 +50,7 @@ ploneModule.run(function($httpBackend) {
       "title": "Benutzer"
     }
   ];
-  var re = new RegExp('\\+\\+api\\+\\+v1/portlet_navigation\\?path\=.*');
+  var re = new RegExp('++api++v1/portlet_navigation?path=.*');
   $httpBackend.whenGET(re).respond(portlet_navigation);
 
   // TRAVERSAL
@@ -60,8 +60,8 @@ ploneModule.run(function($httpBackend) {
     'title': 'Startseite',
     'description': 'Congrats you installed Plone',
     'text': '<p>Lorem Ipsum</p>'
-  }
-  var re = new RegExp('\\+\\+api\\+\\+v1/traversal\\?path\=.*');
+  };
+  var re = new RegExp('++api++v1/traversal?path=.*');
   $httpBackend.whenGET(re).respond(traversal);
 
   // PASS THROUGH TEMPLATES
