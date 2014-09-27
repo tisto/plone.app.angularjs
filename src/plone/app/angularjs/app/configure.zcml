@@ -4,6 +4,8 @@
     xmlns:zcml="http://namespaces.zope.org/zcml"
     i18n_domain="plone.app.angularjs">
 
+  <include file="caching.zcml" />
+
   <browser:page
     name="index.html"
     for="Products.CMFCore.interfaces.ISiteRoot"
