@@ -4,7 +4,6 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.Five.browser import BrowserView
 from zope.component.hooks import getSite
 from Products.CMFCore.utils import getToolByName
-from zope.interface import implements
 from plone.app.angularjs.interfaces import IRestApi
 
 import json
@@ -31,58 +30,85 @@ class ApiOverview(BrowserView):
         ]
 
 
-class RestApi(object):
-    implements(IRestApi)
+def json_api_call(func):
+    """ decorator to return all values as json
+    """
+    def decorator(*args, **kwargs):
+        instance = args[0]
+        request = getattr(instance, 'request', None)
+        request.response.setHeader(
+            'Content-Type',
+            'application/json; charset=utf-8'
+        )
+        result = func(*args, **kwargs)
+        return json.dumps(result, indent=2, sort_keys=True)
 
-    def traversal(self, request):
+    return decorator
+
+
+class Traversal(BrowserView):
+
+    @json_api_call
+    def __call__(self):
         portal = getSite()
-        path = request.get('path')
+        path = self.request.get('path')
         if not path:
-            return
+            return {
+                'code': '404',
+                'message': "No path has been provided.",
+            }
         path = '/'.join(portal.getPhysicalPath()) + '/' + path
         try:
             obj = portal.restrictedTraverse(path)
         except KeyError:
-            return json.dumps({'title': 'Object not found.'})
+            return {
+                'code': '404',
+                'message': "No object found for path '%s'." % path,
+            }
         try:
             text = obj.getText()
         except AttributeError:
             text = ''
-        request.response.setHeader("Content-Type", "application/json")
-        return json.dumps({
+        return {
             'route': path,
             'id': obj.id,
             'title': obj.title,
             'description': obj.Description(),
             'text': text
-        })
+        }
 
-    def top_navigation(self, request):
+
+class TopNavigation(BrowserView):
+
+    @json_api_call
+    def __call__(self):
         portal = getSite()
         catalog = getToolByName(portal, 'portal_catalog')
         portal_path = '/'.join(portal.getPhysicalPath())
-        return json.dumps(
-            [
-                {
-                    'id': brain.id,
-                    'title': brain.Title,
-                    'description': brain.description,
-                    'path': brain.getPath().replace(
-                        portal_path, ''
-                    ).lstrip('/')
-                }
-                for brain in catalog({
-                    'path': {
-                        'query': '/'.join(portal.getPhysicalPath()),
-                        'depth': 1
-                    },
-                    'portal_type': 'Folder',
-                    'sort_on': 'getObjPositionInParent'
-                }) if brain.exclude_from_nav is not True
-            ]
-        )
+        return [
+            {
+                'id': brain.id,
+                'title': brain.Title,
+                'description': brain.description,
+                'path': brain.getPath().replace(
+                    portal_path, ''
+                ).lstrip('/')
+            }
+            for brain in catalog({
+                'path': {
+                    'query': '/'.join(portal.getPhysicalPath()),
+                    'depth': 1
+                },
+                'portal_type': 'Folder',
+                'sort_on': 'getObjPositionInParent'
+            }) if brain.exclude_from_nav is not True
+        ]
 
-    def portlet_navigation(self, request):
+
+class PortletNavigation(BrowserView):
+
+    @json_api_call
+    def __call__(self):
         portal = getSite()
         catalog = getToolByName(portal, 'portal_catalog')
         portal_path = '/'.join(portal.getPhysicalPath())
@@ -105,7 +131,7 @@ class RestApi(object):
             ) if brain.exclude_from_nav is not True
         ]
 
-        path = request.get('path')
+        path = self.request.get('path')
         if path:
             try:
                 obj = portal.restrictedTraverse(portal_path + path)
@@ -153,4 +179,4 @@ class RestApi(object):
                         print('      +- ' + item['id'])
             print('---------------')
 
-        return json.dumps(top_level_children)
+        return top_level_children

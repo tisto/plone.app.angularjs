@@ -1,8 +1,4 @@
 # -*- coding: utf-8 -*-
-from zope.component import getUtility
-
-from plone.app.angularjs.interfaces import IRestApi
-from plone.app.angularjs.api.traverser import IAPIRequest
 from plone.app.angularjs.testing import \
     PLONE_APP_ANGULARJS_INTEGRATION_TESTING
 from plone.app.testing import setRoles
@@ -22,47 +18,62 @@ class TestRestApiTraversalMethod(unittest.TestCase):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
-        self.api = getUtility(IRestApi)
 
     def test_traversal_view_is_registered(self):
         view = getMultiAdapter(
             (self.portal, self.request),
-            name=""
+            name="traversal"
         )
-        self.assertTrue(
-            view.publishTraverse(self.request, u"api")
-        )
+        self.assertTrue(view())
 
     def test_traversal_without_param(self):
         view = getMultiAdapter(
             (self.portal, self.request),
-            name=""
+            name="traversal"
         )
-        self.assertTrue(
-            view.publishTraverse(self.request, u"api")
+        self.assertEqual(
+            json.loads(view()),
+            {u'message': u'No path has been provided.', u'code': u'404'}
         )
-        view.publishTraverse(self.request, u"api").traverse(
-            'v1',
-            ''
-        )
-        self.assertTrue(IAPIRequest.providedBy(self.request))
 
     def test_traversal_empty_param(self):
-        self.assertFalse(self.api.traversal(self.request))
+        self.request.set('path', '')
+        view = getMultiAdapter(
+            (self.portal, self.request),
+            name="traversal"
+        )
+        self.assertEqual(
+            json.loads(view()),
+            {u'message': u'No path has been provided.', u'code': u'404'}
+        )
 
     def test_traversal_not_found(self):
-        self.request.set('path', 'nonexistingdoc')
+        self.request.set('path', 'nonexisting')
+
+        view = getMultiAdapter(
+            (self.portal, self.request),
+            name="traversal"
+        )
+
         self.assertEqual(
-            json.loads(self.api.traversal(self.request)),
-            {'title': 'Object not found.'}
+            json.loads(view()),
+            {
+                u'code': u'404',
+                u'message': u"No object found for path '/plone/nonexisting'."
+            }
         )
 
     def test_traversal_document(self):
         self.portal.invokeFactory('Document', 'doc1')
         self.request.set('path', 'doc1')
 
+        view = getMultiAdapter(
+            (self.portal, self.request),
+            name="traversal"
+        )
+
         self.assertEqual(
-            json.loads(self.api.traversal(self.request)),
+            json.loads(view()),
             {
                 u'route': u'/plone/doc1',
                 u'title': u'',
@@ -76,8 +87,13 @@ class TestRestApiTraversalMethod(unittest.TestCase):
         self.portal.invokeFactory('Document', 'doc1', title=u'Document 1')
         self.request.set('path', 'doc1')
 
+        view = getMultiAdapter(
+            (self.portal, self.request),
+            name="traversal"
+        )
+
         self.assertEqual(
-            json.loads(self.api.traversal(self.request)),
+            json.loads(view()),
             {
                 u'route': u'/plone/doc1',
                 u'title': u'Document 1',
@@ -92,9 +108,13 @@ class TestRestApiTraversalMethod(unittest.TestCase):
         self.portal.doc1.setDescription(u'I am the first document!')
         self.request.set('path', 'doc1')
 
-        self.assertTrue(self.api.traversal(self.request))
+        view = getMultiAdapter(
+            (self.portal, self.request),
+            name="traversal"
+        )
+
         self.assertEqual(
-            json.loads(self.api.traversal(self.request)),
+            json.loads(view()),
             {
                 u'route': u'/plone/doc1',
                 u'title': u'Document 1',
@@ -108,8 +128,13 @@ class TestRestApiTraversalMethod(unittest.TestCase):
         self.portal.invokeFactory('Folder', 'folder1')
         self.request.set('path', 'folder1')
 
+        view = getMultiAdapter(
+            (self.portal, self.request),
+            name="traversal"
+        )
+
         self.assertEqual(
-            json.loads(self.api.traversal(self.request)),
+            json.loads(view()),
             {
                 u'route': u'/plone/folder1',
                 u'title': u'',
@@ -124,8 +149,13 @@ class TestRestApiTraversalMethod(unittest.TestCase):
         self.portal.folder1.invokeFactory('Document', 'doc1')
         self.request.set('path', 'folder1/doc1')
 
+        view = getMultiAdapter(
+            (self.portal, self.request),
+            name="traversal"
+        )
+
         self.assertEqual(
-            json.loads(self.api.traversal(self.request)),
+            json.loads(view()),
             {
                 u'route': u'/plone/folder1/doc1',
                 u'title': u'',

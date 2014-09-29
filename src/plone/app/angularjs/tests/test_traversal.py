@@ -65,7 +65,7 @@ class TestAngularAppPortalRootTraverser(unittest.TestCase):
             ""
         )
         self.assertTrue(
-            "<h1>REST API</h1>" in view()
+            "<h1>REST API</h1>" in view
         )
 
 

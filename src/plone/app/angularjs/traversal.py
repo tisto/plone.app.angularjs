@@ -1,5 +1,4 @@
-from zope.component import getUtility
-from plone.app.angularjs.interfaces import IRestApi
+# -*- coding: utf-8 -*-
 from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
 from ZPublisher.BaseRequest import DefaultPublishTraverse
 from zope.component import adapts
@@ -17,16 +16,20 @@ class AngularAppPortalRootTraverser(DefaultPublishTraverse):
     def publishTraverse(self, request, name):
         if IAPIRequest.providedBy(request):
             if name == '' or name == 'folder_listing' or name == 'front-page':
-                return ApiOverview(self.context, self.request)
-            api = getUtility(IRestApi)
-            if getattr(api, name, None):
-                return getattr(api, name)(request)
-            else:
-                return json.dumps({
-                    'code': '404',
-                    'message': "API method '%s' not found." % name,
-                    'data': ''
-                })
+                return ApiOverview(self.context, self.request)()
+            if name == 'traversal':
+                from plone.app.angularjs.api.api import Traversal
+                return Traversal(self.context, self.request)()
+            if name == 'top_navigation':
+                from plone.app.angularjs.api.api import TopNavigation
+                return TopNavigation(self.context, self.request)()
+            if name == 'portlet_navigation':
+                from plone.app.angularjs.api.api import PortletNavigation
+                return PortletNavigation(self.context, self.request)()
+            return json.dumps({
+                'code': '404',
+                'message': "API method '%s' not found." % name,
+            })
         is_front_page = request.URL.endswith('front-page')
         no_front_page = \
             request.URL.endswith('folder_listing') or \

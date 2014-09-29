@@ -5,9 +5,6 @@ from plone.app.testing import setRoles
 import unittest2 as unittest
 
 from zope.component import getMultiAdapter
-from zope.component import getUtility
-
-from plone.app.angularjs.interfaces import IRestApi
 
 from plone.app.angularjs.testing import\
     PLONE_APP_ANGULARJS_INTEGRATION_TESTING
@@ -25,23 +22,24 @@ class TestApi(unittest.TestCase):
         self.request = self.layer['request']
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
 
-    def test_utility(self):
-        self.assertTrue(getUtility(IRestApi))
-
     def test_portlet_portlet_navigation_method(self):
-        api = getUtility(IRestApi)
-        self.assertTrue(api.portlet_navigation(self.request))
+        view = getMultiAdapter(
+            (self.portal, self.request),
+            name="portlet_navigation"
+        )
+
+        self.assertTrue(view())
         self.portal.invokeFactory('Folder', id='folder1', title='Folder 1')
         self.assertEqual(
-            json.loads(api.portlet_navigation(self.request))[0]['path'],
+            json.loads(view())[0]['path'],
             'folder1'
         )
         self.assertEqual(
-            json.loads(api.portlet_navigation(self.request))[0]['id'],
+            json.loads(view())[0]['id'],
             'folder1'
         )
         self.assertEqual(
-            json.loads(api.portlet_navigation(self.request))[0]['path'],
+            json.loads(view())[0]['path'],
             'folder1'
         )
 
