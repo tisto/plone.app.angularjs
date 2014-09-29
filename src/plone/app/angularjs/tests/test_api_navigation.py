@@ -6,6 +6,9 @@ from plone.app.angularjs.testing import\
 from plone.app.angularjs.testing import\
     PLONE_APP_ANGULARJS_FUNCTIONAL_TESTING
 from zope.component import getMultiAdapter
+from zope.interface import directlyProvides
+
+from plone.app.angularjs.interfaces import IAPIRequest
 
 import json
 import unittest2 as unittest
@@ -20,6 +23,7 @@ class TestAngularJsTopNavigation(unittest.TestCase):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
+        directlyProvides(self.portal, IAPIRequest)
 
     def test_empty_navigation(self):
         view = getMultiAdapter(
@@ -86,6 +90,7 @@ class TestAngularJsPortletNavigation(unittest.TestCase):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
+        directlyProvides(self.portal, IAPIRequest)
 
     def test_empty_navigation(self):
         view = getMultiAdapter(

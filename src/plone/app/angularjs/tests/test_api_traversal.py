@@ -3,7 +3,10 @@ from plone.app.angularjs.testing import \
     PLONE_APP_ANGULARJS_INTEGRATION_TESTING
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
+from zope.interface import directlyProvides
 from zope.component import getMultiAdapter
+
+from plone.app.angularjs.interfaces import IAPIRequest
 
 import unittest2 as unittest
 import json
@@ -18,6 +21,7 @@ class TestRestApiTraversalMethod(unittest.TestCase):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
+        directlyProvides(self.portal, IAPIRequest)
 
     def test_traversal_view_is_registered(self):
         view = getMultiAdapter(

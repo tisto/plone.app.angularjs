@@ -1,14 +1,6 @@
 from zope.interface import Interface
 
 
-class IRestApi(Interface):
+class IAPIRequest(Interface):
+    """Marker for API requests
     """
-    """
-
-    def portlet_navigation():
-        """Returns the portlet navigation tree.
-        """
-
-    def top_navigation():
-        """Returns the top navigation entries.
-        """

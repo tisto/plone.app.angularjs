@@ -6,21 +6,21 @@
 
   <browser:view
     name="traversal"
-    for="Products.CMFCore.interfaces.ISiteRoot"
+    for="plone.app.angularjs.api.traverser.IAPIRequest"
     class=".api.Traversal"
     permission="zope2.View"
     />
 
   <browser:view
     name="top_navigation"
-    for="Products.CMFCore.interfaces.ISiteRoot"
+    for="plone.app.angularjs.api.traverser.IAPIRequest"
     class=".api.TopNavigation"
     permission="zope2.View"
     />
 
   <browser:view
     name="portlet_navigation"
-    for="Products.CMFCore.interfaces.ISiteRoot"
+    for="plone.app.angularjs.api.traverser.IAPIRequest"
     class=".api.PortletNavigation"
     permission="zope2.View"
     />

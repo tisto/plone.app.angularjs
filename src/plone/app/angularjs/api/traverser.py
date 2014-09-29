@@ -1,5 +1,4 @@
-import json
-from zope.interface import Interface
+# -*- coding: utf-8 -*-
 from zope.interface import implementer
 from zope.interface import alsoProvides
 from zope.component import adapter
@@ -13,10 +12,9 @@ from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
 # used for archetypes that implements .../image_<size_name>
 from plone.app.imaging.interfaces import IBaseObject
 
+from plone.app.angularjs.interfaces import IAPIRequest
 
-class IAPIRequest(Interface):
-    """Marker for API requests
-    """
+import json
 
 
 class FakeView(BrowserView):

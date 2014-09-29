@@ -6,6 +6,8 @@ import unittest2 as unittest
 
 from zope.component import getMultiAdapter
 
+from zope.interface import directlyProvides
+
 from plone.app.angularjs.testing import\
     PLONE_APP_ANGULARJS_INTEGRATION_TESTING
 
@@ -21,6 +23,7 @@ class TestApi(unittest.TestCase):
         self.portal = self.layer['portal']
         self.request = self.layer['request']
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
+        directlyProvides(self.portal, IAPIRequest)
 
     def test_portlet_portlet_navigation_method(self):
         view = getMultiAdapter(
