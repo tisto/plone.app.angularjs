@@ -3,10 +3,12 @@ plone.app.angularjs
 
 Experimental AngularJS-based front end for the Plone CMS.
 
+
 Contents
 --------
 
 .. contents::
+
 
 Prerequisits
 ------------
@@ -18,6 +20,7 @@ Install Bower::
 Install Grunt::
 
   $ sudo npm install -g grunt-cli
+
 
 Buildout
 --------
