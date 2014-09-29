@@ -9,6 +9,9 @@
 
   <includeDependencies package="." />
 
+  <include package=".api" />
+  <include package=".app" />
+
   <genericsetup:registerProfile
     name="default"
     title="plone.app.angularjs"
@@ -17,17 +20,12 @@
     provides="Products.GenericSetup.interfaces.EXTENSION"
     />
 
-  <include package=".app" />
-
   <browser:resourceDirectory
     name="plone.app.angularjs"
     directory="app"
     />
 
-  <include package=".api" />
-
   <adapter factory=".traversal.AngularAppPortalRootTraverser" />
-
   <adapter factory=".traversal.AngularAppRedirectorTraverser" />
 
 </configure>
