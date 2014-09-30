@@ -48,7 +48,7 @@ ploneModule.directive('navigationPortletDirective',
   function() {
     'use strict';
     return {
-      templateUrl: 'navigation-portlet.tpl.html',
+      templateUrl: '++theme++plone.app.angularjs/navigation-portlet.tpl.html',
       controller: 'NavigationPortletController'
     };
   }

@@ -58,7 +58,7 @@ class TestCaching(unittest.TestCase):
 
     def test_index_html_templates_caching(self):
         self.browser.open(
-            self.portal_url + '/index.html'
+            self.portal_url + '/++theme++plone.app.angularjs/index.html'
         )
 
         self.assertEqual(
@@ -71,10 +71,10 @@ class TestCaching(unittest.TestCase):
             self.browser.headers['X-Cache-Operation']
         )
 
-    @unittest.skip('Not implemented yet')
     def test_html_templates_caching(self):
         self.browser.open(
-            self.portal_url + '/navigation.tpl.html'
+            self.portal_url +
+            '/++theme++plone.app.angularjs/navigation.tpl.html'
         )
 
         self.assertEqual(

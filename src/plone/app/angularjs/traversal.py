@@ -4,7 +4,6 @@ from ZPublisher.BaseRequest import DefaultPublishTraverse
 from zope.component import adapts
 from plone.dexterity.interfaces import IDexterityItem
 from zope.publisher.interfaces.browser import IBrowserRequest
-from plone.app.angularjs.app.index import AngularAppRootView
 from plone.app.angularjs.interfaces import IAPIRequest
 from plone.app.angularjs.api.api import ApiOverview
 import json
@@ -14,6 +13,25 @@ from zope.interface import alsoProvides
 from zope.component import adapter
 from zope.traversing.interfaces import ITraversable
 from zope.publisher.interfaces.http import IHTTPRequest
+
+from zope.site.hooks import getSite
+from Products.Five.browser import BrowserView
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+
+
+class AngularAppRootView(BrowserView):
+
+    template = ViewPageTemplateFile('app/index.html')
+
+    def __call__(self):
+        return self.template()
+
+    def base(self):
+        """Return the portal url with a trailing '/'. Without this the Angular
+           app won't work properly.
+        """
+        portal = getSite()
+        return portal.absolute_url() + '/'
 
 
 @adapter(IPloneSiteRoot, IHTTPRequest)

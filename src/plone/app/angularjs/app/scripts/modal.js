@@ -27,7 +27,7 @@ ploneModule.controller('ModalDemoCtrl', ['$scope', '$modal', '$log',
     $scope.open = function () {
 
       var modalInstance = $modal.open({
-        templateUrl: 'edit.tpl.html',
+        templateUrl: '++theme++plone.app.angularjs/edit.tpl.html',
         controller: 'ModalInstanceCtrl',
         resolve: {
           items: function () {

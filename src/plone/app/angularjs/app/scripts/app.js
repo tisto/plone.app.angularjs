@@ -18,7 +18,7 @@ ploneModule.config(['$routeProvider', '$locationProvider',
     $locationProvider.hashPrefix('!');
     $routeProvider.when('/:objecttraversal*', {
       controller: 'ObjectPathController',
-      templateUrl: 'page.tpl.html'
+      templateUrl: '++theme++plone.app.angularjs/page.tpl.html'
     }).otherwise({
       redirectTo: 'front-page'
     });

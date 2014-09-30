@@ -10,7 +10,6 @@
   <includeDependencies package="." />
 
   <include package=".api" />
-  <include package=".app" />
 
   <genericsetup:registerProfile
     name="default"
