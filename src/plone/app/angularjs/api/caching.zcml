@@ -6,27 +6,7 @@
   <include package="z3c.caching" file="meta.zcml" />
 
   <cache:ruleset
-    for="plone.app.angularjs.interfaces.IAPIRequest"
-    ruleset="plone.resource"
-    />
-
-  <cache:ruleset
-    for=".api.ApiOverview"
-    ruleset="plone.resource"
-    />
-
-  <cache:ruleset
-    for=".api.Traversal"
-    ruleset="plone.resource"
-    />
-
-  <cache:ruleset
-    for=".api.TopNavigation"
-    ruleset="plone.resource"
-    />
-
-  <cache:ruleset
-    for=".api.PortletNavigation"
+    for="plone.app.angularjs.interfaces.IAPIMethod"
     ruleset="plone.resource"
     />
 

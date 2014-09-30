@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 from Products.CMFPlone.interfaces.siteroot import IPloneSiteRoot
+from Products.Five.browser import BrowserView
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from ZPublisher.BaseRequest import DefaultPublishTraverse
-from zope.component import adapts
 from plone.dexterity.interfaces import IDexterityItem
-from zope.publisher.interfaces.browser import IBrowserRequest
 from plone.app.angularjs.interfaces import IAPIRequest
 from plone.app.angularjs.api.api import ApiOverview
-import json
-# -*- coding: utf-8 -*-
 from zope.interface import implementer
 from zope.interface import alsoProvides
 from zope.component import adapter
+from zope.component import adapts
 from zope.traversing.interfaces import ITraversable
 from zope.publisher.interfaces.http import IHTTPRequest
+from zope.publisher.interfaces.browser import IBrowserRequest
 
 from zope.site.hooks import getSite
-from Products.Five.browser import BrowserView
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+
+import json
 
 
 class AngularAppRootView(BrowserView):

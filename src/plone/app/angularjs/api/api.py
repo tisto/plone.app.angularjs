@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
+from zope.interface import implements
 from Acquisition import aq_chain
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.Five.browser import BrowserView
 from zope.component.hooks import getSite
 from Products.CMFCore.utils import getToolByName
-
+from plone.app.angularjs.interfaces import IAPIMethod
 import json
 
 
@@ -39,6 +40,7 @@ def json_api_call(func):
 
 
 class Traversal(BrowserView):
+    implements(IAPIMethod)
 
     @json_api_call
     def __call__(self):
@@ -71,6 +73,7 @@ class Traversal(BrowserView):
 
 
 class TopNavigation(BrowserView):
+    implements(IAPIMethod)
 
     @json_api_call
     def __call__(self):
@@ -98,6 +101,7 @@ class TopNavigation(BrowserView):
 
 
 class PortletNavigation(BrowserView):
+    implements(IAPIMethod)
 
     @json_api_call
     def __call__(self):
