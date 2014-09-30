@@ -41,7 +41,7 @@ class TestAngularAppPortalRootTraverser(unittest.TestCase):
         directlyProvides(self.request, IAPIRequest)
         traversal = AngularAppPortalRootTraverser(self.portal, self.request)
         view = traversal.publishTraverse(self.request, "top_navigation")
-        self.assertEqual(json.loads(view), [])
+        self.assertEqual(json.loads(view()), [])
 
     def test_api_non_existing_method(self):
         self.request.URL = 'http://nohost/plone/++api++v1/'
@@ -65,7 +65,7 @@ class TestAngularAppPortalRootTraverser(unittest.TestCase):
             ""
         )
         self.assertTrue(
-            "<h1>REST API</h1>" in view
+            "<h1>REST API</h1>" in view()
         )
 
 

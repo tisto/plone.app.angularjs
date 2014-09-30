@@ -10,6 +10,7 @@ from plone.testing import z2
 
 from zope.configuration import xmlconfig
 import plone.app.angularjs
+import plone.app.caching
 
 
 class PloneAppAngularJsLayer(PloneSandboxLayer):
@@ -27,7 +28,27 @@ class PloneAppAngularJsLayer(PloneSandboxLayer):
         applyProfile(portal, 'plone.app.angularjs:default')
 
 
+class PloneAppCachingLayer(PloneSandboxLayer):
+
+    def setUpZope(self, app, configurationContext):
+        xmlconfig.file(
+            'configure.zcml',
+            plone.app.caching,
+            context=configurationContext
+        )
+
+    def setUpPloneSite(self, portal):
+        # Enable Caching
+        applyProfile(portal, 'plone.app.caching:default')
+        applyProfile(portal, 'plone.app.caching:without-caching-proxy')
+        from zope.component import getUtility
+        from plone.registry.interfaces import IRegistry
+        registry = getUtility(IRegistry)
+        registry['plone.caching.interfaces.ICacheSettings.enabled'] = True
+
+
 PLONE_APP_ANGULARJS_FIXTURE = PloneAppAngularJsLayer()
+PLONE_APP_CACHING_FIXTURE = PloneAppCachingLayer()
 
 PLONE_APP_ANGULARJS_INTEGRATION_TESTING = IntegrationTesting(
     bases=(PLONE_APP_ANGULARJS_FIXTURE,),
@@ -36,6 +57,14 @@ PLONE_APP_ANGULARJS_INTEGRATION_TESTING = IntegrationTesting(
 
 PLONE_APP_ANGULARJS_FUNCTIONAL_TESTING = FunctionalTesting(
     bases=(PLONE_APP_ANGULARJS_FIXTURE, z2.ZSERVER_FIXTURE),
+    name="PloneAppAngularJs:Functional"
+)
+
+PLONE_APP_ANGULARJS_WITH_CACHING_FUNCTIONAL_TESTING = FunctionalTesting(
+    bases=(
+        PLONE_APP_ANGULARJS_FUNCTIONAL_TESTING,
+        PLONE_APP_CACHING_FIXTURE,
+    ),
     name="PloneAppAngularJs:Functional"
 )
 

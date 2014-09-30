@@ -1,0 +1,28 @@
+<configure
+  xmlns="http://namespaces.zope.org/zope"
+  xmlns:cache="http://namespaces.zope.org/cache"
+  i18n_domain="plone.app.angularjs">
+
+  <include package="z3c.caching" file="meta.zcml" />
+
+  <cache:ruleset
+    for=".api.ApiOverview"
+    ruleset="plone.resource"
+    />
+
+  <cache:ruleset
+    for=".api.Traversal"
+    ruleset="plone.resource"
+    />
+
+  <cache:ruleset
+    for=".api.TopNavigation"
+    ruleset="plone.resource"
+    />
+
+  <cache:ruleset
+    for=".api.PortletNavigation"
+    ruleset="plone.resource"
+    />
+
+</configure>
