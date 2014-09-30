@@ -49,6 +49,12 @@ class APITraverser(object):
         return self.context
 
 
+def underscore_to_camelcase(underscore_string):
+    return ''.join(
+        x for x in underscore_string.title() if not x.isspace()
+    ).replace('_', '')
+
+
 class AngularAppPortalRootTraverser(DefaultPublishTraverse):
     adapts(IPloneSiteRoot, IBrowserRequest)
 
@@ -56,19 +62,21 @@ class AngularAppPortalRootTraverser(DefaultPublishTraverse):
         if IAPIRequest.providedBy(request):
             if name == '' or name == 'folder_listing' or name == 'front-page':
                 return ApiOverview(self.context, self.request)
-            if name == 'traversal':
-                from plone.app.angularjs.api.api import Traversal
-                return Traversal(self.context, self.request)
-            if name == 'top_navigation':
-                from plone.app.angularjs.api.api import TopNavigation
-                return TopNavigation(self.context, self.request)
-            if name == 'portlet_navigation':
-                from plone.app.angularjs.api.api import PortletNavigation
-                return PortletNavigation(self.context, self.request)
-            return json.dumps({
-                'code': '404',
-                'message': "API method '%s' not found." % name,
-            })
+
+            klassname = underscore_to_camelcase(name)
+            mod = __import__(
+                'plone.app.angularjs.api.api',
+                fromlist=[klassname]
+            )
+            try:
+                klass = getattr(mod, klassname)
+                return klass(self.context, self.request)
+            except AttributeError:
+                return json.dumps({
+                    'code': '404',
+                    'message': "API method '%s' not found." % name,
+                })
+
         is_front_page = request.URL.endswith('front-page')
         no_front_page = \
             request.URL.endswith('folder_listing') or \
