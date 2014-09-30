@@ -27,11 +27,4 @@
     permission="zope2.View"
     />
 
-  <adapter
-      factory=".traverser.APITraverser"
-      name="api"
-      />
-
-  <adapter factory=".traverser.APIInnerTraverser" />
-
 </configure>

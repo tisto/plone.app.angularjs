@@ -8,7 +8,7 @@ from plone.app.angularjs.testing import\
     PLONE_APP_ANGULARJS_INTEGRATION_TESTING
 from plone.app.angularjs.traversal import AngularAppPortalRootTraverser
 from plone.app.angularjs.traversal import AngularAppRedirectorTraverser
-from plone.app.angularjs.api.traverser import IAPIRequest
+from plone.app.angularjs.traversal import IAPIRequest
 from zope.interface import directlyProvides
 
 import json

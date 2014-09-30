@@ -1,7 +1,6 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
-    xmlns:cache="http://namespaces.zope.org/cache"
     xmlns:five="http://namespaces.zope.org/five"
     xmlns:i18n="http://namespaces.zope.org/i18n"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
@@ -26,13 +25,7 @@
     directory="app"
     />
 
-  <include package="z3c.caching" file="meta.zcml" />
-
-  <cache:ruleset
-    for="plone.app.angularjs.api.api.Traversal"
-    ruleset="plone.resource"
-    />
-
+  <adapter factory=".traversal.APITraverser" name="api" />
   <adapter factory=".traversal.AngularAppPortalRootTraverser" />
   <adapter factory=".traversal.AngularAppRedirectorTraverser" />
 

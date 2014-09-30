@@ -5,9 +5,30 @@ from zope.component import adapts
 from plone.dexterity.interfaces import IDexterityItem
 from zope.publisher.interfaces.browser import IBrowserRequest
 from plone.app.angularjs.app.index import AngularAppRootView
-from plone.app.angularjs.api.traverser import IAPIRequest
+from plone.app.angularjs.interfaces import IAPIRequest
 from plone.app.angularjs.api.api import ApiOverview
 import json
+# -*- coding: utf-8 -*-
+from zope.interface import implementer
+from zope.interface import alsoProvides
+from zope.component import adapter
+from zope.traversing.interfaces import ITraversable
+from zope.publisher.interfaces.http import IHTTPRequest
+
+
+@adapter(IPloneSiteRoot, IHTTPRequest)
+@implementer(ITraversable)
+class APITraverser(object):
+    """The root API traverser
+    """
+
+    def __init__(self, context, request=None):
+        self.context = context
+        self.request = request
+
+    def traverse(self, name, postpath):
+        alsoProvides(self.request, IAPIRequest)
+        return self.context
 
 
 class AngularAppPortalRootTraverser(DefaultPublishTraverse):
