@@ -1,0 +1,10 @@
+{
+  "name": "plone.app.angularjs",
+  "version": "0.1.0",
+  "repository": "https://github.com/tisto/plone.app.angularjs",
+  "devDependencies": {
+    "gulp": "~3.8.8",
+    "gulp-prefix": "*",
+    "del": "*"
+  }
+}

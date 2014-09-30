@@ -1,0 +1,20 @@
+<div>
+
+  <!-- TEMPLATE -->
+  <script type="text/ng-template" id="navigationTree">
+    <a ng-href="{{ node.path }}">{{ node.title }}</a>
+    <ul ng-if="node.children" class="nav nav-pills nav-stacked">
+      <li ng-repeat="node in node.children" ng-include="'navigationTree'">
+      </li>
+    </ul>
+  </script>
+
+  <!-- START RECURSION -->
+  <ul id="portlet-navigation-directive" class="nav nav-pills nav-stacked">
+    <li ng-repeat="node in folders" ng-include="'navigationTree'"></li>
+  </ul>
+
+  <!-- DEBUG -->
+  <!--<pre>{{output}}</pre>-->
+
+</div>
