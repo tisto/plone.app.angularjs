@@ -20,8 +20,9 @@
     provides="Products.GenericSetup.interfaces.EXTENSION"
     />
 
-  <browser:resourceDirectory
-    name="plone.app.angularjs"
+  <include package="plone.resource" file="meta.zcml"/>
+  <plone:static
+    type="theme"
     directory="app"
     />
 

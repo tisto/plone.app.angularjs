@@ -27,7 +27,7 @@ class TestCaching(unittest.TestCase):
 
     def test_js_caching(self):
         self.browser.open(
-            self.portal_url + '/++resource++plone.app.angularjs/scripts/app.js'
+            self.portal_url + '/++theme++plone.app.angularjs/scripts/app.js'
         )
 
         self.assertEqual(
@@ -42,7 +42,7 @@ class TestCaching(unittest.TestCase):
 
     def test_css_caching(self):
         self.browser.open(
-            self.portal_url + '/++resource++plone.app.angularjs/' +
+            self.portal_url + '/++theme++plone.app.angularjs/' +
             'bower_components/bootstrap/dist/css/bootstrap.min.css'
         )
 
