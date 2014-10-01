@@ -7,7 +7,7 @@
 
   <cache:ruleset
     for="plone.app.angularjs.interfaces.IAPIMethod"
-    ruleset="plone.resource"
+    ruleset="plone.content.itemView"
     />
 
 </configure>

@@ -93,11 +93,11 @@ class TestCaching(unittest.TestCase):
         )
 
         self.assertEqual(
-            'plone.resource',
+            'plone.content.itemView',
             self.browser.headers.get('X-Cache-Rule'),
             "Response header should have contained 'X-Cache-Rule' but did not."
         )
         self.assertEqual(
-            'plone.app.caching.strongCaching',
+            'plone.app.caching.weakCaching',
             self.browser.headers.get('X-Cache-Operation')
         )
