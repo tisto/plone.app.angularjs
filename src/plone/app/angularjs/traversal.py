@@ -6,6 +6,7 @@ from ZPublisher.BaseRequest import DefaultPublishTraverse
 from plone.dexterity.interfaces import IDexterityItem
 from plone.app.angularjs.interfaces import IAPIRequest
 from plone.app.angularjs.api.api import ApiOverview
+from plone.app.angularjs.utils import underscore_to_camelcase
 from zope.interface import implementer
 from zope.interface import alsoProvides
 from zope.component import adapter
@@ -13,7 +14,6 @@ from zope.component import adapts
 from zope.traversing.interfaces import ITraversable
 from zope.publisher.interfaces.http import IHTTPRequest
 from zope.publisher.interfaces.browser import IBrowserRequest
-
 from zope.site.hooks import getSite
 
 import json
@@ -47,12 +47,6 @@ class APITraverser(object):
     def traverse(self, name, postpath):
         alsoProvides(self.request, IAPIRequest)
         return self.context
-
-
-def underscore_to_camelcase(underscore_string):
-    return ''.join(
-        x for x in underscore_string.title() if not x.isspace()
-    ).replace('_', '')
 
 
 class AngularAppPortalRootTraverser(DefaultPublishTraverse):
