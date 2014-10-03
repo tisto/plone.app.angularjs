@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 
 def underscore_to_camelcase(underscore_string):

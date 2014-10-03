@@ -25,8 +25,13 @@
     directory="app"
     />
 
+  <!-- Mark every ++api++ request with the IAPIRequest interface -->
   <adapter factory=".traversal.APITraverser" name="api" />
+
+  <!-- On portal root, return the Angular app or redirect to ++api++ -->
   <adapter factory=".traversal.AngularAppPortalRootTraverser" />
+
+  <!-- For all other requests, always redirect to the Angular app -->
   <adapter factory=".traversal.AngularAppRedirectorTraverser" />
 
 </configure>

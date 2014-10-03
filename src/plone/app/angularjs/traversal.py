@@ -20,6 +20,8 @@ import json
 
 
 class AngularAppRootView(BrowserView):
+    """Root view of the angular app. Angular needs a proper BASE tag to work.
+    """
 
     template = ViewPageTemplateFile('app/index.html')
 
@@ -37,7 +39,8 @@ class AngularAppRootView(BrowserView):
 @adapter(IPloneSiteRoot, IHTTPRequest)
 @implementer(ITraversable)
 class APITraverser(object):
-    """The root API traverser
+    """Mark every ++api++ traversal adapter request with the IAPIRequest
+       interface.
     """
 
     def __init__(self, context, request=None):
@@ -50,6 +53,9 @@ class APITraverser(object):
 
 
 class AngularAppPortalRootTraverser(DefaultPublishTraverse):
+    """Requests on the plone site root should either return the Angular app,
+       or redirected to ++api++.
+    """
     adapts(IPloneSiteRoot, IBrowserRequest)
 
     def publishTraverse(self, request, name):
@@ -87,6 +93,10 @@ class AngularAppPortalRootTraverser(DefaultPublishTraverse):
 
 
 class AngularAppRedirectorTraverser(DefaultPublishTraverse):
+    """Single page web applications expect all requests to be redirected to
+       the application root (e.g. /Plone/news/news1 -> /Plone). The Angular
+       app then takes care of mapping the URL to content.
+    """
     adapts(IDexterityItem, IBrowserRequest)
     # XXX: Adapting IContentish works only for Archetypes content objects:
     # from Products.CMFCore.interfaces import IContentish
