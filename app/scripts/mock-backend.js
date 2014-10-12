@@ -2,7 +2,8 @@ var ploneModule;
 
 ploneModule.run(function($httpBackend) {
 
-  // TOP NAVIGATION
+
+  // -- TOP NAVIGATION -------------------------------------------------------
   var top_navigation = [
     {
       id: 'news',
@@ -17,9 +18,11 @@ ploneModule.run(function($httpBackend) {
       path: '/events'
     }
   ];
-  $httpBackend.when('GET', '++api++v1/top_navigation').respond(top_navigation);
+  var re = new RegExp('\\+\\+api\\+\\+v1/top_navigation');
+  $httpBackend.whenGET(re).respond(top_navigation);
 
-  // PORTLET NAVIGATION
+
+  // --- PORTLET NAVIGATION --------------------------------------------------
   var portlet_navigation = [
     {
       "path": "front-page",
@@ -50,10 +53,11 @@ ploneModule.run(function($httpBackend) {
       "title": "Benutzer"
     }
   ];
-  var re = new RegExp('++api++v1/portlet_navigation?path=.*');
+  var re = new RegExp('\\+\\+api\\+\\+v1/portlet_navigation\\?path=.*');
   $httpBackend.whenGET(re).respond(portlet_navigation);
 
-  // TRAVERSAL
+
+  // --- TRAVERSAL -----------------------------------------------------------
   var traversal = {
     'route': '/Plone/front-page',
     'id': 'front-page',
@@ -61,10 +65,11 @@ ploneModule.run(function($httpBackend) {
     'description': 'Congrats you installed Plone',
     'text': '<p>Lorem Ipsum</p>'
   };
-  var re = new RegExp('++api++v1/traversal?path=.*');
+  var re = new RegExp('\\+\\+api\\+\\+v1/traversal\\?path=.*');
   $httpBackend.whenGET(re).respond(traversal);
 
   // PASS THROUGH TEMPLATES
-  $httpBackend.whenGET('^.*tpl.html$').passThrough();
+  var re = new RegExp('.*.tpl.html$');
+  $httpBackend.whenGET(re).passThrough();
 
 });
