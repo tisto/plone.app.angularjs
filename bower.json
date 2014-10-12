@@ -18,16 +18,16 @@
   "dependencies": {
     "jquery": "1.11.0",
     "bootstrap": "3.1.1",
-    "angular": "1.2.14",
-    "angular-route": "1.2.14",
-    "angular-animate": "1.2.14",
+    "angular": "~1.2.26",
+    "angular-route": "~1.2.26",
+    "angular-animate": "~1.2.26",
     "angular-loading-bar": "0.4.2",
-    "angular-sanitize": "1.2.14",
+    "angular-sanitize": "~1.2.26",
     "angular-bootstrap": "0.10.0",
     "angular-bootstrap-nav-tree": "*",
-    "angular-mocks": "~1.2.25"
+    "angular-mocks": "~1.2.26"
   },
   "resolutions": {
-    "angular": "1.2.25"
+    "angular": "1.2.26"
   }
 }
