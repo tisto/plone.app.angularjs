@@ -23,7 +23,7 @@ ploneModule.directive('navigationDirective',
   function() {
     'use strict';
     return {
-      templateUrl: '++theme++plone.app.angularjs/navigation.tpl.html',
+      templateUrl: 'navigation.tpl.html',
       controller: 'NavigationController'
     };
   }

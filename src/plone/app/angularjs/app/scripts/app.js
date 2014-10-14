@@ -5,8 +5,7 @@ var ploneModule = angular.module(
     'ngRoute',
     'ngSanitize',
     'ui.bootstrap',
-    'angularBootstrapNavTree',
-    //'ngMockE2E'
+    'angularBootstrapNavTree'
   ]
 );
 

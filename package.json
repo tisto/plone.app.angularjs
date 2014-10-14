@@ -3,8 +3,11 @@
   "version": "0.1.0",
   "repository": "https://github.com/tisto/plone.app.angularjs",
   "devDependencies": {
-    "gulp": "~3.8.8",
+    "browser-sync": "^1.5.7",
+    "del": "*",
+    "gulp": "^3.8.8",
+    "gulp-html-replace": "^1.4.0",
     "gulp-prefix": "*",
-    "del": "*"
+    "gulp-replace": "^0.4.0"
   }
 }

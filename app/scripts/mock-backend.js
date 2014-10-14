@@ -1,6 +1,6 @@
 var ploneModule;
 
-ploneModule.run(function($httpBackend) {
+angular.module('e2e-mocks', ['ngMockE2E']).run(function($httpBackend) {
 
 
   // -- TOP NAVIGATION -------------------------------------------------------
@@ -68,8 +68,12 @@ ploneModule.run(function($httpBackend) {
   var re = new RegExp('\\+\\+api\\+\\+v1/traversal\\?path=.*');
   $httpBackend.whenGET(re).respond(traversal);
 
-  // PASS THROUGH TEMPLATES
+
+  // --- PASS THROUGH TEMPLATES ----------------------------------------------
   var re = new RegExp('.*.tpl.html$');
   $httpBackend.whenGET(re).passThrough();
 
 });
+
+ploneModule.requires.push('e2e-mocks');
+
