@@ -62,38 +62,8 @@ angular.module('e2e-mocks', ['ngMockE2E']).run(function($httpBackend) {
 
 
   // --- PORTLET NAVIGATION --------------------------------------------------
-  var portlet_navigation = [
-    {
-      "path": "front-page",
-      "description": "",
-      "children": [],
-      "id": "front-page",
-      "title": "Willkommen bei Plone"
-    },
-    {
-      "path": "news",
-      "description": "",
-      "children": [],
-      "id": "news",
-      "title": "Nachrichten"
-    },
-    {
-      "path": "events",
-      "description": "",
-      "children": [],
-      "id": "events",
-      "title": "Termine"
-    },
-    {
-      "path": "Members",
-      "description": "",
-      "children": [],
-      "id": "Members",
-      "title": "Benutzer"
-    }
-  ];
   var re = new RegExp('\\+\\+api\\+\\+v1/portlet_navigation');
-  $httpBackend.whenGET(re).respond(portlet_navigation);
+  $httpBackend.whenGET(re).respond(site_structure);
 
 
   // --- TRAVERSAL -----------------------------------------------------------

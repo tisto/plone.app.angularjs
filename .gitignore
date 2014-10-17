@@ -25,3 +25,7 @@ docs/html
 bower_components
 extras
 node_modules
+selenium-screenshot-*
+output.xml
+report.html
+log.html
