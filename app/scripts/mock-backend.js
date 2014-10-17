@@ -62,8 +62,8 @@ angular.module('e2e-mocks', ['ngMockE2E']).run(function($httpBackend) {
 
 
   // --- PORTLET NAVIGATION --------------------------------------------------
-  var re = new RegExp('\\+\\+api\\+\\+v1/portlet_navigation');
-  $httpBackend.whenGET(re).respond(site_structure);
+  var portlet_navigation_re = new RegExp('\\+\\+api\\+\\+v1/portlet_navigation');
+  $httpBackend.whenGET(portlet_navigation_re).respond(site_structure);
 
 
   // --- TRAVERSAL -----------------------------------------------------------
@@ -75,15 +75,15 @@ angular.module('e2e-mocks', ['ngMockE2E']).run(function($httpBackend) {
       'description': value.description,
       'text': '<p>Lorem Ipsum</p>'
     };
-    var re = new RegExp('\\+\\+api\\+\\+v1/traversal\\?path=' + value.path);
-    $httpBackend.whenGET(re).respond(traversal);
+    var traversal_re = new RegExp('\\+\\+api\\+\\+v1/traversal\\?path=' + value.path);
+    $httpBackend.whenGET(traversal_re).respond(traversal);
 
   });
 
 
   // --- PASS THROUGH TEMPLATES ----------------------------------------------
-  var re = new RegExp('.*.tpl.html$');
-  $httpBackend.whenGET(re).passThrough();
+  var templates_re = new RegExp('.*.tpl.html$');
+  $httpBackend.whenGET(templates_re).passThrough();
 
 });
 
