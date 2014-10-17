@@ -44,7 +44,7 @@ gulp.task('scripts', function(){
 });
 
 
-// STYPES
+// STYLES
 gulp.task('styles', function(){
   gulp.src('app/styles/*.css')
     .pipe(gulp.dest('src/plone/app/angularjs/app/styles/'));
