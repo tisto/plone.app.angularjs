@@ -1,9 +1,11 @@
 var gulp = require('gulp'),
     del = require('del'),
     prefix = require('gulp-prefix'),
+    less = require('gulp-less'),
     replace = require('gulp-replace'),
     htmlReplace = require('gulp-html-replace'),
-    browserSync = require('browser-sync');
+    browserSync = require('browser-sync'),
+    sourcemaps = require('gulp-sourcemaps');
 
 
 // CLEAN
@@ -47,7 +49,10 @@ gulp.task('scripts', function(){
 
 // STYLES
 gulp.task('styles', function(){
-  gulp.src('app/styles/*.css')
+  gulp.src('app/styles/*.less')
+    .pipe(sourcemaps.init())
+    .pipe(less())
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('src/plone/app/angularjs/app/styles/'));
 });
 

@@ -8,6 +8,10 @@
     "gulp": "^3.8.8",
     "gulp-html-replace": "^1.4.0",
     "gulp-prefix": "*",
-    "gulp-replace": "^0.4.0"
+    "gulp-replace": "^0.4.0",
+    "gulp-less": "^1.3.6",
+    "gulp-sourcemaps": "^1.2.4"
+  },
+  "dependencies": {
   }
 }
