@@ -1,6 +1,135 @@
 # -*- coding: utf-8 -*-
 import unittest2 as unittest
 from plone.app.angularjs.utils import underscore_to_camelcase
+from plone.app.angularjs.utils import get_object_schema
+from plone.app.angularjs.utils import serialize_to_json
+from plone.app.angularjs.testing import\
+    PLONE_APP_ANGULARJS_INTEGRATION_TESTING
+from plone.app.textfield.value import RichTextValue
+
+from DateTime import DateTime
+
+
+class SerializeToJsonIntegrationTest(unittest.TestCase):
+
+    layer = PLONE_APP_ANGULARJS_INTEGRATION_TESTING
+
+    def setUp(self):
+        self.app = self.layer['app']
+        self.portal = self.layer['portal']
+
+    def test_serialize_title(self):
+        self.portal.invokeFactory('Document', id='doc1', title='Doc 1')
+
+        self.assertEqual(
+            serialize_to_json(self.portal.doc1).get('title'),
+            'Doc 1'
+        )
+
+    def test_serialize_description(self):
+        self.portal.invokeFactory('Document', id='doc1', title='Doc 1')
+        self.portal.doc1.description = u'Lorem Ipsum'
+
+        self.assertEqual(
+            serialize_to_json(self.portal.doc1).get('description'),
+            'Lorem Ipsum'
+        )
+
+    def test_serialize_rich_text(self):
+        self.portal.invokeFactory('Document', id='doc1', title='Doc 1')
+        self.portal.doc1.text = RichTextValue(
+            u"Lorem ipsum.",
+            'text/plain',
+            'text/html'
+        )
+
+        self.assertEqual(
+            serialize_to_json(self.portal.doc1).get('text'),
+            u'<p>Lorem ipsum.</p>'
+        )
+
+    def test_serialize_datetime(self):
+        self.portal.invokeFactory('Document', id='doc1', title='Doc 1')
+        self.portal.doc1.setEffectiveDate(DateTime('2014/04/04'))
+        self.assertEqual(
+            serialize_to_json(self.portal.doc1).get('effective'),
+            '2014/04/04 00:00:00 GMT+2'
+        )
+
+    def test_ignore_underscore_values(self):
+        self.portal.invokeFactory('Document', id='doc1', title='Doc 1')
+
+        self.assertFalse(
+            '__name__' in serialize_to_json(self.portal.doc1)
+        )
+        self.assertFalse(
+            'manage_options' in serialize_to_json(self.portal.doc1)
+        )
+
+
+class GetObjectSchemaUnitTest(unittest.TestCase):
+
+    layer = PLONE_APP_ANGULARJS_INTEGRATION_TESTING
+
+    def setUp(self):
+        self.app = self.layer['app']
+        self.portal = self.layer['portal']
+
+    def test_empty(self):
+        self.portal.invokeFactory('Document', id='doc1', title='Doc 1')
+        schema = [x[0] for x in get_object_schema(self.portal.doc1)]
+        self.assertEqual(
+            schema,
+            [
+                'title',
+                'allow_discussion',
+                'exclude_from_nav',
+                'text',
+                'relatedItems',
+                'table_of_contents',
+                '__dav_resource__',
+                'title',
+                'manage_options',
+                'meta_type',
+                '__name__',
+                '__http_methods__',
+                'isPrincipiaFolderish',
+                'icon',
+                '__dav_resource__',
+                'title',
+                'manage_options',
+                'meta_type',
+                '__name__',
+                '__http_methods__',
+                'isPrincipiaFolderish',
+                'icon',
+                'meta_type',
+                'isPrincipiaFolderish',
+                'manage_options',
+                '__dav_resource__',
+                '__http_methods__',
+                '_properties',
+                'title',
+                '__name__',
+                '__name__',
+                'title',
+                'allow_discussion',
+                'exclude_from_nav',
+                'rights',
+                'contributors',
+                'effective',
+                'title',
+                'expires',
+                'language',
+                'subjects',
+                'creators',
+                'description',
+                'text',
+                'relatedItems',
+                'changeNote',
+                'table_of_contents'
+            ]
+        )
 
 
 class UnderscoreToCamelcaseUnitTest(unittest.TestCase):

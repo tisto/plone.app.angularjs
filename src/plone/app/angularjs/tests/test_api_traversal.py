@@ -24,14 +24,14 @@ class TestRestApiTraversalMethod(unittest.TestCase):
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
         directlyProvides(self.portal, IAPIRequest)
 
-    def test_traversal_view_is_registered(self):
+    def test_api_traversal_view_is_registered(self):
         view = getMultiAdapter(
             (self.portal, self.request),
             name="traversal"
         )
         self.assertTrue(view())
 
-    def test_traversal_without_param(self):
+    def test_api_traversal_without_param(self):
         view = getMultiAdapter(
             (self.portal, self.request),
             name="traversal"
@@ -41,7 +41,7 @@ class TestRestApiTraversalMethod(unittest.TestCase):
             {u'message': u'No path has been provided.', u'code': u'404'}
         )
 
-    def test_traversal_empty_param(self):
+    def test_api_traversal_empty_param(self):
         self.request.set('path', '')
         view = getMultiAdapter(
             (self.portal, self.request),
@@ -52,7 +52,7 @@ class TestRestApiTraversalMethod(unittest.TestCase):
             {u'message': u'No path has been provided.', u'code': u'404'}
         )
 
-    def test_traversal_not_found(self):
+    def test_api_traversal_not_found(self):
         self.request.set('path', 'nonexisting')
 
         view = getMultiAdapter(
@@ -68,7 +68,36 @@ class TestRestApiTraversalMethod(unittest.TestCase):
             }
         )
 
-    def test_traversal_document(self):
+    def test_api_traversal_document_returns_title(self):
+        self.portal.invokeFactory('Document', 'doc1', title=u'Document 1')
+        self.request.set('path', 'doc1')
+
+        view = getMultiAdapter(
+            (self.portal, self.request),
+            name="traversal"
+        )
+
+        self.assertEqual(
+            json.loads(view())['title'],
+            u'Document 1'
+        )
+
+    def test_api_traversal_document_returns_description(self):
+        self.portal.invokeFactory('Document', 'doc1', title=u'Document 1')
+        self.portal.doc1.setDescription(u'I am the first document!')
+        self.request.set('path', 'doc1')
+
+        view = getMultiAdapter(
+            (self.portal, self.request),
+            name="traversal"
+        )
+
+        self.assertEqual(
+            json.loads(view())['description'],
+            u'I am the first document!'
+        )
+
+    def test_api_traversal_document_returns_text(self):
         self.portal.invokeFactory('Document', 'doc1')
         self.portal.doc1.text = RichTextValue(
             u"Lorem ipsum.",
@@ -83,58 +112,11 @@ class TestRestApiTraversalMethod(unittest.TestCase):
         )
 
         self.assertEqual(
-            json.loads(view()),
-            {
-                u'route': u'/plone/doc1',
-                u'title': u'',
-                u'description': u'',
-                u'text': u'<p>Lorem ipsum.</p>',
-                u'id': u'doc1'
-            }
+            json.loads(view())['text'],
+            u'<p>Lorem ipsum.</p>'
         )
 
-    def test_traversal_document_sets_title(self):
-        self.portal.invokeFactory('Document', 'doc1', title=u'Document 1')
-        self.request.set('path', 'doc1')
-
-        view = getMultiAdapter(
-            (self.portal, self.request),
-            name="traversal"
-        )
-
-        self.assertEqual(
-            json.loads(view()),
-            {
-                u'route': u'/plone/doc1',
-                u'title': u'Document 1',
-                u'description': u'',
-                u'text': u'',
-                u'id': u'doc1'
-            }
-        )
-
-    def test_traversal_document_sets_description(self):
-        self.portal.invokeFactory('Document', 'doc1', title=u'Document 1')
-        self.portal.doc1.setDescription(u'I am the first document!')
-        self.request.set('path', 'doc1')
-
-        view = getMultiAdapter(
-            (self.portal, self.request),
-            name="traversal"
-        )
-
-        self.assertEqual(
-            json.loads(view()),
-            {
-                u'route': u'/plone/doc1',
-                u'title': u'Document 1',
-                u'description': u'I am the first document!',
-                u'text': u'',
-                u'id': u'doc1'
-            }
-        )
-
-    def test_traversal_folder(self):
+    def test_api_traversal_folder(self):
         self.portal.invokeFactory('Folder', 'folder1')
         self.request.set('path', 'folder1')
 
@@ -144,17 +126,11 @@ class TestRestApiTraversalMethod(unittest.TestCase):
         )
 
         self.assertEqual(
-            json.loads(view()),
-            {
-                u'route': u'/plone/folder1',
-                u'title': u'',
-                u'description': u'',
-                u'text': u'',
-                u'id': u'folder1'
-            }
+            json.loads(view())['route'],
+            u'/plone/folder1'
         )
 
-    def test_traversal_nested_document(self):
+    def test_api_traversal_nested_document(self):
         self.portal.invokeFactory('Folder', 'folder1')
         self.portal.folder1.invokeFactory('Document', 'doc1')
         self.request.set('path', 'folder1/doc1')
@@ -165,12 +141,6 @@ class TestRestApiTraversalMethod(unittest.TestCase):
         )
 
         self.assertEqual(
-            json.loads(view()),
-            {
-                u'route': u'/plone/folder1/doc1',
-                u'title': u'',
-                u'description': u'',
-                u'text': u'',
-                u'id': u'doc1'
-            }
+            json.loads(view())['route'],
+            u'/plone/folder1/doc1'
         )

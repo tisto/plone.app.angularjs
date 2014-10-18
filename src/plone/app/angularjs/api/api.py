@@ -6,6 +6,9 @@ from Products.Five.browser import BrowserView
 from zope.component.hooks import getSite
 from Products.CMFCore.utils import getToolByName
 from plone.app.angularjs.interfaces import IAPIMethod
+from plone.app.angularjs.utils import serialize_to_json
+
+
 import json
 
 
@@ -60,20 +63,9 @@ class Traversal(BrowserView):
                 'message': "No object found for path '%s'." % path,
             }
 
-        # process rich text
-        text = getattr(obj, 'text', None)
-        if text is not None:
-            text = text.output
-        else:
-            text = ''
-
-        return {
-            'route': path,
-            'id': obj.id,
-            'title': obj.title,
-            'description': obj.Description(),
-            'text': text
-        }
+        result = serialize_to_json(obj)
+        result['route'] = path
+        return result
 
 
 class TopNavigation(BrowserView):
