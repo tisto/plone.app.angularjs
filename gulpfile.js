@@ -1,8 +1,10 @@
 var gulp = require('gulp'),
+    concat = require('gulp-concat'),
     del = require('del'),
     prefix = require('gulp-prefix'),
     less = require('gulp-less'),
     replace = require('gulp-replace'),
+    ugilfy = require('gulp-uglify'),
     htmlReplace = require('gulp-html-replace'),
     browserSync = require('browser-sync'),
     sourcemaps = require('gulp-sourcemaps');
@@ -34,15 +36,18 @@ gulp.task('index-html', function(){
   gulp.src('app/index.html')
     .pipe(prefix(prefixUrl, null, true))
     .pipe(htmlReplace({
-        'mock': ''
+      'scripts': '++theme++plone.app.angularjs/plone.app.angularjs.min.js',
+      'mock': ''
     }))
     .pipe(gulp.dest('src/plone/app/angularjs/app'));
 });
+
 
 // SCRIPTS
 gulp.task('scripts', function(){
   gulp.src('app/scripts/**/*.js')
     .pipe(replace("templateUrl: '", "templateUrl: '++theme++plone.app.angularjs/"))
+    .pipe(concat('plone.app.angularjs.min.js'))
     .pipe(gulp.dest('src/plone/app/angularjs/app/scripts/'));
 });
 
