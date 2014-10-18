@@ -59,10 +59,14 @@ class Traversal(BrowserView):
                 'code': '404',
                 'message': "No object found for path '%s'." % path,
             }
-        try:
-            text = obj.getText()
-        except AttributeError:
+
+        # process rich text
+        text = getattr(obj, 'text', None)
+        if text is not None:
+            text = text.output
+        else:
             text = ''
+
         return {
             'route': path,
             'id': obj.id,

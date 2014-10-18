@@ -6,6 +6,7 @@ from plone.app.testing import TEST_USER_ID
 from zope.interface import directlyProvides
 from zope.component import getMultiAdapter
 
+from plone.app.textfield.value import RichTextValue
 from plone.app.angularjs.interfaces import IAPIRequest
 
 import unittest2 as unittest
@@ -69,6 +70,11 @@ class TestRestApiTraversalMethod(unittest.TestCase):
 
     def test_traversal_document(self):
         self.portal.invokeFactory('Document', 'doc1')
+        self.portal.doc1.text = RichTextValue(
+            u"Lorem ipsum.",
+            'text/plain',
+            'text/html'
+        )
         self.request.set('path', 'doc1')
 
         view = getMultiAdapter(
@@ -82,7 +88,7 @@ class TestRestApiTraversalMethod(unittest.TestCase):
                 u'route': u'/plone/doc1',
                 u'title': u'',
                 u'description': u'',
-                u'text': u'',
+                u'text': u'<p>Lorem ipsum.</p>',
                 u'id': u'doc1'
             }
         )
