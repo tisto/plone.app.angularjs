@@ -29,7 +29,7 @@ gulp.task('bower', function(){
 // INDEX.HTML
 gulp.task('index-html', function(){
   var prefixUrl = "++theme++plone.app.angularjs/";
-  gulp.src('app/*.html')
+  gulp.src('app/index.html')
     .pipe(prefix(prefixUrl, null, true))
     .pipe(htmlReplace({
         'mock': ''
@@ -49,6 +49,16 @@ gulp.task('scripts', function(){
 gulp.task('styles', function(){
   gulp.src('app/styles/*.css')
     .pipe(gulp.dest('src/plone/app/angularjs/app/styles/'));
+});
+
+
+// WATCH
+gulp.task('watch', function() {
+  gulp.watch('app/styles/**/*.less', ['styles']);
+  gulp.watch('app/scripts/**/*.js', ['scripts']);
+  //gulp.watch('app/images/**/*', ['images']);
+  gulp.watch('app/*.tpl.html', ['templates']);
+  gulp.watch('app/index.html', ['index-html']);
 });
 
 
