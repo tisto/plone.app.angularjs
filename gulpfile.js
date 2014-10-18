@@ -8,7 +8,7 @@ var gulp = require('gulp'),
 
 // CLEAN
 gulp.task('clean', function(cb) {
-  del(['src/plone/app/angularjs/app/*.*'], cb)
+  del(['src/plone/app/angularjs/app/**/*.*'], cb)
 });
 
 
@@ -18,6 +18,7 @@ gulp.task('templates', function(){
   .pipe(gulp.dest('src/plone/app/angularjs/app'));
 });
 
+
 // BOWER_COMPOMENTS
 gulp.task('bower', function(){
   gulp.src('app/bower_components/**/*.*')
@@ -25,7 +26,7 @@ gulp.task('bower', function(){
 });
 
 
-// PREFIX
+// INDEX.HTML
 gulp.task('index-html', function(){
   var prefixUrl = "++theme++plone.app.angularjs/";
   gulp.src('app/*.html')
@@ -62,4 +63,6 @@ gulp.task('browser-sync', function() {
 
 
 // DEFAULT
-gulp.task('default', ['bower', 'templates', 'index-html', 'scripts', 'styles']);
+gulp.task('default', ['clean'], function() {
+  gulp.start('bower', 'templates', 'index-html', 'scripts', 'styles');
+});
