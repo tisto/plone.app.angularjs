@@ -87,40 +87,24 @@ class GetObjectSchemaUnitTest(unittest.TestCase):
                 'text',
                 'relatedItems',
                 'table_of_contents',
-                'title',
                 'meta_type',
                 'isPrincipiaFolderish',
                 'icon',
-                'title',
-                'meta_type',
-                'isPrincipiaFolderish',
-                'icon',
-                'meta_type',
-                'isPrincipiaFolderish',
-                'title',
-                'title',
-                'allow_discussion',
-                'exclude_from_nav',
                 'rights',
                 'contributors',
                 'effective',
-                'title',
                 'expires',
                 'language',
                 'subjects',
                 'creators',
                 'description',
-                'text',
-                'relatedItems',
-                'changeNote',
-                'table_of_contents'
+                'changeNote'
             ]
         )
 
     def test_folder(self):
         self.portal.invokeFactory('Folder', id='folder1', title='Folder 1')
         schema = [x[0] for x in get_object_schema(self.portal.folder1)]
-
         self.assertEqual(
             schema,
             [
@@ -129,41 +113,19 @@ class GetObjectSchemaUnitTest(unittest.TestCase):
                 'exclude_from_nav',
                 'relatedItems',
                 'nextPreviousEnabled',
-                'title',
                 'isAnObjectManager',
                 'meta_type',
                 'meta_types',
                 'isPrincipiaFolderish',
                 'icon',
-                'isAnObjectManager',
-                'meta_type',
-                'meta_types',
-                'isPrincipiaFolderish',
-                'title',
-                'meta_type',
-                'isPrincipiaFolderish',
-                'icon',
-                'title',
-                'meta_type',
-                'isPrincipiaFolderish',
-                'icon',
-                'meta_type',
-                'isPrincipiaFolderish',
-                'title',
                 'rights',
                 'contributors',
                 'effective',
-                'title',
                 'expires',
                 'language',
                 'subjects',
                 'creators',
-                'description',
-                'title',
-                'allow_discussion',
-                'exclude_from_nav',
-                'relatedItems',
-                'nextPreviousEnabled'
+                'description'
             ]
         )
 

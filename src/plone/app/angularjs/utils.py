@@ -52,18 +52,23 @@ def serialize_to_json(obj):
 
 
 def get_object_schema(obj):
+    object_schema = set()
     for iface in providedBy(obj).flattened():
         for name, field in getFields(iface).items():
             no_underscore_method = not name.startswith('_')
             no_manage_method = not name.startswith('manage')
             if no_underscore_method and no_manage_method:
-                yield name, field
+                if name not in object_schema:
+                    object_schema.add(name)
+                    yield name, field
 
     assignable = IBehaviorAssignable(obj, None)
     if assignable:
         for behavior in assignable.enumerateBehaviors():
             for name, field in getFields(behavior.interface).items():
-                yield name, field
+                if name not in object_schema:
+                    object_schema.add(name)
+                    yield name, field
 
 
 def underscore_to_camelcase(underscore_string):
