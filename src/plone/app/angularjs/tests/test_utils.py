@@ -53,7 +53,7 @@ class SerializeToJsonIntegrationTest(unittest.TestCase):
         self.portal.doc1.setEffectiveDate(DateTime('2014/04/04'))
         self.assertEqual(
             serialize_to_json(self.portal.doc1).get('effective'),
-            '2014/04/04 00:00:00 GMT+2'
+            '2014-04-04T00:00:00'
         )
 
     def test_ignore_underscore_values(self):
@@ -75,7 +75,7 @@ class GetObjectSchemaUnitTest(unittest.TestCase):
         self.app = self.layer['app']
         self.portal = self.layer['portal']
 
-    def test_empty(self):
+    def test_document(self):
         self.portal.invokeFactory('Document', id='doc1', title='Doc 1')
         schema = [x[0] for x in get_object_schema(self.portal.doc1)]
         self.assertEqual(
@@ -87,31 +87,17 @@ class GetObjectSchemaUnitTest(unittest.TestCase):
                 'text',
                 'relatedItems',
                 'table_of_contents',
-                '__dav_resource__',
                 'title',
-                'manage_options',
                 'meta_type',
-                '__name__',
-                '__http_methods__',
                 'isPrincipiaFolderish',
                 'icon',
-                '__dav_resource__',
                 'title',
-                'manage_options',
                 'meta_type',
-                '__name__',
-                '__http_methods__',
                 'isPrincipiaFolderish',
                 'icon',
                 'meta_type',
                 'isPrincipiaFolderish',
-                'manage_options',
-                '__dav_resource__',
-                '__http_methods__',
-                '_properties',
                 'title',
-                '__name__',
-                '__name__',
                 'title',
                 'allow_discussion',
                 'exclude_from_nav',
@@ -128,6 +114,56 @@ class GetObjectSchemaUnitTest(unittest.TestCase):
                 'relatedItems',
                 'changeNote',
                 'table_of_contents'
+            ]
+        )
+
+    def test_folder(self):
+        self.portal.invokeFactory('Folder', id='folder1', title='Folder 1')
+        schema = [x[0] for x in get_object_schema(self.portal.folder1)]
+
+        self.assertEqual(
+            schema,
+            [
+                'title',
+                'allow_discussion',
+                'exclude_from_nav',
+                'relatedItems',
+                'nextPreviousEnabled',
+                'title',
+                'isAnObjectManager',
+                'meta_type',
+                'meta_types',
+                'isPrincipiaFolderish',
+                'icon',
+                'isAnObjectManager',
+                'meta_type',
+                'meta_types',
+                'isPrincipiaFolderish',
+                'title',
+                'meta_type',
+                'isPrincipiaFolderish',
+                'icon',
+                'title',
+                'meta_type',
+                'isPrincipiaFolderish',
+                'icon',
+                'meta_type',
+                'isPrincipiaFolderish',
+                'title',
+                'rights',
+                'contributors',
+                'effective',
+                'title',
+                'expires',
+                'language',
+                'subjects',
+                'creators',
+                'description',
+                'title',
+                'allow_discussion',
+                'exclude_from_nav',
+                'relatedItems',
+                'nextPreviousEnabled'
             ]
         )
 
