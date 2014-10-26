@@ -14,7 +14,10 @@ ploneModule.config(['$routeProvider', '$locationProvider',
     'use strict';
     $locationProvider.html5Mode(true);
     $locationProvider.hashPrefix('!');
-    $routeProvider.when('/:objecttraversal*', {
+    $routeProvider.when('/contact-info', {
+      controller: 'ContactInfoFormController',
+      templateUrl: '++theme++plone.app.angularjs/contact-info.tpl.html'
+    }).when('/:objecttraversal*', {
       controller: 'ObjectPathController',
       templateUrl: '++theme++plone.app.angularjs/page.tpl.html'
     }).otherwise({
@@ -27,8 +30,6 @@ ploneModule.controller('ObjectPathController',
   ['$scope', '$routeParams', '$http', '$sce',
     function($scope, $routeParams, $http, $sce) {
       'use strict';
-      //if ($routeParams.objecttraversal.match('/edit$')) {
-      //}
       $http({
         url: '++api++v1/traversal',
         method: 'GET',
@@ -39,6 +40,31 @@ ploneModule.controller('ObjectPathController',
           return $sce.trustAsHtml($scope.snippet);
         };
       });
+    }
+  ]
+);
+
+
+ploneModule.controller('ContactInfoFormController',
+  ['$scope',
+    function($scope) {
+      'use strict';
+      $scope.form = {
+        'fullname': '',
+        'email': '',
+        'text': ''
+      };
+      $scope.submit = function (isValid) {
+        if(!isValid) return;
+
+        console.log($scope.form);
+        // clear form
+        $scope.form = {
+          'fullname': '',
+          'email': '',
+          'text': ''
+        };
+      };
     }
   ]
 );
