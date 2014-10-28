@@ -14,7 +14,10 @@ var ploneModule = angular.module(
 ploneModule.config(['$routeProvider', '$locationProvider',
   function($routeProvider, $locationProvider) {
     'use strict';
-    $locationProvider.html5Mode(true);
+    $locationProvider.html5Mode({
+      enabled: true,
+      requireBase: false
+    });
     $locationProvider.hashPrefix('!');
     $routeProvider.when('/contact-info', {
       controller: 'ContactInfoFormController',

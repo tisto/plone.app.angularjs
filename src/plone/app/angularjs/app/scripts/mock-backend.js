@@ -77,9 +77,11 @@ angular.module('e2e-mocks', ['ngMockE2E']).run(function($httpBackend) {
     };
     var traversal_re = new RegExp('\\+\\+api\\+\\+v1/traversal\\?path=' + value.path);
     $httpBackend.whenGET(traversal_re).respond(traversal);
-
   });
 
+  var traversal = site_structure[0];
+  var traversal_re = new RegExp('\\+\\+api\\+\\+v1/traversal\\?path=.*');
+  $httpBackend.whenGET(traversal_re).respond(traversal);
 
   // --- PASS THROUGH TEMPLATES ----------------------------------------------
   var templates_re = new RegExp('.*.tpl.html$');

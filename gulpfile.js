@@ -53,6 +53,7 @@ gulp.task('styles', function(){
     .pipe(sourcemaps.init())
     .pipe(less())
     .pipe(sourcemaps.write())
+    .pipe(gulp.dest('app/styles/'))
     .pipe(gulp.dest('src/plone/app/angularjs/app/styles/'));
 });
 
