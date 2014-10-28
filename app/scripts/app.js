@@ -4,7 +4,8 @@ var ploneModule = angular.module(
     'ngAnimate',
     'ngRoute',
     'ngSanitize',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'ui.tinymce'
   ]
 );
 
