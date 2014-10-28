@@ -21,8 +21,18 @@
         <input type="email" name="email" ng-model="form.email" required />
       </div>
       <div class="field">
+        <label for="address">Country</label>
+        <ui-select ng-model="country.selected" theme="bootstrap" ng-disabled="disabled" style="width: 300px;">
+          <ui-select-match placeholder="Select or search a country in the list...">{{$select.selected.name}}</ui-select-match>
+          <ui-select-choices repeat="country in countries | filter: $select.search">
+            <span ng-bind-html="country.name | highlight: $select.search"></span>
+            <small ng-bind-html="country.code | highlight: $select.search"></small>
+          </ui-select-choices>
+        </ui-select>
+      </div>
+      <div class="field">
         <label for="text">Text</label>
-        <textarea ui-tinymce ng-model="form.text" name="text" required />
+        <textarea ui-tinymce ng-model="form.text" name="text" />
       </div>
       <nav class="actions">
         <input type="submit" value="Send" />
