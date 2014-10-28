@@ -1,7 +1,7 @@
 <div class="container">
   <div class="jumbotron">
-    <h1>{{page.title}}</h1>
-    <p>{{page.description}}</p>
+    <h1>Contact Form</h1>
+    <p>Fill out the form below to contact the site owners.</p>
   </div>
   <ol class="breadcrumb">
     <li><a href="front-page">Home</a></li>
@@ -9,7 +9,6 @@
   </ol>
   <div id="navigation-portlet-directive" navigation-portlet-directive></div>
   <div id="content">
-    <h1>Contact Form</h1>
     <form name="contactInfoForm"
           ng-controller="ContactInfoFormController"
           ng-submit="submit(contactInfoForm.$valid)">
@@ -26,7 +25,7 @@
         <textarea ng-model="form.text" name="text" required />
       </div>
       <nav class="actions">
-        <input type="submit" />
+        <input type="submit" value="Send" />
       </nav>
     </form>
   </div>
