@@ -85,6 +85,6 @@ gulp.task('browser-sync', function() {
 
 
 // DEFAULT
-gulp.task('default', ['clean', 'browser-sync'], function() {
+gulp.task('default', ['clean'], function() {
   gulp.start('bower', 'templates', 'index-html', 'scripts', 'styles');
 });
