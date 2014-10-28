@@ -54,7 +54,7 @@ ploneModule.controller('ContactInfoFormController',
       $scope.form = {
         'fullname': '',
         'email': '',
-        'country': {},
+        'country': '',
         'text': ''
       };
 
@@ -305,18 +305,29 @@ ploneModule.controller('ContactInfoFormController',
         {name: 'Zimbabwe', code: 'ZW'}
       ];
 
+      $scope.alerts = [];
+
+      $scope.addAlert = function() {
+        $scope.alerts.push({type: 'success', msg: 'Message send!'});
+      };
+
+      $scope.closeAlert = function(index) {
+        $scope.alerts.splice(index, 1);
+      };
+
       $scope.submit = function (isValid) {
         if(!isValid) return;
-
+        $scope.addAlert();
         console.log($scope.form);
         // clear form
         $scope.form = {
           'fullname': '',
           'email': '',
-          'address': '',
+          'country': '',
           'text': ''
         };
       };
+
     }
   ]
 );

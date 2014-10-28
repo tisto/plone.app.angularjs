@@ -12,6 +12,7 @@
     <form name="contactInfoForm"
           ng-controller="ContactInfoFormController"
           ng-submit="submit(contactInfoForm.$valid)">
+      <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
       <div class="field">
         <label for="fullname">Fullname</label>
         <input type="text" name="fullname" ng-model="form.fullname" />
@@ -34,8 +35,8 @@
         <label for="text">Text</label>
         <textarea ui-tinymce ng-model="form.text" name="text" />
       </div>
-      <nav class="actions">
-        <input type="submit" value="Send" />
+      <nav class="actions btn-group">
+        <input type="submit" value="Send" class="btn btn-primary" />
       </nav>
     </form>
   </div>
