@@ -5,6 +5,7 @@ var gulp = require('gulp'),
     replace = require('gulp-replace'),
     htmlReplace = require('gulp-html-replace'),
     browserSync = require('browser-sync'),
+    reload = browserSync.reload,
     sourcemaps = require('gulp-sourcemaps');
 
 
@@ -17,14 +18,16 @@ gulp.task('clean', function(cb) {
 // TEMPLATES
 gulp.task('templates', function(){
   gulp.src('app/*.tpl.html')
-  .pipe(gulp.dest('src/plone/app/angularjs/app'));
+  .pipe(gulp.dest('src/plone/app/angularjs/app'))
+  .pipe(reload({stream:true}));
 });
 
 
 // BOWER_COMPOMENTS
 gulp.task('bower', function(){
   gulp.src('app/bower_components/**/*.*')
-  .pipe(gulp.dest('src/plone/app/angularjs/app/bower_components'));
+  .pipe(gulp.dest('src/plone/app/angularjs/app/bower_components'))
+  .pipe(reload({stream:true}));
 });
 
 
@@ -36,14 +39,16 @@ gulp.task('index-html', function(){
     .pipe(htmlReplace({
         'mock': ''
     }))
-    .pipe(gulp.dest('src/plone/app/angularjs/app'));
+    .pipe(gulp.dest('src/plone/app/angularjs/app'))
+    .pipe(reload({stream:true}));
 });
 
 // SCRIPTS
 gulp.task('scripts', function(){
   gulp.src('app/scripts/**/*.js')
     .pipe(replace("templateUrl: '", "templateUrl: '++theme++plone.app.angularjs/"))
-    .pipe(gulp.dest('src/plone/app/angularjs/app/scripts/'));
+    .pipe(gulp.dest('src/plone/app/angularjs/app/scripts/'))
+    .pipe(reload({stream:true}));
 });
 
 
@@ -54,12 +59,13 @@ gulp.task('styles', function(){
     .pipe(less())
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('app/styles/'))
-    .pipe(gulp.dest('src/plone/app/angularjs/app/styles/'));
+    .pipe(gulp.dest('src/plone/app/angularjs/app/styles/'))
+    .pipe(reload({stream:true}));
 });
 
 
 // WATCH
-gulp.task('watch', function() {
+gulp.task('watch', ['browser-sync'], function() {
   gulp.watch('app/styles/**/*.less', ['styles']);
   gulp.watch('app/scripts/**/*.js', ['scripts']);
   //gulp.watch('app/images/**/*', ['images']);
@@ -79,6 +85,6 @@ gulp.task('browser-sync', function() {
 
 
 // DEFAULT
-gulp.task('default', ['clean'], function() {
+gulp.task('default', ['clean', 'browser-sync'], function() {
   gulp.start('bower', 'templates', 'index-html', 'scripts', 'styles');
 });
